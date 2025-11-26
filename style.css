@@ -1,28 +1,36 @@
 /* scrollable body */
-body {
+html, body {
   margin: 0;
   padding: 0;
+  width: 100%;
   font-family: 'ADLaM Display', cursive;
   overflow-x: hidden;
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 /* frame around entire page */
 .page-frame {
-  border: 2px solid #000;   /* thin black border */
-  border-radius: 12px;      /* optional rounded corners */
-  padding: 20px;            /* space inside the frame */
-  margin: 20px;             /* space outside the frame */
+  border: 2px solid #000;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px;
+  min-height: 100vh;
   box-sizing: border-box;
-  min-height: 100vh; /* ensures full height on mobile */
+}
 
+/* top row for back button */
+.top-row {
+  display: flex;
+  justify-content: flex-start;
+  margin: 10px;
 }
 
 /* container for buttons */
 .button-container {
   display: flex;
-  align-items: center;   /* vertically align */
-  gap: 20px;             /* space between buttons */
+  align-items: center;
+  gap: 20px;
   margin: 10px 10px;
 }
 
@@ -30,28 +38,13 @@ body {
 .back-btn {
   width: 55px;
   cursor: pointer;
-  display: inline-block; /* inline so it sits next to others */
+  display: inline-block;
 }
 
-/* taipei button */
-.taipei-button {
+/* shared style for city buttons */
+.city-button {
   font-family: 'ADLaM Display', sans-serif;
-  font-size: 20px;          /* smaller text */
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #003366;           /* Dark blue text */
-  background-color: #add8e6;/* Light blue background */
-  border: 2px solid #000;   /* Black border */
-  border-radius: 8px;       /* slightly smaller corners */
-  padding: 8px 16px;        /* less padding */
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-/* taipei button */
-.taichung-button {
-  font-family: 'ADLaM Display', sans-serif;
-  font-size: 20px;          /* same smaller size */
+  font-size: 20px;
   font-weight: bold;
   text-transform: uppercase;
   color: #003366;
@@ -63,6 +56,10 @@ body {
   transition: background-color 0.3s ease;
 }
 
+.city-button.active {
+  background-color: #add8e6;
+}
+
 /* full-width divider inside frame */
 .full-divider {
   width: 100%;
@@ -70,25 +67,6 @@ body {
   background-color: black;
   border: none;
   margin: 10px 0;
-}
-
-/* shared style for city buttons */
-.city-button {
-  font-family: 'ADLaM Display', sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #003366;
-  background-color: #ffffff; /* default white */
-  border: 2px solid #000;
-  border-radius: 8px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.city-button.active {
-  background-color: #add8e6; /* light blue when active */
 }
 
 .city-content {
@@ -99,9 +77,10 @@ body {
   display: none;
 }
 
+/* mobile responsiveness */
 @media screen and (max-width: 600px) {
   .button-container {
-    flex-wrap: wrap; /* allows wrapping if needed */
+    flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
   }
@@ -109,12 +88,13 @@ body {
   .city-button {
     font-size: 16px;
     padding: 6px 12px;
-    flex: 1 1 auto; /* allows buttons to shrink and grow */
-    max-width: 45%; /* ensures two buttons fit side by side */
+    flex: 1 1 40%;
+    max-width: 40%;
+    box-sizing: border-box;
   }
 
   .back-btn {
-    width: 40px;
+    width: 36px;
   }
 
   .page-frame {

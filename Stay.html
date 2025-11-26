@@ -8,23 +8,26 @@
   <link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap" rel="stylesheet">
 
   <title>Stay</title>
- </head>
+</head>
 
 <body>
   <div class="page-frame">
-    <div class="button-container">
+    <div class="top-row">
       <img class="back-btn" src="asset/btn_back.png" onclick="window.location.href='index.html'">
+    </div>
+
+    <div class="button-container">
       <button class="city-button active">Stay</button>
       <button class="city-button">Activities</button>
     </div>
 
-    <hr class ="full-divider">
+    <hr class="full-divider">
+
     <div class="button-container">
       <button id="taipei-btn" class="city-button active">TAIPEI</button>
       <button id="taichung-btn" class="city-button">TAICHUNG</button>
     </div>
 
-    <!-- Content sections -->
     <div id="taipei-content" class="city-content">
       <h2>Xi Men Ding</h2>
       <p>Here you can display information about Taipei — hotels, attractions, food, etc.</p>
@@ -43,11 +46,8 @@
     const taichungContent = document.getElementById("taichung-content");
 
     function showContent(clickedBtn, otherBtn, showDiv, hideDiv) {
-      // toggle button colors
       clickedBtn.classList.add("active");
       otherBtn.classList.remove("active");
-
-      // toggle content visibility
       showDiv.classList.remove("hidden");
       hideDiv.classList.add("hidden");
     }
@@ -60,5 +60,5 @@
       showContent(taichungBtn, taipeiBtn, taichungContent, taipeiContent);
     });
   </script>
-
 </body>
+</html>
