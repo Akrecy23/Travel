@@ -1,30 +1,36 @@
+/* Mobile styles for screens ≤600px */
 @media screen and (max-width: 600px) {
   /* Frame scales down with tighter spacing */
   .page-frame {
-    margin: 10px;
+    margin: 10px auto;
     padding: 12px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
-  /* Button container wraps and centers buttons */
+  /* Button container stays in one row and scales down */
   .button-container {
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap; /* prevent wrapping */
+    justify-content: space-between; /* even spacing */
     gap: 12px;
-    margin: 8px;
+    margin: 8px auto;
   }
 
   /* Back button shrinks slightly */
   .back-btn {
     width: 36px;
+    flex-shrink: 0;
   }
 
-  /* City buttons scale down and auto-fit content */
+  /* City buttons scale down proportionally */
   .city-button {
     font-size: 16px;
     padding: 6px 12px;
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     width: auto;
     box-sizing: border-box;
+    margin: 0; /* remove any default spacing */
   }
 
   /* Divider remains full width but thinner */
