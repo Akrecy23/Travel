@@ -88,8 +88,8 @@ html, body {
   .city-button {
     font-size: 16px;
     padding: 6px 12px;
-    flex: 1 1 40%;
-    max-width: 40%;
+    flex: 0 1 auto;
+    width: auto;
     box-sizing: border-box;
   }
 
