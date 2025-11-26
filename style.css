@@ -1,0 +1,89 @@
+/* frame around entire page */
+.page-frame {
+  border: 2px solid #000;   /* thin black border */
+  border-radius: 12px;      /* optional rounded corners */
+  padding: 20px;            /* space inside the frame */
+  margin: 20px;             /* space outside the frame */
+}
+
+/* container for buttons */
+.button-container {
+  display: flex;
+  align-items: center;   /* vertically align */
+  gap: 20px;             /* space between buttons */
+  margin: 10px 10px;
+}
+
+/* back button (image) */
+.back-btn {
+  width: 55px;
+  cursor: pointer;
+  display: inline-block; /* inline so it sits next to others */
+}
+
+/* taipei button */
+.taipei-button {
+  font-family: 'ADLaM Display', sans-serif;
+  font-size: 20px;          /* smaller text */
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #003366;           /* Dark blue text */
+  background-color: #add8e6;/* Light blue background */
+  border: 2px solid #000;   /* Black border */
+  border-radius: 8px;       /* slightly smaller corners */
+  padding: 8px 16px;        /* less padding */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* taipei button */
+.taichung-button {
+  font-family: 'ADLaM Display', sans-serif;
+  font-size: 20px;          /* same smaller size */
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #003366;
+  background-color: #ffffff;
+  border: 2px solid #000;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* full-width divider inside frame */
+.full-divider {
+  width: 100%;
+  height: 3px;
+  background-color: black;
+  border: none;
+  margin: 10px 0;
+}
+
+/* shared style for city buttons */
+.city-button {
+  font-family: 'ADLaM Display', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #003366;
+  background-color: #ffffff; /* default white */
+  border: 2px solid #000;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.city-button.active {
+  background-color: #add8e6; /* light blue when active */
+}
+
+.city-content {
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
