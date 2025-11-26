@@ -69,33 +69,3 @@ html, body {
 .hidden {
   display: none;
 }
-
-/* mobile responsiveness */
-@media screen and (max-width: 600px) {
-  .button-container {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .city-button {
-    font-size: 16px;
-    padding: 6px 12px;
-    flex: 0 1 auto;
-    width: auto;
-    box-sizing: border-box;
-  }
-
-  .back-btn {
-    width: 36px;
-  }
-
-  .page-frame {
-    margin: 10px;
-    padding: 12px;
-  }
-
-  .city-content {
-    font-size: 16px;
-  }
-}

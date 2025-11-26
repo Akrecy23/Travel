@@ -1,0 +1,41 @@
+@media screen and (max-width: 600px) {
+  /* Frame scales down with tighter spacing */
+  .page-frame {
+    margin: 10px;
+    padding: 12px;
+  }
+
+  /* Button container wraps and centers buttons */
+  .button-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 8px;
+  }
+
+  /* Back button shrinks slightly */
+  .back-btn {
+    width: 36px;
+  }
+
+  /* City buttons scale down and auto-fit content */
+  .city-button {
+    font-size: 16px;
+    padding: 6px 12px;
+    flex: 0 1 auto;
+    width: auto;
+    box-sizing: border-box;
+  }
+
+  /* Divider remains full width but thinner */
+  .full-divider {
+    height: 2px;
+    margin: 8px 0;
+  }
+
+  /* Content text scales down */
+  .city-content {
+    font-size: 16px;
+    margin-top: 16px;
+  }
+}
