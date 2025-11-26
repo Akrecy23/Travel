@@ -1,4 +1,8 @@
-/* scrollable body */
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -6,35 +10,35 @@ html, body {
   font-family: 'ADLaM Display', cursive;
   overflow-x: hidden;
   overflow-y: auto;
-  box-sizing: border-box;
 }
 
-/* frame around entire page */
+/* Frame around entire page */
 .page-frame {
   border: 2px solid #000;
   border-radius: 12px;
   padding: 20px;
   margin: 20px;
   min-height: 100vh;
-  box-sizing: border-box;
 }
 
-/* container for buttons */
+/* Container for buttons */
 .button-container {
   display: flex;
   align-items: center;
   gap: 20px;
   margin: 10px 10px;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
 }
 
-/* back button (image) */
+/* Back button (image) */
 .back-btn {
   width: 55px;
   cursor: pointer;
   display: inline-block;
 }
 
-/* shared style for city buttons */
+/* Shared style for city buttons */
 .city-button {
   font-family: 'ADLaM Display', sans-serif;
   font-size: 20px;
@@ -53,7 +57,7 @@ html, body {
   background-color: #add8e6;
 }
 
-/* full-width divider inside frame */
+/* Divider */
 .full-divider {
   width: 100%;
   height: 3px;

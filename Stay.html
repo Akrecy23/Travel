@@ -12,31 +12,34 @@
 </head>
 
 <body>
-  <div class="page-frame">
-    <div class="button-container">
-      <img class="back-btn" src="asset/btn_back.png" onclick="window.location.href='index.html'">
-      <button class="city-button active" onclick="window.location.href='Stay.html'">Stay</button>
-      <button class="city-button">Activities</button>
-    </div>
+  <div class="scale-wrapper">
+    <div class="page-frame">
+      <div class="button-container">
+        <img class="back-btn" src="asset/btn_back.png" onclick="window.location.href='index.html'">
+        <button class="city-button active" onclick="window.location.href='Stay.html'">Stay</button>
+        <button class="city-button">Activities</button>
+      </div>
 
-    <hr class="full-divider">
+      <hr class="full-divider">
 
-    <div class="button-container">
-      <button id="taipei-btn" class="city-button active">TAIPEI</button>
-      <button id="taichung-btn" class="city-button">TAICHUNG</button>
-    </div>
+      <div class="button-container">
+        <button id="taipei-btn" class="city-button active">TAIPEI</button>
+        <button id="taichung-btn" class="city-button">TAICHUNG</button>
+      </div>
 
-    <div id="taipei-content" class="city-content">
-      <h2>Xi Men Ding</h2>
-      <p>Here you can display information about Taipei — hotels, attractions, food, etc.</p>
-    </div>
+      <div id="taipei-content" class="city-content">
+        <h2>Xi Men Ding</h2>
+        <p>Here you can display information about Taipei — hotels, attractions, food, etc.</p>
+      </div>
 
-    <div id="taichung-content" class="city-content hidden">
-      <h2>Welcome to Taichung</h2>
-      <p>Here you can display information about Taichung — culture, places to visit, and more.</p>
+      <div id="taichung-content" class="city-content hidden">
+        <h2>Welcome to Taichung</h2>
+        <p>Here you can display information about Taichung — culture, places to visit, and more.</p>
+      </div>
     </div>
   </div>
 
+  <!-- Only in Stay.html -->
   <script>
     const taipeiBtn = document.getElementById("taipei-btn");
     const taichungBtn = document.getElementById("taichung-btn");
@@ -50,13 +53,14 @@
       hideDiv.classList.add("hidden");
     }
 
-    taipeiBtn.addEventListener("click", () => {
+    taipeiBtn?.addEventListener("click", () => {
       showContent(taipeiBtn, taichungBtn, taipeiContent, taichungContent);
     });
 
-    taichungBtn.addEventListener("click", () => {
+    taichungBtn?.addEventListener("click", () => {
       showContent(taichungBtn, taipeiBtn, taichungContent, taipeiContent);
     });
   </script>
 </body>
 </html>
+
