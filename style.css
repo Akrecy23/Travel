@@ -1,9 +1,21 @@
+/* scrollable body */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'ADLaM Display', cursive;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 /* frame around entire page */
 .page-frame {
   border: 2px solid #000;   /* thin black border */
   border-radius: 12px;      /* optional rounded corners */
   padding: 20px;            /* space inside the frame */
   margin: 20px;             /* space outside the frame */
+  box-sizing: border-box;
+  min-height: 100vh; /* ensures full height on mobile */
+
 }
 
 /* container for buttons */
@@ -87,3 +99,32 @@
   display: none;
 }
 
+@media screen and (max-width: 600px) {
+  .button-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .city-button,
+  .taipei-button,
+  .taichung-button {
+    width: 100%;
+    font-size: 18px;
+    padding: 10px;
+  }
+
+  .back-btn {
+    width: 40px;
+    margin-bottom: 10px;
+  }
+
+  .page-frame {
+    margin: 10px;
+    padding: 12px;
+  }
+
+  .city-content {
+    font-size: 16px;
+  }
+}
