@@ -1,13 +1,44 @@
-/* Mobile styles for screens ≤600px */
 @media screen and (max-width: 600px) {
-  .scale-wrapper {
-    transform: scale(0.85); /* Adjust this value to control scaling */
-    transform-origin: top left;
-    width: 100%;
-    overflow-x: hidden;
+  /* Frame scales down with tighter spacing */
+  .page-frame {
+    margin: 1rem;
+    padding: 1rem;
+    min-height: 100vh;
   }
 
-  body {
-    overflow-x: hidden;
+  /* Button container stays left-aligned and spaced */
+  .button-container {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin: 0.5rem 1rem;
+  }
+
+  /* Back button shrinks slightly */
+  .back-btn {
+    width: 2.25rem; /* ~36px */
+    flex-shrink: 0;
+  }
+
+  /* City buttons scale with screen size */
+  .city-button {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    padding: 0.5rem 1rem;
+    flex: 0 1 auto;
+    width: auto;
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  /* Divider remains full width but thinner */
+  .full-divider {
+    height: 2px;
+    margin: 0.5rem 0;
+  }
+
+  /* Content text scales down */
+  .city-content {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    margin-top: 1rem;
   }
 }
