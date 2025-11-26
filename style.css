@@ -19,13 +19,6 @@ html, body {
   box-sizing: border-box;
 }
 
-/* top row for back button */
-.top-row {
-  display: flex;
-  justify-content: flex-start;
-  margin: 10px;
-}
-
 /* container for buttons */
 .button-container {
   display: flex;
