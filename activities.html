@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- TITLE OF WEBPAGE-->
+    <title>Activities Page</title>
+    <!-- ALL THE CSS FILES-->
+    <link rel="stylesheet" href="Common_Layout/CL_style.css">
+    <!-- ACTIVITIES CSS FILES-->
+    <link rel="stylesheet" href="activities_script/Activities_style.css">
+    
+    <!-- INCLUDE FIREBASE SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="demo-card">
+            <!-- INJECT HOME LAYOUT W REF TO CLASS-->
+            <!-- Done by referencing "demo-card" in Home_FrontLayout.js-->
+        </div>
+        <!-- CONTENT AREA -->
+        <div class="content-area">
+            <!-- MODAL -->
+            <div id="filterModal" class="modal-overlay hidden">
+                <!-- SHOW LIST OF FILTERS -->
+            </div>
+            <!-- ACTIVITY GRID(CARDS) -->
+            <div class="scroll-wrapper">
+                <div class="activities-grid" id="activitiesGrid">
+                    <!-- Activity cards will be dynamically inserted here -->
+                </div>
+                <div class="modal" id="add-activity-modal">
+                    <!-- Form for adding new activity will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CALL SCRIPT -->
+    <!-- Initialise Firestore database -->
+    <script src="init_firebase.js"></script>
+    <!-- Initialise Google API (Map) -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAgDHi85w4J9ezEl6nIumKBKAwWjmWsVo&libraries=places,marker"></script>
+    <script src="activities_script/ActivityDetails_Card_MAP.js"></script>
+    <!-- Inject Home Front Layout -->
+    <script src="Common_Layout/Inject_Layout.js"></script>
+    <!-- Populate Year Drop-down Options -->
+    <script src="Common_Layout/Year_Dropdown.js"></script>
+    <!-- Handle clicking of Filter icon -->
+    <script src="Common_Layout/Filter_Button.js"></script>
+    <!-- Handle clicking of Search icon -->
+    <script src="Common_Layout/Search_Toggle.js"></script>
+    <!-- Show Activities Cards P1-4 -->
+    <script src="activities_script/ActivityDetails_Card_P4.js"></script>
+    <script src="activities_script/ActivityDetails_Card_P3.js"></script>
+    <script src="activities_script/ActivityDetails_Card_P2.js"></script>
+    <script src="activities_script/ActivityDetails_Card_P1.js"></script>
+    <!-- Handle Clicking of New Activity Button --> 
+    <script src="activities_script/Add_Activity_Button.js"></script>
+</body>

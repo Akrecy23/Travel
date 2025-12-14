@@ -1,0 +1,458 @@
+/* ======== EXPENSES GRID ======== */
+.scroll-wrapper {
+  flex: 1; /* take all remaining vertical space */
+  overflow-y: auto; /* only this scrolls */
+  padding: 0.75rem;
+  box-sizing: border-box;
+}
+.expenses-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+/* === Card Container === */
+.expenses-card {
+  background: rgb(247, 215, 215);;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* === Header === */
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.trip-header h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+}
+.trip-status {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* === Detail Items === */
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.detail-icon,
+.detail-item svg {
+  flex-shrink: 0;
+  color: #9ca3af;
+  margin-top: 0.125rem;
+}
+.detail-text {
+  flex: 1;
+}
+.detail-main {
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.4;
+}
+.detail-sub {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 1.125rem;
+}
+
+/* === Description === */
+.trip-description .detail-main {
+  font-size: 0.875rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+/* === Action Buttons === */
+.trip-actions, .spending-edit-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.view-btn {
+  background: #2563eb;
+  color: #fff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.view-btn:hover {
+  background: #1e40af;
+}
+.view-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+.spending-save-btn,
+.spending-cancel-btn {
+  background: #f3f4f6;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #555;
+  transition: color 0.2s ease, background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: 4px;
+}
+.spending-save-btn {
+  color: #16a34a !important;
+}
+.spending-cancel-btn {
+  color: #dc2626 !important; /* red */
+}
+/* Modal overlay */
+#expensesModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none; /* hidden by default */
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+/* Modal box */
+.modal-box {
+  background: #fff;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* Modal header */
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+#closeModal {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+#closeModal:hover {
+  color: #000;
+}
+/* Tabs */
+.modal-tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #ddd;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+.modal-tabs button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: #f3f4f6;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+.modal-tabs button.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* Summary row */
+#modalSummary {
+  padding: 1rem 1.5rem;
+  background: #f9fafb;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;   /* stack items vertically */
+  gap: 0.25rem;             /* small spacing between lines */
+}
+
+#modalSummary .summary-row span {
+  font-weight: 500;
+  color: #374151;
+  display: block;           /* ensure each span takes full line */
+}
+
+
+/* Modal content */
+#modalContent {
+  padding: 2rem;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+/* Expenses header row */
+.expenses-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.expenses-header-row h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+.new-expense-btn {
+  background-color: #2563eb;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.new-expense-btn:hover {
+  background-color: #1e40af;
+}
+
+/* Spendings grid */
+.spendings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Full-width card */
+.spending-card {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Top row: badge + actions */
+.card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-top-row .tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+}
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.card-actions button {
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+.edit-btn svg {
+  stroke: #2563eb;
+}
+.delete-btn svg {
+  stroke: #dc2626;
+}
+.card-actions button:hover svg {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+/* Header row (title only now) */
+.card-header h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+/* Details section */
+.card-body {
+  font-size: 0.875rem;
+  color: #4b5563;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.card-body strong {
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Amount at bottom */
+.card-amount {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #2563eb;
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+/* Container for the add button */
+.timeline-add {
+  text-align: flex-start;
+  margin-top: 1rem;
+}
+
+/* Tags (already defined) */
+.tag.Other,
+.tag.Default {
+  background: #bec2cc;
+  color: #374151;
+}
+.tag.Transport { background: #dbeafe; color: #1e3a8a; }
+.tag.Accommodation { background: #fce7f3; color: #9d174d; }
+.tag.Food { background: #fef9c3; color: #92400e; }
+.tag.Activity { background: #d1fae5; color: #065f46; }
+.tag.Flight { background: #e4c6e4; color: #882400; }
+
+/* Overlay container inside expenseModal */
+#newExpenseFormContainer {
+  position: absolute;       /* overlay on top of modal content */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  padding: 2rem;
+  display: none;            /* hidden by default */
+  z-index: 20;              /* above modal body */
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease-in-out;
+  border-radius: 8px;
+}
+/* Form itself */
+#newExpenseForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 37.5rem;
+  margin: 0 auto;           /* center form horizontally */
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+/* Title row: h3 + close button */
+#newExpenseForm .form-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+#newExpenseForm .form-title-row h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+#newExpenseForm .close-form-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+#newExpenseForm .close-form-btn:hover {
+  color: #000;
+}
+/* Header section (Trip + Tab) */
+#newExpenseForm .form-header {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  font-weight: 600;
+}
+
+#newExpenseForm .form-header label {
+  margin-right: 0.25rem;
+}
+
+#newExpenseForm .form-header input[readonly] {
+  background: #f3f4f6;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  font-weight: 500;
+  cursor: not-allowed;       /* cross cursor for uneditable fields */
+}
+#newExpenseForm .form-fields label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+#newExpenseForm .form-fields input,
+#newExpenseForm .form-fields textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.95rem;
+}
+/* Actions */
+#newBookingForm .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+#newExpenseForm .form-actions button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+#newExpenseForm .form-actions button[type="submit"] {
+  background: #2563eb;
+  color: #fff;
+}
+
+#newExpenseForm .form-actions button[type="submit"]:hover {
+  background: #1e40af;
+}
