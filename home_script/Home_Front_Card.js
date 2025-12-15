@@ -276,7 +276,18 @@ document.addEventListener("HomeCardsReady", () => {
   if (viewAllLink) {
     viewAllLink.addEventListener("click", (e) => {
       e.preventDefault(); // prevent the # from jumping the page
+      // ✅ Activate the All Trips toggle visually
+      const toggleBtns = document.querySelectorAll(".toggle-btn");
+      toggleBtns.forEach(b => b.classList.remove("active"));
+
+      const allTripsBtn = [...toggleBtns].find(b =>
+        b.textContent.includes("All Trips")
+      );
+      if (allTripsBtn) {
+        allTripsBtn.classList.add("active");
+      }
       document.dispatchEvent(new Event("CreateHomeBackLayout"));
     });
   }
 });
+
