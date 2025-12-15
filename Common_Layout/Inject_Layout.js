@@ -118,7 +118,7 @@ function createHomeFrontLayout() {
       btn.classList.add("active");
       if (btn.textContent.includes("Trip Focus")) {
         console.log("Trip Focus selected");
-        createHomeFrontLayout();
+        window.location.href = "home.html";
       } else if (btn.textContent.includes("All Trips")) {
         console.log("All Trips selected");
         document.dispatchEvent(new Event("CreateHomeBackLayout"));
@@ -178,4 +178,5 @@ function createHomeFrontLayout() {
   });
 
   // document.dispatchEvent(new Event("HomeFrontLayoutReady"));
+
 }
