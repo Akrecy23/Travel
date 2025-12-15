@@ -1,0 +1,410 @@
+/* ============================================
+   MOBILE RESPONSIVE CSS
+   Add this at the END of your CL_style.css file
+   ============================================ */
+
+/* Tablet and smaller laptops (1024px and below) */
+@media (max-width: 1024px) {
+    html {
+        font-size: 14px; /* Reduce base font size */
+    }
+
+    .content-area {
+        padding: 0 2rem; /* Reduce side padding */
+    }
+
+    .category-section {
+        padding: 1rem 2rem;
+    }
+
+    /* Make filter panel take more vertical space on tablets */
+    #filterModal {
+        height: 40vh;
+    }
+}
+
+/* Mobile phones (768px and below) */
+@media (max-width: 768px) {
+    html {
+        font-size: 13px;
+    }
+
+    /* Reduce all padding */
+    .content-area {
+        padding: 0 1rem;
+    }
+
+    .category-section {
+        padding: 0.75rem 1rem;
+    }
+
+    /* Header adjustments */
+    .header-container {
+        padding: 0.5rem 0.75rem;
+        flex-wrap: wrap; /* Allow wrapping if needed */
+    }
+
+    .title {
+        font-size: 1rem;
+    }
+
+    .logo {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    /* Toggle buttons - stack vertically or reduce size */
+    .view-toggle {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .toggle-btn {
+        padding: 0.25rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    /* Right controls - stack if needed */
+    .right-controls {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    /* Category pills - single column on mobile */
+    .category-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .category-pills {
+        width: 100%;
+        overflow-x: auto; /* Allow horizontal scrolling */
+        flex-wrap: nowrap; /* Keep pills in a row */
+    }
+
+    .pill {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+        white-space: nowrap; /* Prevent text wrapping */
+    }
+
+    /* Category controls - full width */
+    .category-controls {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    /* Search bar */
+    .search-bar {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .search-input {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    /* Filter modal - take more screen space */
+    #filterModal {
+        height: 50vh;
+    }
+
+    .filter-left {
+        width: 30%;
+        padding: 0.5rem;
+    }
+
+    .filter-right {
+        width: 70%;
+        padding: 0.5rem;
+    }
+
+    .filter-category,
+    .filter-header {
+        font-size: 0.7rem;
+    }
+
+    .filter-pill {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    /* Dropdown adjustments */
+    .dropdown-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .dropdown-menu {
+        width: 8rem;
+        max-height: 8rem;
+    }
+
+    .dropdown-menu li {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    /* Sign out button */
+    .signout-btn {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+}
+
+/* Small phones (480px and below) */
+@media (max-width: 480px) {
+    html {
+        font-size: 12px;
+    }
+
+    /* Further reduce padding */
+    .content-area {
+        padding: 0 0.75rem;
+    }
+
+    .category-section {
+        padding: 0.5rem 0.75rem;
+    }
+
+    /* Header - very compact */
+    .header-container {
+        padding: 0.5rem;
+        gap: 0.5rem;
+    }
+
+    .header-left {
+        gap: 0.25rem;
+    }
+
+    .title {
+        font-size: 0.875rem;
+    }
+
+    .logo {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    /* Toggle buttons - smaller */
+    .toggle-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    /* Category pills - even smaller */
+    .pill {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.7rem;
+    }
+
+    /* Filter modal - almost full screen */
+    #filterModal {
+        height: 60vh;
+    }
+
+    .filter-left {
+        width: 35%;
+        padding: 0.375rem;
+    }
+
+    .filter-right {
+        width: 65%;
+        padding: 0.375rem;
+    }
+
+    .filter-category,
+    .filter-header {
+        font-size: 0.65rem;
+    }
+
+    .filter-pill {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.65rem;
+    }
+
+    /* Modal buttons */
+    .modal-btn {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    /* Dropdown */
+    .dropdown-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .dropdown-menu {
+        width: 7rem;
+        max-height: 7rem;
+    }
+
+    .dropdown-menu li {
+        padding: 0.4rem;
+        font-size: 0.75rem;
+    }
+
+    /* Buttons and controls */
+    .search-btn,
+    .filter-btn {
+        padding: 0.375rem;
+    }
+
+    .search-btn svg,
+    .filter-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .signout-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+}
+
+/* Extra small phones (360px and below) */
+@media (max-width: 360px) {
+    html {
+        font-size: 11px;
+    }
+
+    .content-area {
+        padding: 0 0.5rem;
+    }
+
+    .category-section {
+        padding: 0.4rem 0.5rem;
+    }
+
+    .title {
+        font-size: 0.8rem;
+    }
+
+    .pill {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.65rem;
+    }
+
+    /* Filter modal controls */
+    .filter-left {
+        width: 40%;
+    }
+
+    .filter-right {
+        width: 60%;
+    }
+}
+
+/* ============================================
+   LANDSCAPE MODE ADJUSTMENTS
+   ============================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+    /* Reduce header height in landscape */
+    .header-container {
+        padding: 0.4rem 0.75rem;
+    }
+
+    .category-section {
+        padding: 0.5rem 1rem;
+    }
+
+    /* Filter modal takes less height */
+    #filterModal {
+        height: 70vh;
+    }
+}
+
+/* ============================================
+   GRID ADJUSTMENTS FOR CARDS
+   ============================================ */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .activities-grid,
+    .food-grid,
+    .country-cards {
+        grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+        gap: 1rem;
+    }
+
+    .bookings-grid,
+    .expenses-grid,
+    .itinerary-grid {
+        gap: 1rem;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 768px) {
+    .activities-grid,
+    .food-grid,
+    .country-cards {
+        grid-template-columns: 1fr; /* Single column */
+        gap: 1rem;
+    }
+
+    .bookings-grid,
+    .expenses-grid,
+    .itinerary-grid {
+        gap: 0.75rem;
+    }
+
+    /* Reduce card padding */
+    .activity-card,
+    .food-card,
+    .bookings-card,
+    .expenses-card,
+    .itinerary-card {
+        padding: 1rem;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .activities-grid,
+    .food-grid,
+    .country-cards,
+    .bookings-grid,
+    .expenses-grid,
+    .itinerary-grid {
+        gap: 0.5rem;
+    }
+
+    .activity-card,
+    .food-card,
+    .bookings-card,
+    .expenses-card,
+    .itinerary-card {
+        padding: 0.75rem;
+    }
+}
+
+/* ============================================
+   PREVENT HORIZONTAL OVERFLOW
+   ============================================ */
+@media (max-width: 768px) {
+    /* Force all content to fit within viewport */
+    body {
+        overflow-x: hidden;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
+    /* Ensure text doesn't overflow */
+    h1, h2, h3, h4, h5, h6, p, div {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* Ensure images scale properly */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
