@@ -13,7 +13,6 @@ body {
     min-height: 100vh;
     overflow-y: auto;
     display: flex;
-    align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #ede9fe 100%);
     padding: 1.5rem;
@@ -304,3 +303,4 @@ body {
     }
 
 }
+
