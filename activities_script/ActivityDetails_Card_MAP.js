@@ -23,11 +23,14 @@ async function geocodeAddress(address) {
 async function showMapOnFlip(card, data, docRef) {
   const mapEl = card.querySelector(`#map-${data.id}`);
   if (!mapEl) return;
+
+  // Wait until the card-back is actually visible
+  await waitForVisible(mapEl);
+
   // If lat/lng already exist in Firestore data, skip
   if (data.latitude && data.longitude) {
-    setTimeout(() => {
-      initMap(mapEl, data.latitude, data.longitude);
-    }, 600);
+    initMap(mapEl, data.latitude, data.longitude);
+    console.log("show map 1");
     return;
   }
   // Otherwise, geocode (convert) the address
@@ -42,9 +45,8 @@ async function showMapOnFlip(card, data, docRef) {
     data.latitude = coords.lat;
     data.longitude = coords.lng;
     // Show the map
-    setTimeout(() => {
-      initMap(mapEl, data.latitude, data.longitude);
-    }, 600);
+    initMap(mapEl, coords.lat, coords.lng);
+    console.log("show map 2");
   } else {
     mapEl.innerHTML = "<p>Map unavailable</p>";
   }
@@ -80,5 +82,19 @@ function initMap(mapEl, lat, lng) {
     title: "Activity Location"
   });
 
+}
+
+function waitForVisible(el) {
+  return new Promise(resolve => {
+    const check = () => {
+      const rect = el.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        resolve();
+      } else {
+        requestAnimationFrame(check);
+      }
+    };
+    check();
+  });
 }
 
