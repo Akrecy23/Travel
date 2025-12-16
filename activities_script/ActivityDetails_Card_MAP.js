@@ -3,24 +3,19 @@
 // ====== CONVERT ADDRESS TO LAT & LONG ===========
 // Only need to run once for new location (or location without lat & lng)
 async function geocodeAddress(address) {
-  const apiKey = "AIzaSyDAgDHi85w4J9ezEl6nIumKBKAwWjmWsVo"; // replace with your key
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+  return new Promise((resolve, reject) => {
+    const geocoder = new google.maps.Geocoder();
 
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (data.status === "OK" && data.results[0]) {
-      const location = data.results[0].geometry.location;
-      return { lat: location.lat, lng: location.lng };
-    } else {
-      console.error("Geocoding failed:", data.status);
-      return null;
-    }
-  } catch (err) {
-    console.error("Error calling Geocoding API:", err);
-    return null;
-  }
+    geocoder.geocode({ address: address }, (results, status) => {
+      if (status === "OK" && results[0]) {
+        const location = results[0].geometry.location;
+        resolve({ lat: location.lat(), lng: location.lng() });
+      } else {
+        console.error("Geocoding failed:", status);
+        resolve(null);
+      }
+    });
+  });
 }
 
 // ========= CHECK FOR LAT & LONG, ELSE CREATE ==============
@@ -80,4 +75,5 @@ function initMap(mapEl, lat, lng) {
     map: map,
     title: "Activity Location"
   });
+
 }
