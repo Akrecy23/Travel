@@ -238,7 +238,7 @@ async function handleFood(subSnap, cardsContainer, statusId, foodType, currentUs
             if (!opened) {
               window.location.href = appleMapsUrl;
             }
-          }, 500);
+          }, 3000);
         
           return;
         }
@@ -258,6 +258,7 @@ async function handleFood(subSnap, cardsContainer, statusId, foodType, currentUs
     }
   });
 }
+
 
 
 
