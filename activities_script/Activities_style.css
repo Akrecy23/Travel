@@ -4,6 +4,9 @@
   overflow-y: auto; /* only this scrolls */
   padding: 0.75rem;
   box-sizing: border-box;
+  overflow-x: visible;
+  perspective: 1000px;
+  transform-style: preserve-3d;
 }
 .activities-grid,
 .country-cards {
@@ -582,5 +585,6 @@
   transform: translateY(-2px); 
 
 }
+
 
 
