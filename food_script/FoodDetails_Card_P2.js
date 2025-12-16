@@ -217,15 +217,32 @@ async function handleFood(subSnap, cardsContainer, statusId, foodType, currentUs
         
         // iOS
         if (/iPhone|iPad|iPod/i.test(ua)) {
-          // Try Google Maps app first
-          mapsUrl = `comgooglemaps://?q=${encodedAddress}`;
+          const googleMapsUrl = `comgooglemaps://?q=${encodedAddress}`;
+          const appleMapsUrl = `http://maps.apple.com/?q=${encodedAddress}`;
         
-          // If Google Maps isn't installed, fallback to Apple Maps
+          let opened = false;
+        
+          // If the page becomes hidden, it means Google Maps opened
+          const handleVisibility = () => {
+            opened = true;
+            document.removeEventListener("visibilitychange", handleVisibility);
+          };
+        
+          document.addEventListener("visibilitychange", handleVisibility);
+        
+          // Try Google Maps
+          window.location.href = googleMapsUrl;
+        
+          // After 500ms, if still visible → Google Maps is NOT installed → open Apple Maps
           setTimeout(() => {
-            window.location.href = `http://maps.apple.com/?q=${encodedAddress}`;
-          }, 200);
-        }
+            if (!opened) {
+              window.location.href = appleMapsUrl;
+            }
+          }, 500);
         
+          return;
+        }
+
         // Android
         else if (/Android/i.test(ua)) {
           mapsUrl = `geo:0,0?q=${encodedAddress}`;
@@ -241,5 +258,6 @@ async function handleFood(subSnap, cardsContainer, statusId, foodType, currentUs
     }
   });
 }
+
 
 
