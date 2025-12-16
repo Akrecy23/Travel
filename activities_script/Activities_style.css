@@ -86,6 +86,7 @@
   height: 28.125rem;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  z-index: 3;
 }
 .back-header {
   text-align: center;
@@ -581,4 +582,5 @@
   transform: translateY(-2px); 
 
 }
+
 
