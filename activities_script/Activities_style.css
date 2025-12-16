@@ -70,7 +70,7 @@
   transform: rotateY(0deg);
 }
 .activity-card.flipped .card-front{
-  position: absolute;
+  
   height: 28.125rem;
 }
 .activity-card.flipped .trip-expand {
@@ -585,6 +585,7 @@
   transform: translateY(-2px); 
 
 }
+
 
 
 
