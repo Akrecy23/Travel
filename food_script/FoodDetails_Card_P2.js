@@ -211,18 +211,35 @@ async function handleFood(subSnap, cardsContainer, statusId, foodType, currentUs
         }
 
         const encodedAddress = encodeURIComponent(address);
-        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
+        const ua = navigator.userAgent;
+        
         let mapsUrl;
-        if (isMobile) {
+        
+        // iOS
+        if (/iPhone|iPad|iPod/i.test(ua)) {
+          // Try Google Maps app first
+          mapsUrl = `comgooglemaps://?q=${encodedAddress}`;
+        
+          // If Google Maps isn't installed, fallback to Apple Maps
+          setTimeout(() => {
+            window.location.href = `http://maps.apple.com/?q=${encodedAddress}`;
+          }, 200);
+        }
+        
+        // Android
+        else if (/Android/i.test(ua)) {
           mapsUrl = `geo:0,0?q=${encodedAddress}`;
-        } else {
+        }
+        
+        // Desktop
+        else {
           mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
         }
-
-        window.open(mapsUrl, "_blank");
+        
+        window.location.href = mapsUrl;
       });
     }
   });
 }
+
 
