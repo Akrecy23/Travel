@@ -151,7 +151,6 @@ function createActivityCard(data, activityType) {
                 </button>
               </div>
             </div>
-            </div>
             <p class="remarks-text ${!data.Remarks ? 'remarks-empty' : ''}">
               ${data.Remarks || "No remarks yet"}
             </p>
@@ -214,4 +213,5 @@ function createActivityCard(data, activityType) {
     </div>
   `;
   return card;
+
 }
