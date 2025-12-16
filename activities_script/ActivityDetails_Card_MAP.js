@@ -21,11 +21,13 @@ async function geocodeAddress(address) {
 // ========= CHECK FOR LAT & LONG, ELSE CREATE ==============
 // Only runs when card is flipped (or new activity is added)
 async function showMapOnFlip(card, data, docRef) {
+  console.log("running");
   const mapEl = card.querySelector(`#map-${data.id}`);
   if (!mapEl) return;
 
   // Wait until the card-back is actually visible
   await waitForVisible(mapEl);
+  console.log("visible");
 
   // If lat/lng already exist in Firestore data, skip
   if (data.latitude && data.longitude) {
@@ -97,4 +99,5 @@ function waitForVisible(el) {
     check();
   });
 }
+
 
