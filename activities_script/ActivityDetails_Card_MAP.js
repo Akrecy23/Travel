@@ -25,7 +25,9 @@ async function showMapOnFlip(card, data, docRef) {
   if (!mapEl) return;
   // If lat/lng already exist in Firestore data, skip
   if (data.latitude && data.longitude) {
-    initMap(mapEl, data.latitude, data.longitude);
+    setTimeout(() => {
+      initMap(mapEl, data.latitude, data.longitude);
+    }, 600);
     return;
   }
   // Otherwise, geocode (convert) the address
@@ -40,7 +42,9 @@ async function showMapOnFlip(card, data, docRef) {
     data.latitude = coords.lat;
     data.longitude = coords.lng;
     // Show the map
-    initMap(mapEl, coords.lat, coords.lng);
+    setTimeout(() => {
+      initMap(mapEl, data.latitude, data.longitude);
+    }, 600);
   } else {
     mapEl.innerHTML = "<p>Map unavailable</p>";
   }
@@ -77,3 +81,4 @@ function initMap(mapEl, lat, lng) {
   });
 
 }
+
