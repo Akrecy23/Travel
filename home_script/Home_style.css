@@ -304,7 +304,11 @@ font-size: 1.5rem;
 .trip-badge.upcoming {
   background: #10b981; /* green for upcoming */
 }
-
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .trip-info {
   padding: 0.75rem;
 }
@@ -312,6 +316,19 @@ font-size: 1.5rem;
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
+}
+.collaborators-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.25rem 0.625rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.collaborators-btn:hover {
+  background: #0056b3;
 }
 .trip-details {
   font-size: 0.875rem;
@@ -438,4 +455,5 @@ font-size: 1.5rem;
 #add-trip-modal .submit-btn:hover {
   background: #218838;
   transform: translateY(-2px);
+
 }
