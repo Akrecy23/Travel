@@ -81,6 +81,10 @@ document.addEventListener("CreateHomeBackLayout", () => {
             </div>
             <div class="trip-countdown">${countdown}</div>
           </div>
+          <div class="collaborator-form hidden">
+            <input type="email" class="collaborator-email" placeholder="Enter collaborator's email">
+            <button class="send-collaborator-btn">Send</button>
+          </div>
         </div>
       `;
     }).join("");
@@ -188,18 +192,26 @@ document.addEventListener("CreateHomeBackLayout", () => {
     btn.addEventListener("click", e => {
       e.preventDefault();
       const card = btn.closest(".trip-card");
-      const yearId = card.dataset.year;
-      const country = card.dataset.country;
-      const groupId = card.dataset.group;
-      const tripId = card.dataset.trip;
-      // Call your add collaborators function (defined elsewhere)
-      addCollaborators(yearId, country, groupId, tripId, card);
+      const form = card.querySelector(".collaborator-form");
+      form.classList.toggle("hidden"); // show/hide the form
+    });
+  });
+  // For clicking on Send Button
+  heroCardContainer.querySelectorAll(".send-collaborator-btn").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      const card = btn.closest(".trip-card");
+      const emailInput = card.querySelector(".collaborator-email");
+      const email = emailInput.value.trim();
+
+      addCollaborators(email, emailInput, card)
     });
   });
 
   // Dispatch event listener to signal layout ready
   document.dispatchEvent(new Event("HomeBackLayoutReady"));
 });
+
 
 
 
