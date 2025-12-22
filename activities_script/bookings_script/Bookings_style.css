@@ -1,0 +1,705 @@
+/* ======== BOOKINGS GRID ======== */
+.scroll-wrapper {
+  flex: 1; /* take all remaining vertical space */
+  overflow-y: auto; /* only this scrolls */
+  padding: 0.75rem;
+  box-sizing: border-box;
+}
+.bookings-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+/* === Card Container === */
+.bookings-card {
+  background: rgb(247, 215, 215); /*rgb(241, 229, 229)*/
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* === Header === */
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.trip-header h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+}
+.trip-status {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* === Detail Items === */
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.detail-icon,
+.detail-item svg {
+  flex-shrink: 0;
+  color: #9ca3af;
+  margin-top: 0.125rem;
+}
+.detail-text {
+  flex: 1;
+}
+.detail-main {
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.4;
+}
+.detail-sub {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.125rem;
+}
+
+/* === Description === */
+.trip-description .detail-main {
+  font-size: 0.875rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+/* === Action Buttons === */
+.trip-actions, .edit-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.view-btn {
+  background: #2563eb;
+  color: #fff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.view-btn:hover {
+  background: #1e40af;
+}
+.view-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+.edit-btn,
+.delete-btn,
+.tick-btn,
+.cancel-btn {
+  background: #f3f4f6;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #555;
+  transition: color 0.2s ease, background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: 4px;
+}
+.edit-btn:hover {
+  color: #2563eb;
+  background: #e5e7eb;
+}
+.delete-btn:hover {
+  color: #dc2626;
+  background: #e5e7eb;
+}
+.edit-btn svg {
+  stroke: #2563eb;
+}
+.delete-btn svg {
+  stroke: #dc2626;
+}
+.tick-btn {
+  color: #16a34a !important;
+}
+.cancel-btn {
+  color: #dc2626 !important; /* red */
+}
+/* Shorter length */
+.edit-time {
+  width: 5rem;        /* adjust as needed */
+  padding: 0.125rem 0.25rem;
+  font-size: 0.9rem;
+  text-align: center; /* keeps the time nicely aligned */
+}
+/* Longer length for Other Bookings */
+.edit-time-others {
+  width: 160px;        /* adjust as needed */
+  padding: 0.125rem 0.25rem;
+  font-size: 0.9rem;
+  text-align: center; /* keeps the time nicely aligned */
+}
+
+/* === Edit Mode === */
+.bookings-card.editing {
+  background: #fff8f8;
+  border: 1px solid #e5e7eb;
+}
+.bookings-card.editing input[type="text"],
+.bookings-card.editing textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #333;
+  background: #fff;
+  box-sizing: border-box;
+}
+.bookings-card.editing input[type="text"]:focus,
+.bookings-card.editing textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+.bookings-card.editing textarea {
+  resize: vertical;
+  min-height: 3.75rem;
+}
+/* ======= Modal Overlay & Box ========= */
+#bookingsModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none; /* hidden by default */
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+.modal-box {
+  background: #fff;
+  width: 100%;
+  max-width: 56.25rem;
+  max-height: 90vh;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+/* ======= Modal Header ============ */
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+#closeModal {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+#closeModal:hover {
+  color: #000;
+}
+
+/* ======= Modal Content ========= */
+#modalContent {
+  padding: 2rem;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+
+/* =========== Tabs ========== */
+.modal-tabs {
+  display: flex;
+  justify-content: space-between;   /* push tabs left, + New right */
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #ddd;
+  flex-shrink: 0;
+}
+
+.modal-tabs .tabs-left {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+
+.modal-tabs button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: #f3f4f6;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.modal-tabs button.active {
+  background: #2563eb;
+  color: white;
+}
+
+.new-btn {
+  background: #1a5ceb !important;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.new-btn:hover {
+  background: #1e40af;
+}
+
+/* ======== Frames Grid (Bookings) ========= */
+.frames-grid {
+  display: flex;
+  flex-direction: column; /* one per row */
+  gap: 1rem;
+}
+.frame {
+  background: #f9fafb;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.frame:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+/* Frame header with buttons aligned right */
+/* ========== BOOKING CARDS ========== */
+.booking-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.booking-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.card-title {
+  margin: 0.5rem 0 0 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.icon-btn {
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.icon-btn:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-outbound {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.badge-return {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-stay {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-other {
+  background: #fce7f3;
+  color: #9f1239;
+}
+
+/* ========== FLIGHT CARD SPECIFIC ========== */
+.flight-timeline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.flight-point {
+  text-align: center;
+}
+
+.flight-time {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  display: block;
+}
+
+.flight-airport {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.flight-duration {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: 0 1.25rem;
+}
+
+.flight-line {
+  width: 100%;
+  height: 0.125rem;
+  background: #d1d5db;
+  position: relative;
+}
+
+.flight-plane {
+  font-size: 1.125rem;
+  margin-top: 0.25rem;
+}
+
+.duration-text {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* ========== STAY CARD SPECIFIC ========== */
+.stay-dates {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.stay-checkin,
+.stay-checkout {
+  text-align: center;
+}
+
+.stay-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.stay-date {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  display: block;
+}
+
+.stay-time {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  margin-top: 0.125rem;
+  display: block;
+}
+
+.stay-nights {
+  flex: 1;
+  text-align: center;
+}
+
+.nights-badge {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #059669;
+  padding: 0.5rem 1rem;
+  background: #d1fae5;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* ========== INFO GRID (USED BY ALL CARDS) ========== */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.info-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.info-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 0.825rem;
+  color: #111827;
+  font-weight: 600;
+}
+
+/* ========== EMPTY STATE ========== */
+.empty-state {
+  text-align: center;
+  padding: 3.75rem 1.25rem;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 1rem;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.btn-add-booking {
+  padding: 0.625rem 1.25rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: background 0.2s;
+}
+
+.btn-add-booking:hover {
+  background: #2563eb;
+}
+
+/* ========== RESPONSIVE (MOBILE) ========== */
+@media (max-width: 40rem) {
+  .booking-card {
+    padding: 1rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .flight-time {
+    font-size: 1.25rem;
+  }
+
+  .flight-airport {
+    font-size: 0.6875rem;
+  }
+
+  .flight-duration {
+    margin: 0 0.75rem;
+  }
+
+  .stay-date {
+    font-size: 0.875rem;
+  }
+
+  .info-label {
+    font-size: 0.6875rem;
+  }
+
+  .info-value {
+    font-size: 0.8125rem;
+  }
+}
+/* Overlay container inside bookingsModal */
+#newBookingFormContainer {
+  position: absolute;       /* overlay on top of modal content */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  padding: 2rem;
+  display: none;            /* hidden by default */
+  z-index: 20;              /* above modal body */
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease-in-out;
+  border-radius: 8px;
+}
+
+/* Form itself */
+#newBookingForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 37.5rem;
+  margin: 0 auto;           /* center form horizontally */
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+/* Header section (Trip + Tab) */
+#newBookingForm .form-header {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  font-weight: 600;
+}
+
+#newBookingForm .form-header label {
+  margin-right: 0.25rem;
+}
+
+#newBookingForm .form-header input[readonly] {
+  background: #f3f4f6;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  font-weight: 500;
+  cursor: not-allowed;       /* cross cursor for uneditable fields */
+}
+
+/* Close button in form header */
+#newBookingForm .close-form-btn {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+#newBookingForm .close-form-btn:hover {
+  color: #000;
+}
+
+/* Field groups */
+#newBookingForm .form-fields h3,
+#newBookingForm .form-fields h4 {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+#newBookingForm .form-fields label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+#newBookingForm .form-fields input,
+#newBookingForm .form-fields textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.95rem;
+}
+
+#newBookingForm .form-fields input[type="radio"] {
+  width: auto;
+  margin-right: 0.25rem;
+}
+
+/* Actions */
+#newBookingForm .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+#newBookingForm .form-actions button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+#newBookingForm .form-actions button[type="submit"] {
+  background: #2563eb;
+  color: #fff;
+}
+
+#newBookingForm .form-actions button[type="submit"]:hover {
+  background: #1e40af;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

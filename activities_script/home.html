@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- TITLE OF WEBPAGE-->
+    <title>Home Page</title>
+    <!-- ALL THE CSS FILES-->
+    <link rel="stylesheet" href="Common_script/CL_style.css">
+    <link rel="stylesheet" href="Common_script/CL_Mobile_style.css">
+    <!-- HOME PAGE CSS FILE -->
+    <link rel="stylesheet" href="home_script/Home_style.css">
+
+    <!-- INCLUDE FIREBASE SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="demo-card">
+            <!-- INJECT HOME LAYOUT W REF TO CLASS-->
+            <!-- Done by referencing "demo-card" in Home_FrontLayout.js-->
+        </div>
+
+        <!-- Scrollable section -->
+        <div class="scroll-section">
+            <!-- Hero Card -->
+            <div class="hero-card-container">
+                <!-- INJECT CARD DETAILS W REF TO CLASS-->
+                <!-- Done by referencing "hero-card" in Home_Front_Card.js-->
+            </div>
+            <!-- View All Trips Link -->
+            <div class="view-all-link">
+                <a href="#" class="link-btn">
+                    View all trips
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="modal" id="add-trip-modal">
+                <!-- Form for adding new itinerary will be injected here -->
+            </div>
+            <div id="invitationsModal" class="modal" style="display:none;">
+                <!-- Modal for viewing list of invitations will be injected here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- CALL SCRIPT -->
+    <!-- Initialise Firestore database -->
+    <script src="Common_script/init_firebase.js"></script>
+    <!-- Inject Common Layout -->
+    <script src="Common_script/Inject_Layout.js"></script>
+    <!-- Utilities Script -->
+    <script src="home_script/Home_Utilities.js"></script>
+    <!-- Inject Front Cards -->
+    <script src="home_script/Home_Front_Card.js"></script>
+    <!-- Inject Back Layout -->
+    <script src="home_script/Home_Back_Layout.js"></script>
+    <!-- Handle Clicking of New Trip Button --> 
+    <script src="home_script/Add_Trip.js"></script>
+    <!-- Handle Clicking of Edit Trip Button --> 
+    <script src="home_script/All_Edit_Btn.js"></script>
+    <!-- Handle Clicking of Delete Trip Button --> 
+    <script src="home_script/All_Delete_Btn.js"></script>
+    <!-- Handle Clicking of Add Collaborator + Send Button --> 
+    <script src="home_script/AddCollaborators.js"></script>
+    <!-- Handle Clicking of Invitations Button --> 
+    <script src="home_script/View_Invites.js"></script>
+</body>
