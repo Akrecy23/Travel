@@ -183,9 +183,23 @@ document.addEventListener("CreateHomeBackLayout", () => {
       deleteTrip(yearId, country, groupId, tripId, card);
     });
   });
+  // For clicking on Add Collaborators Button
+  heroCardContainer.querySelectorAll(".collaborators-btn").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      const card = btn.closest(".trip-card");
+      const yearId = card.dataset.year;
+      const country = card.dataset.country;
+      const groupId = card.dataset.group;
+      const tripId = card.dataset.trip;
+      // Call your add collaborators function (defined elsewhere)
+      addCollaborators(yearId, country, groupId, tripId, card);
+    });
+  });
 
   // Dispatch event listener to signal layout ready
   document.dispatchEvent(new Event("HomeBackLayoutReady"));
 });
+
 
 
