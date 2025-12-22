@@ -1,0 +1,281 @@
+document.addEventListener("BookingsRendered", e => {
+  const currentUserId = window.CURRENT_UID;
+  if (!currentUserId) {
+    alert("You must be logged in to add a trip.");
+    return;
+  }
+
+  const { tabName, tripId } = e.detail;
+  const modalContent = document.getElementById("modalContent");
+
+  modalContent.querySelectorAll(".booking-card").forEach(card => {
+    const editBtn = card.querySelector(".edit-btn");
+    if (!editBtn) return;
+    editBtn.addEventListener("click", () => {
+      const col = card.dataset.collection; // "Flight", "Stay", "Other Bookings"
+      const docId = card.dataset.docId;
+
+      if (col === "Flight") {
+        // Replace Airline, FlightNo, Date, BookingRef with inputs
+        const airlineEl = card.querySelector(".info-item:nth-child(1) .info-value");
+        const flightNoEl = card.querySelector(".info-item:nth-child(2) .info-value");
+        const dateEl = card.querySelector(".info-item:nth-child(3) .info-value");
+        const refEl = card.querySelector(".info-item:nth-child(4) .info-value");
+        const departTimeEl = card.querySelector(".flight-point:first-child .flight-time");
+        const departAirportEl = card.querySelector(".flight-point:first-child .flight-airport");
+        const arriveTimeEl = card.querySelector(".flight-point:last-child .flight-time");
+        const arriveAirportEl = card.querySelector(".flight-point:last-child .flight-airport");
+        const titleEl = card.querySelector(".card-title"); // shows FromCountry → ToCountry
+        const statusEl = card.querySelector(".badge"); 
+
+        const originalAirline = airlineEl.textContent;
+        const originalFlightNo = flightNoEl.textContent;
+        const originalDate = dateEl.textContent;
+        const originalRef = refEl.textContent;
+        const originalDepartTime = departTimeEl.textContent;
+        const originalDepartAirport = departAirportEl.textContent;
+        const originalArriveTime = arriveTimeEl.textContent;
+        const originalArriveAirport = arriveAirportEl.textContent;
+        const [originalFromCountry, originalToCountry] = titleEl.textContent.split("→").map(s => s.trim());
+        const originalStatus = statusEl.textContent.trim();
+            
+        airlineEl.innerHTML = `<input type="text" class="edit-airline" value="${originalAirline}">`;
+        flightNoEl.innerHTML = `<input type="text" class="edit-flightno" value="${originalFlightNo}">`;
+        dateEl.innerHTML = `<input type="date" class="edit-date" value="${toDateInputValue(originalDate)}">`;
+        refEl.innerHTML = `<input type="text" class="edit-ref" value="${originalRef}">`;
+        departTimeEl.innerHTML = `<input type="time" class="edit-depart-time" value="${toTimeInputValue(originalDepartTime)}">`;
+        departAirportEl.innerHTML = `<input type="text" class="edit-depart-airport" value="${originalDepartAirport}">`;
+        arriveTimeEl.innerHTML = `<input type="time" class="edit-arrive-time" value="${toTimeInputValue(originalArriveTime)}">`;
+        arriveAirportEl.innerHTML = `<input type="text" class="edit-arrive-airport" value="${originalArriveAirport}">`;
+        titleEl.innerHTML = `
+          <input type="text" class="edit-from-country" value="${originalFromCountry}">
+          →
+          <input type="text" class="edit-to-country" value="${originalToCountry}">
+        `;
+        statusEl.innerHTML = `
+          <select class="edit-status">
+            <option value="Outbound" ${originalStatus === "Outbound" ? "selected" : ""}>Outbound</option>
+            <option value="Return" ${originalStatus === "Return" ? "selected" : ""}>Return</option>
+          </select>
+          `;
+
+        // Add ✔ ✖ buttons
+        addEditActions(card, async () => {
+          await window.db
+            .collection("Trips").doc(tripId)
+            .collection(col).doc(docId)
+            .update({
+              Airline: card.querySelector(".edit-airline").value.trim(),
+              FlightNo: card.querySelector(".edit-flightno").value.trim(),
+              Date: formatDate(card.querySelector(".edit-date").value.trim()),
+              BookingRef: card.querySelector(".edit-ref").value.trim(),
+              DepartureTime: formatTimeInput(card.querySelector(".edit-depart-time").value.trim()),
+              FromAirport: card.querySelector(".edit-depart-airport").value.trim(),
+              ArrivalTime: formatTimeInput(card.querySelector(".edit-arrive-time").value.trim()),
+              ToAirport: card.querySelector(".edit-arrive-airport").value.trim(),
+              FromCountry: card.querySelector(".edit-from-country").value.trim(),
+              ToCountry: card.querySelector(".edit-to-country").value.trim(),
+              Type: card.querySelector(".edit-status").value
+            });
+            renderTab("Flights", tripId);
+          },[
+            airlineEl, flightNoEl, dateEl, refEl,
+            departTimeEl, departAirportEl,
+            arriveTimeEl, arriveAirportEl,
+            statusEl
+          ],[
+            originalAirline, originalFlightNo, originalDate, originalRef,
+            originalDepartTime, originalDepartAirport,
+            originalArriveTime, originalArriveAirport,
+            originalStatus
+          ],
+          () => {
+            titleEl.innerHTML = `${originalFromCountry} → ${originalToCountry}`;
+          }, col);
+        } else if (col === "Stay") {
+          const typeEl = card.querySelector(".badge-stay");
+          const nameEl = card.querySelector(".card-title");
+          const inDateEl = card.querySelector(".stay-checkin .stay-date");
+          const inTimeEl = card.querySelector(".stay-checkin .stay-time");
+          const outDateEl = card.querySelector(".stay-checkout .stay-date");
+          const outTimeEl = card.querySelector(".stay-checkout .stay-time");
+          const addressEl = card.querySelector(".info-item.full-width .info-value");
+          const roomEl = card.querySelector(".info-item:nth-child(2) .info-value");
+          const bedEl = card.querySelector(".info-item:nth-child(3) .info-value");
+          const refEl = card.querySelector(".info-item.full-width:last-child .info-value");
+
+          // Store originals
+          const originalType = typeEl.textContent.replace("🏨", "").trim();
+          const originalName = nameEl.textContent;
+          const originalInDate = inDateEl.textContent;
+          const originalInTime = inTimeEl.textContent;
+          const originalOutDate = outDateEl.textContent;
+          const originalOutTime = outTimeEl.textContent;
+          const originalAddress = addressEl.textContent;
+          const originalRoom = roomEl.textContent;
+          const originalBed = bedEl.textContent;
+          const originalRef = refEl.textContent;
+
+          // Replace with inputs
+          typeEl.innerHTML = `
+            🏨 <select class="edit-type">
+            <option value="Hotel" ${originalType === "Hotel" ? "selected" : ""}>Hotel</option>
+            <option value="Hostel" ${originalType === "Hostel" ? "selected" : ""}>Hostel</option>
+            <option value="Airbnb" ${originalType === "Airbnb" ? "selected" : ""}>Airbnb</option>
+            </select>
+          `;
+          nameEl.innerHTML = `<input type="text" class="edit-name" value="${originalName}">`;
+          inDateEl.innerHTML = `<input type="date" class="edit-inDate" value="${toDateInputValue(originalInDate)}">`;
+          inTimeEl.innerHTML = `<input type="time" class="edit-inTime" value="${toTimeInputValue(originalInTime)}">`;
+          outDateEl.innerHTML = `<input type="date" class="edit-outDate" value="${toDateInputValue(originalOutDate)}">`;
+          outTimeEl.innerHTML = `<input type="time" class="edit-outTime" value="${toTimeInputValue(originalOutTime)}">`;
+          addressEl.innerHTML = `<input type="text" class="edit-address" value="${originalAddress}">`;
+          roomEl.innerHTML = `<input type="text" class="edit-room" value="${originalRoom}">`;
+          bedEl.innerHTML = `<input type="number" class="edit-bed" value="${originalBed}">`;
+          refEl.innerHTML = `<input type="text" class="edit-ref" value="${originalRef}">`;
+
+          // Add ✔ ✖ buttons
+          addEditActions(card, async () => {
+            await window.db
+            .collection("Trips").doc(tripId)
+            .collection(col).doc(docId)
+            .update({
+                Type: card.querySelector(".edit-type").value,
+                Name: card.querySelector(".edit-name").value.trim(),
+                inDate: formatDate(card.querySelector(".edit-inDate").value),
+                inTime: formatTimeInput(card.querySelector(".edit-inTime").value.trim()),
+                outDate: formatDate(card.querySelector(".edit-outDate").value),
+                outTime: formatTimeInput(card.querySelector(".edit-outTime").value.trim()),
+                Address: card.querySelector(".edit-address").value.trim(),
+                RoomNo: card.querySelector(".edit-room").value.trim(),
+                BedNo: card.querySelector(".edit-bed").value,
+                BookingRef: card.querySelector(".edit-ref").value.trim()
+              });
+            renderTab("Stay", tripId);
+          }, [
+              typeEl, nameEl, inDateEl, inTimeEl, outDateEl, outTimeEl,
+              addressEl, roomEl, bedEl, refEl
+          ],[
+              originalType, originalName, originalInDate, originalInTime,
+              originalOutDate, originalOutTime, originalAddress,
+              originalRoom, originalBed, originalRef
+          ],
+            null,
+            col
+          );
+        } else {
+          const typeEl = card.querySelector(".badge-other");
+          const nameEl = card.querySelector(".card-title");
+          const dateEl = card.querySelector(".info-item:nth-child(1) .info-value");
+          const timeEl = card.querySelector(".info-item:nth-child(2) .info-value");
+          const refEl = card.querySelector(".info-item:nth-child(3) .info-value");
+          const notesEl = card.querySelector(".info-item:nth-child(4) .info-value");
+          // Store originals
+          const originalType = typeEl.textContent.trim();
+          const originalName = nameEl.textContent;
+          const originalDate = dateEl.textContent;
+          const originalTime = timeEl.textContent;
+          const originalRef = refEl.textContent;
+          const originalNotes = notesEl.textContent;
+          // Replace with inputs
+          typeEl.innerHTML = `
+            <select class="edit-type">
+            <option value="Ticket" ${originalType.includes("Ticket") ? "selected" : ""}>Ticket</option>
+            <option value="Tour" ${originalType.includes("Tour") ? "selected" : ""}>Tour</option>
+            <option value="Activity" ${originalType.includes("Activity") ? "selected" : ""}>Activity</option>
+            </select>
+          `;
+          nameEl.innerHTML = `<input type="text" class="edit-name" value="${originalName}">`;
+          dateEl.innerHTML = `<input type="date" class="edit-date" value="${toDateInputValue(originalDate)}">`;
+          timeEl.innerHTML = `<input type="text" class="edit-time-others" value="${originalTime}">`;
+          refEl.innerHTML = `<input type="text" class="edit-ref" value="${originalRef}">`;
+          notesEl.innerHTML = `<input type="text" class="edit-notes" value="${originalNotes}">`;
+          // Add ✔ ✖ buttons
+          addEditActions(card, async () => {
+            await window.db
+            .collection("Trips").doc(tripId)
+            .collection(col).doc(docId)
+            .update({
+                Type: card.querySelector(".edit-type").value,
+                Name: card.querySelector(".edit-name").value.trim(),
+                Date: formatDate(card.querySelector(".edit-date").value),
+                Time: card.querySelector(".edit-time-others").value.trim(),
+                BookingRef: card.querySelector(".edit-ref").value.trim(),
+                Remarks: card.querySelector(".edit-notes").value.trim()
+              });
+            renderTab("Others", tripId);
+            },[
+              typeEl, nameEl, dateEl, timeEl, refEl, notesEl
+            ],[
+              originalType, originalName, originalDate, originalTime, originalRef, originalNotes
+            ],
+            null,
+            col
+          );
+        }  
+    });
+  });
+})
+
+// Adds ✔ / ✖ actions to a card and wires cancel/save
+function addEditActions(card, onSave, elements, originals, specialRestore, col) {
+  // Prevent duplicate bars
+  if (card.querySelector(".edit-actions")) return;
+
+  // Mark editing state (optional)
+  card.classList.add("editing");
+
+  // Hide original footer buttons during editing
+  const actionsContainer = card.querySelector(".card-actions");
+  if (actionsContainer) actionsContainer.style.display = "none";
+
+  // Add ✔ ✖ action bar
+  const editActions = document.createElement("div");
+  editActions.className = "edit-actions";
+  editActions.innerHTML = `
+    <button class="tick-btn">✔</button>
+    <button class="cancel-btn">✖</button>
+  `;
+  actionsContainer.insertAdjacentElement("afterend", editActions);
+
+  // Cancel → restore original card by re-rendering the tab
+  editActions.querySelector(".cancel-btn").addEventListener("click", () => {
+    elements.forEach((el, i) => {
+      el.textContent = originals[i];
+    });
+
+    // Handle any special cases (like title with arrow, or badge with emoji)
+    if (typeof specialRestore === "function") {
+      specialRestore();
+    }
+
+    editActions.remove();
+    if (actionsContainer) actionsContainer.style.display = "flex";
+    card.classList.remove("editing");
+  });
+
+  // Tick: call the provided async onSave handler
+  editActions.querySelector(".tick-btn").addEventListener("click", async () => {
+    // Only run time validation for Others
+    if (col === "Other Bookings") {
+      const timeInput = card.querySelector(".edit-time-others");
+      if (timeInput) {
+        const isValid = validateOtherBookingTime(timeInput, originals[3]);
+        if (!isValid) {
+          return; // stop save if invalid
+        }
+      }
+    }
+
+    try {
+      await onSave();
+      // ✅ Only remove if save succeeded
+      editActions.remove();
+      if (actionsContainer) actionsContainer.style.display = "flex";
+      card.classList.remove("editing");
+    } catch (err) {
+      console.error(err);
+      // keep editing state so user can fix
+    }
+  });
+}

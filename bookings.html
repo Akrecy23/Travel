@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- TITLE OF WEBPAGE-->
+    <title>Bookings Page</title>
+    <!-- ALL THE CSS FILES-->
+    <link rel="stylesheet" href="Common_script/CL_style.css">
+    <link rel="stylesheet" href="Common_script/CL_Mobile_style.css">
+    <!-- ITINERARY CSS FILES-->
+    <link rel="stylesheet" href="bookings_script/Bookings_style.css">
+    
+    <!-- INCLUDE FIREBASE SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="demo-card">
+            <!-- INJECT HOME LAYOUT W REF TO CLASS-->
+            <!-- Done by referencing "demo-card" in Home_FrontLayout.js-->
+        </div>
+        <!-- CONTENT AREA -->
+        <div class="content-area">
+            <!-- MODAL -->
+            <div id="filterModal" class="modal-overlay hidden">
+                <!-- SHOW LIST OF FILTERS -->
+            </div>
+             <!-- ITINERARY GRID(CARDS) -->
+            <div class="scroll-wrapper">
+                <div class="bookings-grid" id="bookingsGrid">
+                    <!-- Itinerary cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+        <!-- MODAL -->
+        <div id="bookingsModal">
+            <!-- SHOW BOOKINGS DETAILS -->
+        </div>
+    </div>
+    
+    <!-- CALL SCRIPT -->
+    <!-- Initialise Firestore database -->
+    <script src="Common_script/init_firebase.js"></script>
+    <!-- Inject Home Front Layout -->
+    <script src="Common_script/Inject_Layout.js"></script>
+    <!-- Populate Year Drop-down Options -->
+    <script src="Common_script/Year_Dropdown.js"></script>
+    <!-- Handle clicking of Filter icon -->
+    <script src="Common_script/Filter_Button.js"></script>
+    <!-- Handle clicking of Search icon -->
+    <script src="Common_script/Search_Toggle.js"></script>
+    <!-- Utilities (Helper Function) File -->
+    <script src="bookings_script/Utilities.js"></script>
+    <!-- Display Bookings card -->
+    <script src="bookings_script/BookingsDetails_Card.js"></script>
+    <!-- Show in-depth details of each card -->
+    <script src="bookings_script/ViewBooking_Button.js"></script>
+    <script src="bookings_script/ViewBooking_Button_P2.js"></script>
+    <!-- Handle clicking of Edit button -->
+    <script src="bookings_script/All_Edit_Btn.js"></script>
+    <!-- Handle clicking of Add New Booking button -->
+    <script src="bookings_script/Add_Booking.js"></script>
+</body>
