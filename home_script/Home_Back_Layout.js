@@ -65,18 +65,15 @@ document.addEventListener("CreateHomeBackLayout", () => {
             <!-- Flex container for title + collaborators button -->
             <div class="trip-header">
               <h4 class="trip-name">${card.title}</h4>
-              <button class="collaborators-btn" title="Add Collaborators">+ Add Collaborators</button>
+              <button class="view-collaborators-btn" data-trip-id="${card.tripId}">
+                View Collaborators
+              </button>
             </div>
             <div class="trip-details">
               <div class="trip-detail">${card.location}</div>
               <div class="trip-detail">${card.dateRange}</div>
             </div>
             <div class="trip-countdown">${countdown}</div>
-          </div>
-          <div class="collaborators-actions">
-            <button class="view-collaborators-btn" data-trip-id="${card.tripId}">
-              View Collaborators
-            </button>
           </div>
         </div>
       `;
@@ -198,6 +195,7 @@ document.addEventListener("CreateHomeBackLayout", () => {
   // Dispatch event listener to signal layout ready
   document.dispatchEvent(new Event("HomeBackLayoutReady"));
 });
+
 
 
 
