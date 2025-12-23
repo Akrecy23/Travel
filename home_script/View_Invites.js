@@ -15,6 +15,19 @@ async function openInvitationsModal() {
   `;
   modal.style.display = "flex";
 
+  // Attach close button listener immediately after injection
+  const closeBtn = modal.querySelector("#closeInvitations");
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  // Also allow clicking outside modal-box to close
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
   const content = document.getElementById("invitationsContent");
 
   try {
@@ -118,12 +131,4 @@ async function openInvitationsModal() {
     console.error("Error loading invitations:", err);
     content.innerHTML = "<p>Something went wrong while loading invitations.</p>";
   }
-
-  // Close modal
-  document.getElementById("closeInvitations").onclick = () => {
-    modal.style.display = "none";
-  };
-  modal.onclick = (e) => {
-    if (e.target === modal) modal.style.display = "none";
-  };
 }
