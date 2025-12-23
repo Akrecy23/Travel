@@ -1,7 +1,7 @@
 // THIS SCRIPT CONTAINS CODE FOR FILTERING LOGIC 
 
 // =========== CREATE FILTER SECTION WHEN LAYOUT IS READY =============
-document.addEventListener("HomeFrontLayoutReady", () => {
+document.addEventListener("dropdownReady", () => {
   // Reference to dom elements
   const filterModal = document.getElementById("filterModal");
   if (!filterModal) return;
@@ -228,4 +228,5 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
