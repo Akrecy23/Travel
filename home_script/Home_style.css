@@ -321,7 +321,7 @@ font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
-.collaborators-btn {
+.view-collaborators-btn {
   background: #007bff;
   color: #fff;
   border: none;
@@ -331,7 +331,7 @@ font-size: 1.5rem;
   font-size: 0.85rem;
 }
 
-.collaborators-btn:hover {
+.view-collaborators-btn:hover {
   background: #0056b3;
 }
 .trip-details {
@@ -493,7 +493,7 @@ font-size: 1.5rem;
 
 /* ========= COLLABORATORS FORM ====== */
 /* ===== Collaborator Modal ===== */
-#collaboratorsModal.modal {
+#collaboratorsModal {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -600,4 +600,5 @@ font-size: 1.5rem;
 
 .collaborator-form button:hover {
   background: #2980b9;
+
 }
