@@ -1,7 +1,7 @@
 // openExpensesModal.js
 // HANDLES THE EXPENSES MODAL UI + TAB SWITCHING
 
-async function openExpensesModal(currentUserId, yearId, countryId, groupId, tripId) {
+async function openExpensesModal(tripId) {
   const modal = document.getElementById("expensesModal");
 
   // Fetch trip doc to get title
@@ -82,3 +82,4 @@ async function openExpensesModal(currentUserId, yearId, countryId, groupId, trip
   };
 
 }
+
