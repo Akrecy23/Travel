@@ -13,7 +13,7 @@ document.addEventListener("dropdownReady", () => {
   const selectedCountries = window.selectedCountry  || "all";
   const selectedGroups = window.selectedGroup || "all";
   if (typeof fetchTripsAndRenderTabs === "function") {
-    fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
+    fetchTripsAndRenderTabs(selectedYear, selectedCountries, selectedGroups);
   }
 });
 
@@ -23,7 +23,7 @@ document.addEventListener("yearChanged", () => {
   const selectedCountries = window.selectedCountry  || "all";
   const selectedGroups = window.selectedGroup || "all";
   if (typeof fetchTripsAndRenderTabs === "function") {
-    fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
+    fetchTripsAndRenderTabs(selectedYear, selectedCountries, selectedGroups);
   }
 });
 
@@ -32,11 +32,11 @@ document.addEventListener("filtersApplied", (e) => {
   const selectedYear = window.displayYear || new Date().getFullYear().toString();
   const selectedCountries = window.selectedCountry  || "all";
   const selectedGroups = window.selectedGroup || "all";
-  fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
+  fetchTripsAndRenderTabs(selectedYear, selectedCountries, selectedGroups);
 });
 
 // DISPLAY TRIPS ACCORDING TO SELECTED YEAR, COUNTRY & GROUP
-async function fetchTripsAndRenderTabs(yearId, countryFilter, groupFilter) {
+async function fetchTripsAndRenderTabs(yearId, countryFilters, groupFilters) {
   const currentUserId = window.CURRENT_UID;
   if (!currentUserId) {
     alert("You must be logged in to add a trip.");
@@ -68,8 +68,8 @@ async function fetchTripsAndRenderTabs(yearId, countryFilter, groupFilter) {
     const tripId = tripDoc.id;
     const tripData = tripDoc.data();
     // Apply filters
-    if (countryFilter !== "all" && tripData.country !== countryFilter) continue;
-    if (groupFilter !== "all" && tripData.group !== groupFilter) continue;
+    if (!countryFilters.includes("all") && !countryFilters.includes(tripData.country)) continue;
+    if (!groupFilters.includes("all") && !groupFilters.includes(tripData.group)) continue;
     // Get date range + status dynamically
     const { dateRange, status, duration } = await getTripDateInfo(
       tripData.tripStartDate,
@@ -195,5 +195,6 @@ function parseDate(dateStr) {
   return new Date(cleaned);
 
 }
+
 
 
