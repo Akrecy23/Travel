@@ -34,8 +34,8 @@ async function openExpensesModal(currentUserId, yearId, countryId, groupId, trip
 
   // Sort docs so PreTrip comes first, then Day 1, Day 2, etc.
   const sortedExpenses = expensesSnap.docs.sort((a, b) => {
-    if (a.id === "PreTrip") return -1;
-    if (b.id === "PreTrip") return 1;
+    if (a.id === "Pre-Trip") return -1;
+    if (b.id === "Pre-Trip") return 1;
     const numA = parseInt(a.id.replace("Day", "")) || 0;
     const numB = parseInt(b.id.replace("Day", "")) || 0;
     return numA - numB;
@@ -80,4 +80,5 @@ async function openExpensesModal(currentUserId, yearId, countryId, groupId, trip
   modal.onclick = (e) => {
     if (e.target === modal) closeModal();
   };
+
 }
