@@ -4,7 +4,7 @@
 // RUN FOLLOWING CODE WHEN THERE'S A SEARCH INPUT
 document.addEventListener("SearchInputFilter", (e) => {
   const searchTerm = e.detail.searchInput;
-  filterTrips(searchTerm, ".itinerary-card", ".trip-title");
+  filterTrips(searchTerm, ".itinerary-card", ".trip-id");
 });
 
 // RUN FOLLOWING CODE WHEN SELECTED LOCATION CHANGED
@@ -185,4 +185,5 @@ function parseDate(dateStr) {
   // Remove weekday if present: "Thursday, Mar 12, 2026" → "Mar 12, 2026"
   const cleaned = dateStr.replace(/^[A-Za-z]+,\s*/, "");
   return new Date(cleaned);
+
 }
