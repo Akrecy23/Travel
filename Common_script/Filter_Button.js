@@ -96,10 +96,12 @@ function initialiseFilters() {
   // ======= POPULATE COUNTRY & GROUP DATA FROM FIRESTORE ========
   // Navigate to Firestore "Trips"
   const tripsRef = window.db.collection("Trips");
+  // Change year type from string to number
+  const yearNum = parseInt(window.displayYear, 10);
   // Query Owned/Collaborated Trips
-  const ownedQuery = tripsRef.where("year", "==", window.displayYear)
+  const ownedQuery = tripsRef.where("year", "==", yearNum)
                              .where("ownerUid", "==", currentUserId);
-  const collabQuery = tripsRef.where("year", "==", window.displayYear)
+  const collabQuery = tripsRef.where("year", "==", yearNum)
                               .where("collaborators", "array-contains", currentUserId);
   Promise.all([ownedQuery.get(), collabQuery.get()])
     .then(([ownedSnap, collabSnap]) => {
@@ -121,6 +123,10 @@ function initialiseFilters() {
         btn.textContent = countryName;
         // Attach listener to country options
         btn.addEventListener("click", () => {
+          if (btn.classList.contains("active")) {
+            btn.classList.remove("active");
+            return;
+          }
           countryOptions.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
           btn.classList.add("active");
         });
@@ -134,6 +140,10 @@ function initialiseFilters() {
         gbtn.textContent = groupName;
         // Attach listener to group options
         gbtn.addEventListener("click", () => {
+          if (gbtn.classList.contains("active")) {
+            gbtn.classList.remove("active");
+            return;
+          }
           groupOptions.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
           gbtn.classList.add("active");
         });
@@ -164,4 +174,5 @@ function initialiseFilters() {
   };
   // Fire event when filters modal is ready
   document.dispatchEvent(new CustomEvent("filtersReady", {}));
+
 }
