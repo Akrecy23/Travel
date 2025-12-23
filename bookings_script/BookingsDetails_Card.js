@@ -1,6 +1,7 @@
 // THIS FILE CONTAINS CODE FOR CREATING TRIPS CARDS
 // INCLUDE FORMATTING OF FRONT SIDE OF CARD (Brief details)
 
+// ========== EVENT LISTENERS =================
 // RUN FOLLOWING CODE WHEN THERE'S A SEARCH INPUT
 document.addEventListener("SearchInputFilter", (e) => {
   const searchTerm = e.detail.searchInput;
@@ -8,7 +9,7 @@ document.addEventListener("SearchInputFilter", (e) => {
 });
 
 // RUN FOLLOWING CODE WHEN SELECTED LOCATION CHANGED
-document.addEventListener("filtersReady", () => {
+document.addEventListener("dropdownReady", () => {
   const selectedYear = window.displayYear || new Date().getFullYear().toString();
   const selectedCountry = window.selectedCountry  || "all";
   const selectedGroup = window.selectedGroup || "all";
@@ -187,3 +188,4 @@ function parseDate(dateStr) {
   return new Date(cleaned);
 
 }
+
