@@ -10,8 +10,8 @@ document.addEventListener("SearchInputFilter", (e) => {
 // RUN FOLLOWING CODE WHEN SELECTED LOCATION CHANGED
 document.addEventListener("dropdownReady", () => {
   const selectedYear = window.displayYear || new Date().getFullYear().toString();
-  const selectedCountry = window.selectedCountry  || "all";
-  const selectedGroup = window.selectedGroup || "all";
+  const selectedCountries = window.selectedCountry  || "all";
+  const selectedGroups = window.selectedGroup || "all";
   if (typeof fetchTripsAndRenderTabs === "function") {
     fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
   }
@@ -20,8 +20,8 @@ document.addEventListener("dropdownReady", () => {
 // RUN FOLLOWING CODE WHEN YEAR CHANGED
 document.addEventListener("yearChanged", () => {
   const selectedYear = window.displayYear || new Date().getFullYear().toString();
-  const selectedCountry = window.selectedCountry  || "all";
-  const selectedGroup = window.selectedGroup || "all";
+  const selectedCountries = window.selectedCountry  || "all";
+  const selectedGroups = window.selectedGroup || "all";
   if (typeof fetchTripsAndRenderTabs === "function") {
     fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
   }
@@ -30,8 +30,8 @@ document.addEventListener("yearChanged", () => {
 // RUN FOLLOWING CODE WHEN FILTERS APPLIED CHANGED
 document.addEventListener("filtersApplied", (e) => {
   const selectedYear = window.displayYear || new Date().getFullYear().toString();
-  const selectedCountry = window.selectedCountry  || "all";
-  const selectedGroup = window.selectedGroup || "all";
+  const selectedCountries = window.selectedCountry  || "all";
+  const selectedGroups = window.selectedGroup || "all";
   fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
 });
 
@@ -195,4 +195,5 @@ function parseDate(dateStr) {
   return new Date(cleaned);
 
 }
+
 
