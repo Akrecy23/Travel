@@ -375,6 +375,7 @@ gap: 0.5rem;
   border-radius: 20px;
   cursor: pointer;
   font-size: 0.75rem;
+  display: inline-flex;
 }
 
 .filter-pill.active {
@@ -423,4 +424,5 @@ gap: 0.5rem;
 @keyframes slideUp {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
+
 }
