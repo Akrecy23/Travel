@@ -43,6 +43,9 @@ document.addEventListener("HomeFrontLayoutReady", () => {
     if (filterBtn) {
       filterBtn.addEventListener("click", () => {
       filterModal.classList.toggle("visible");
+      if (filterModal.classList.contains("visible")) {
+        initialiseFilters();   // ✅ refresh pills on open
+      }
     });
   }
   // Close modal when clicking outside panel
@@ -51,8 +54,6 @@ document.addEventListener("HomeFrontLayoutReady", () => {
       filterModal.classList.remove("visible");
     }
   });
-  // Initialise filters
-  initialiseFilters();
 });
 
 // =========== CREATE FILTER SECTION WHEN YEAR IS CHANGED =============
@@ -123,15 +124,16 @@ function initialiseFilters() {
         btn.textContent = countryName;
         // Attach listener to country options
         btn.addEventListener("click", () => {
+          // Remove highlight if user click to "clear"
           if (btn.classList.contains("active")) {
             btn.classList.remove("active");
             return;
           }
-          countryOptions.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
           btn.classList.add("active");
         });
         countryOptions.appendChild(btn);
       });
+      setupShowMore(countryOptions.closest(".filter-section"));
 
       // Populate group pills
       groups.forEach(groupName => {
@@ -140,39 +142,90 @@ function initialiseFilters() {
         gbtn.textContent = groupName;
         // Attach listener to group options
         gbtn.addEventListener("click", () => {
+          // Remove highlight if user click to "clear"
           if (gbtn.classList.contains("active")) {
             gbtn.classList.remove("active");
             return;
           }
-          groupOptions.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
           gbtn.classList.add("active");
         });
         groupOptions.appendChild(gbtn);
       });
+      setupShowMore(groupOptions.closest(".filter-section"));
     });
 
   // Reference Reset & Apply dom elements
   const resetBtn = filterModal.querySelector("#resetFilters");
   const applyBtn = filterModal.querySelector("#applyFilters");
+  let resetPending = false;
 
   // ========= ATTACH RESET LOGIC ========
   resetBtn.onclick = () => {
+    resetPending = true;
     // Clear all filters
     countryOptions.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
     groupOptions.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
   };
   // ========= ATTACH APPLY LOGIC ========
   applyBtn.onclick = () => {
-    // Store selected options
-    const activeCountry = countryOptions.querySelector(".filter-pill.active");
-    const activeGroup = groupOptions.querySelector(".filter-pill.active");
-    window.selectedCountry = activeCountry ? activeCountry.textContent : "all";
-    window.selectedGroup = activeGroup ? activeGroup.textContent : "all";
+    if (resetPending){
+      window.selectedCountry = "all";
+      window.selectedGroup = "all";
+    } else{
+      // Store selected options
+      const activeCountry = countryOptions.querySelector(".filter-pill.active");
+      const activeGroup = groupOptions.querySelector(".filter-pill.active");
+      window.selectedCountry = activeCountry ? activeCountry.textContent : "all";
+      window.selectedGroup = activeGroup ? activeGroup.textContent : "all";
+    }
     // Fire event when filters has been applied
     document.dispatchEvent(new CustomEvent("filtersApplied", {}));
     filterModal.classList.remove("visible");
   };
-  // Fire event when filters modal is ready
-  document.dispatchEvent(new CustomEvent("filtersReady", {}));
-
 }
+
+// ================= SHOW MORE / SHOW LESS HANDLER =================
+const BATCH_SIZE = 2; // or any number you want
+
+function setupShowMore(sectionElement) {
+  const pills = [...sectionElement.querySelectorAll(".filter-pill")];
+  const showMoreBtn = sectionElement.querySelector(".show-more");
+
+  if (!showMoreBtn || pills.length <= BATCH_SIZE) {
+    showMoreBtn.style.display = "none";
+    return;
+  }
+
+  let visibleCount = BATCH_SIZE;
+
+  // Pre-hide pills to prevent layout shift
+  pills.forEach((pill, index) => {
+    pill.style.visibility = index < visibleCount ? "visible" : "hidden";
+  });
+
+  requestAnimationFrame(() => {
+    pills.forEach((pill, index) => {
+      pill.style.visibility = "visible";
+      pill.style.display = index < visibleCount ? "inline-flex" : "none";
+    });
+  });
+
+  function updateView() {
+    pills.forEach((pill, index) => {
+      pill.style.display = index < visibleCount ? "inline-flex" : "none";
+    });
+
+    showMoreBtn.textContent =
+      visibleCount >= pills.length ? "Show less" : "Show more";
+
+    showMoreBtn.style.display =
+      pills.length > BATCH_SIZE ? "block" : "none";
+  }
+
+  showMoreBtn.onclick = () => {
+    visibleCount =
+      visibleCount >= pills.length ? BATCH_SIZE : visibleCount + BATCH_SIZE;
+    updateView();
+  };
+}
+
