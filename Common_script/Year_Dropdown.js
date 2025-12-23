@@ -40,6 +40,7 @@ document.addEventListener("HomeFrontLayoutReady", () => {
       yearMenu.style.display = "none";
     }
   });
+  document.dispatchEvent(new Event("dropdownReady"));
 });
 
 // ======= LOAD OPTIONS FROM FIRESTORE DATABASE ========
@@ -100,4 +101,5 @@ function loadYear() {
     .catch(error => {
       console.error("Error fetching years:", error);
     });
+
 }
