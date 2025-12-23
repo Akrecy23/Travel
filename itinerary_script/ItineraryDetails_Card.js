@@ -10,33 +10,33 @@ document.addEventListener("SearchInputFilter", (e) => {
 // RUN FOLLOWING CODE WHEN SELECTED LOCATION CHANGED
 document.addEventListener("dropdownReady", () => {
   const selectedYear = window.displayYear || new Date().getFullYear().toString();
-  const selectedCountry = window.selectedCountry  || "all";
-  const selectedGroup = window.selectedGroup || "all";
+  const selectedCountries = window.selectedCountry  || "all";
+  const selectedGroups = window.selectedGroup || "all";
   if (typeof fetchTripsAndRenderTabs === "function") {
-    fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
+    fetchTripsAndRenderTabs(selectedYear, selectedCountries, selectedGroups);
   }
 });
 
 // RUN FOLLOWING CODE WHEN YEAR CHANGED
 document.addEventListener("yearChanged", () => {
   const selectedYear = window.displayYear || new Date().getFullYear().toString();
-  const selectedCountry = window.selectedCountry  || "all";
-  const selectedGroup = window.selectedGroup || "all";
+  const selectedCountries = window.selectedCountry  || "all";
+  const selectedGroups = window.selectedGroup || "all";
   if (typeof fetchTripsAndRenderTabs === "function") {
-    fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
+    fetchTripsAndRenderTabs(selectedYear, selectedCountries, selectedGroups);
   }
 });
 
 // RUN FOLLOWING CODE WHEN FILTERS APPLIED CHANGED
 document.addEventListener("filtersApplied", (e) => {
   const selectedYear = window.displayYear || new Date().getFullYear().toString();
-  const selectedCountry = window.selectedCountry  || "all";
-  const selectedGroup = window.selectedGroup || "all";
-  fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
+  const selectedCountries = window.selectedCountry  || "all";
+  const selectedGroups = window.selectedGroup || "all";
+  fetchTripsAndRenderTabs(selectedYear, selectedCountries, selectedGroups);
 });
 
 // DISPLAY TRIPS ACCORDING TO SELECTED YEAR, COUNTRY & GROUP
-async function fetchTripsAndRenderTabs(yearId, countryFilter, groupFilter) {
+async function fetchTripsAndRenderTabs(yearId, countryFilters, groupFilters) {
   const currentUserId = window.CURRENT_UID;
   if (!currentUserId) {
     alert("You must be logged in to add a trip.");
@@ -69,8 +69,9 @@ async function fetchTripsAndRenderTabs(yearId, countryFilter, groupFilter) {
     const tripData = tripDoc.data();
 
     // Apply filters
-    if (countryFilter !== "all" && tripData.country !== countryFilter) continue;
-    if (groupFilter !== "all" && tripData.group !== groupFilter) continue;
+    // ✅ Multi-select filters
+    if (!countryFilters.includes("all") && !countryFilters.includes(tripData.country)) continue;
+    if (!groupFilters.includes("all") && !groupFilters.includes(tripData.group)) continue;
 
     // Get date range + status dynamically
     const { dateRange, status, duration } = await getTripDateInfo(
@@ -197,4 +198,5 @@ function parseDate(dateStr) {
   return new Date(cleaned);
 
 }
+
 
