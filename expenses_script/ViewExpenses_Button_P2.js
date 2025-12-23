@@ -1,7 +1,7 @@
 // renderTab.js
 // HANDLES RENDERING OF A SINGLE EXPENSE TAB
 
-window.renderTab = async function (expenseId, currentUserId, yearId, countryId, groupId, tripId) {
+window.renderTab = async function (expenseId, tripId) {
   const modalSummary = document.getElementById("modalSummary");
   const modalContent = document.getElementById("modalContent");
 
@@ -156,4 +156,5 @@ window.renderTab = async function (expenseId, currentUserId, yearId, countryId, 
   newBtn.addEventListener("click", () => {
     openNewExpenseForm(expenseId, tripId);
   });
+
 };
