@@ -122,6 +122,9 @@ function initialiseFilters() {
         const btn = document.createElement("button");
         btn.className = "filter-pill";
         btn.textContent = countryName;
+        if (Array.isArray(window.selectedCountries) && window.selectedCountries.includes(countryName)) {
+          btn.classList.add("active");
+        }
         // Attach listener to country options
         btn.addEventListener("click", () => {
           // Remove highlight if user click to "clear"
@@ -140,6 +143,9 @@ function initialiseFilters() {
         const gbtn = document.createElement("button");
         gbtn.className = "filter-pill";
         gbtn.textContent = groupName;
+        if (Array.isArray(window.selectedGroups) && window.selectedGroups.includes(groupName)) {
+          gbtn.classList.add("active");
+        }
         // Attach listener to group options
         gbtn.addEventListener("click", () => {
           // Remove highlight if user click to "clear"
@@ -173,10 +179,10 @@ function initialiseFilters() {
       window.selectedGroup = "all";
     } else{
       // Store selected options
-      const activeCountry = countryOptions.querySelector(".filter-pill.active");
-      const activeGroup = groupOptions.querySelector(".filter-pill.active");
-      window.selectedCountry = activeCountry ? activeCountry.textContent : "all";
-      window.selectedGroup = activeGroup ? activeGroup.textContent : "all";
+      const activeCountries = [...countryOptions.querySelector(".filter-pill.active")];
+      const activeGroups = [...groupOptions.querySelector(".filter-pill.active")];
+      window.selectedCountries = activeCountries.length ? activeCountries.map(btn => btn.textContent) : ["all"];
+      window.selectedGroups = activeGroups.length ? activeGroups.map(btn => btn.textContent) : ["all"];
     }
     // Fire event when filters has been applied
     document.dispatchEvent(new CustomEvent("filtersApplied", {}));
@@ -228,5 +234,6 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
