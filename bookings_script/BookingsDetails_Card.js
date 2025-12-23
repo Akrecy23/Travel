@@ -11,29 +11,29 @@ document.addEventListener("SearchInputFilter", (e) => {
 // RUN FOLLOWING CODE WHEN SELECTED LOCATION CHANGED
 document.addEventListener("dropdownReady", () => {
   const selectedYear = window.displayYear || new Date().getFullYear().toString();
-  const selectedCountry = window.selectedCountries  || "all";
-  const selectedGroup = window.selectedGroups || "all";
+  const selectedCountries = window.selectedCountries  || "all";
+  const selectedGroups = window.selectedGroups || "all";
   if (typeof fetchTripsAndRenderTabs === "function") {
-    fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
+    fetchTripsAndRenderTabs(selectedYear, selectedCountries, selectedGroups);
   }
 });
 
 // RUN FOLLOWING CODE WHEN YEAR CHANGED
 document.addEventListener("yearChanged", () => {
   const selectedYear = window.displayYear || new Date().getFullYear().toString();
-  const selectedCountry = window.selectedCountries  || "all";
-  const selectedGroup = window.selectedGroups || "all";
+  const selectedCountries = window.selectedCountries  || "all";
+  const selectedGroups = window.selectedGroups || "all";
   if (typeof fetchTripsAndRenderTabs === "function") {
-    fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
+    fetchTripsAndRenderTabs(selectedYear, selectedCountries, selectedGroups);
   }
 });
 
 // RUN FOLLOWING CODE WHEN FILTERS APPLIED CHANGED
 document.addEventListener("filtersApplied", (e) => {
   const selectedYear = window.displayYear || new Date().getFullYear().toString();
-  const selectedCountry = window.selectedCountries  || "all";
-  const selectedGroup = window.selectedGroups || "all";
-  fetchTripsAndRenderTabs(selectedYear, selectedCountry, selectedGroup);
+  const selectedCountries = window.selectedCountries  || "all";
+  const selectedGroups = window.selectedGroups || "all";
+  fetchTripsAndRenderTabs(selectedYear, selectedCountries, selectedGroups);
 });
 
 // DISPLAY TRIPS ACCORDING TO SELECTED YEAR, COUNTRY & GROUP
@@ -69,8 +69,8 @@ async function fetchTripsAndRenderTabs(yearId, countryFilter, groupFilter) {
     const tripData = tripDoc.data();
 
     // Apply filters
-    if (countryFilter !== "all" && tripData.country !== countryFilter) continue;
-    if (groupFilter !== "all" && tripData.group !== groupFilter) continue;
+    if (!countryFilters.includes("all") && !countryFilters.includes(tripData.country)) continue;
+    if (!groupFilters.includes("all") && !groupFilters.includes(tripData.group)) continue;
 
     const tripId = tripDoc.id;
     const { dateRange, status, duration } = await getTripDateInfo(
@@ -198,6 +198,7 @@ function parseDate(dateStr) {
   return new Date(cleaned);
 
 }
+
 
 
 
