@@ -79,7 +79,6 @@ async function loadActivityCards(country, city, year, actType, status) {
 
   // ✅ Initialize cityGroups with ALL cities (even empty ones)
   window.cityGroups = {};
-  allCities.forEach(c => window.cityGroups[c] = []);
   
   const ignoreDocs = ["Array_City", "Array_Country", "Array_Year"];
   const snapshot = await window.db
@@ -109,28 +108,28 @@ async function loadActivityCards(country, city, year, actType, status) {
   // Build grouped layout
   grid.innerHTML = "";
   
-  Object.keys(window.cityGroups).sort().forEach(cityName => {
-    const section = document.createElement("div");
-    section.className = "city-section";
-    section.dataset.city = cityName;
-
-    const container = document.createElement("div");
-    container.className = "city-activities";
-
-    // Add all cards for this city
-    window.cityGroups[cityName].forEach(card => container.appendChild(card));
-
-    // ✅ If this city has no cards, show fallback message
-    if (window.cityGroups[cityName].length === 0) {
-      const msg = document.createElement("div");
-      msg.textContent = "No results";
-      msg.className = "no-results";
-      container.appendChild(msg);
-    }
-
-    section.appendChild(container);
-    grid.appendChild(section);
-  });
+  const cityNames = Object.keys(window.cityGroups);
+  if (cityNames.length === 0) {
+    // ✅ No cards at all → show single "No results"
+    const msg = document.createElement("div");
+    msg.textContent = "No results";
+    msg.className = "no-results";
+    grid.appendChild(msg);
+  } else {
+    cityNames.sort().forEach(cityName => {
+      const section = document.createElement("div");
+      section.className = "city-section";
+      section.dataset.city = cityName;
+  
+      const container = document.createElement("div");
+      container.className = "city-activities";
+  
+      window.cityGroups[cityName].forEach(card => container.appendChild(card));
+  
+      section.appendChild(container);
+      grid.appendChild(section);
+    });
+  }
 
   // Reset for next load
   window.cityGroups = {};
@@ -201,3 +200,4 @@ document.addEventListener("ActivityCardsLoaded", () => {
   sections.forEach(section => observer.observe(section));
 
 })
+
