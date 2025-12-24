@@ -179,8 +179,8 @@ function initialiseFilters() {
       window.selectedGroup = "all";
     } else{
       // Store selected options
-      const activeCountries = [...countryOptions.querySelector(".filter-pill.active")];
-      const activeGroups = [...groupOptions.querySelector(".filter-pill.active")];
+      const activeCountries = [...countryOptions.querySelectorAll(".filter-pill.active")];
+      const activeGroups = [...groupOptions.querySelectorAll(".filter-pill.active")];
       window.selectedCountries = activeCountries.length ? activeCountries.map(btn => btn.textContent) : ["all"];
       window.selectedGroups = activeGroups.length ? activeGroups.map(btn => btn.textContent) : ["all"];
     }
@@ -234,6 +234,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
