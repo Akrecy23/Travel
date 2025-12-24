@@ -177,6 +177,7 @@ function initialiseFilters() {
     if (resetPending){
       window.selectedCountry = "all";
       window.selectedGroup = "all";
+      resetPending = false;
     } else{
       // Store selected options
       const activeCountries = [...countryOptions.querySelectorAll(".filter-pill.active")];
@@ -234,6 +235,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
