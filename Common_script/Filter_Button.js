@@ -192,7 +192,7 @@ function initialiseFilters() {
 }
 
 // ================= SHOW MORE / SHOW LESS HANDLER =================
-const BATCH_SIZE = 2; // or any number you want
+const BATCH_SIZE = 4; // or any number you want
 
 function setupShowMore(sectionElement) {
   const pills = [...sectionElement.querySelectorAll(".filter-pill")];
@@ -235,6 +235,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
