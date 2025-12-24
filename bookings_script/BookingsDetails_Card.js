@@ -37,7 +37,7 @@ document.addEventListener("filtersApplied", (e) => {
 });
 
 // DISPLAY TRIPS ACCORDING TO SELECTED YEAR, COUNTRY & GROUP
-async function fetchTripsAndRenderTabs(yearId, countryFilter, groupFilter) {
+async function fetchTripsAndRenderTabs(yearId, countryFilters, groupFilters) {
   const currentUserId = window.CURRENT_UID;
   if (!currentUserId) {
     alert("You must be logged in to add a trip.");
@@ -198,6 +198,7 @@ function parseDate(dateStr) {
   return new Date(cleaned);
 
 }
+
 
 
 
