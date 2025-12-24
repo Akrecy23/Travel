@@ -175,31 +175,29 @@ document.addEventListener("ActivityCardsLoaded", () => {
   const sections = document.querySelectorAll(".city-section");
   const scrollArea = document.querySelector(".scroll-wrapper");
 
-  if (!sections.length) return;
+  if (!sections.length) {
+    // No city sections → show default header
+    header.textContent = "City";
+    addBtn.dataset.city = "";
+    return;
+  }
 
-  const observer = new IntersectionObserver(
+ const observer = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const city = entry.target.dataset.city;
-          if (!city){
-            header.textContent = "City";
-          } else{
-            header.textContent = city;
-          }
-          
-          addBtn.dataset.city = city;
+          header.textContent = city || "City";
+          addBtn.dataset.city = city || "";
         }
       });
     },
-    {
-      root: scrollArea,
-      threshold: 0.1
-    }
+    { root: scrollArea, threshold: 0.1 }
   );
 
   sections.forEach(section => observer.observe(section));
+});
 
-})
+
 
 
