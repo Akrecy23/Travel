@@ -199,12 +199,10 @@ function setupShowMore(sectionElement) {
   const showMoreBtn = sectionElement.querySelector(".show-more");
 
   // Reorder pills: active first, then inactive
-  pills.sort((a, b) => {
-    const aActive = a.classList.contains("active");
-    const bActive = b.classList.contains("active");
-    if (aActive === bActive) return 0;
-    return aActive ? -1 : 1;
-  });
+  const container = sectionElement.querySelector(".filter-options");
+  pills
+    .sort((a, b) => b.classList.contains("active") - a.classList.contains("active"))
+    .forEach(pill => container.appendChild(pill)); // re-append in new order
 
   if (!showMoreBtn || pills.length <= BATCH_SIZE) {
     showMoreBtn.style.display = "none";
@@ -243,6 +241,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
