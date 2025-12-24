@@ -62,8 +62,8 @@ document.addEventListener("yearChanged", (e) => {
     localStorage.setItem("selectedYear", e.detail.year);
     window.displayYear = e.detail.year;
     // Reset filters
-    window.selectedCountry = "all";
-    window.selectedGroup = "all";
+    window.selectedCountries = "all";
+    window.selectedGroups = "all";
     initialiseFilters();
 });
 
@@ -235,6 +235,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
