@@ -32,6 +32,29 @@ async function handleGoogleSignUp() {
         email: user.email,
         nickname: nickname || user.displayName
       });
+
+      // Initialise Suggested Activities/Food Collections
+      const userDocRef = window.db.collection("User").doc(uid);
+
+      // Suggested Activities
+      await userDocRef.collection("Suggested Activities").doc("Array_Country").set(
+        { CountryList: [] },
+        { merge: true }
+      );
+      await userDocRef.collection("Suggested Activities").doc("Array_City").set(
+        {},
+        { merge: true }
+      );
+
+      // Suggested Food
+      await userDocRef.collection("Suggested Food").doc("Array_Country").set(
+        { CountryList: [] },
+        { merge: true }
+      );
+      await userDocRef.collection("Suggested Food").doc("Array_City").set(
+        {},
+        { merge: true }
+      );
       alert(`Account created successfully! Welcome, ${nickname || user.displayName || user.email}! 🎉`);
       
       // Save UID locally and Redirect to Home Page
@@ -46,4 +69,5 @@ async function handleGoogleSignUp() {
     console.error('Google sign-up error:', error);
     alert(`Google sign-up failed: ${error.message}`);
   }
+
 }
