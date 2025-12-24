@@ -175,8 +175,8 @@ function initialiseFilters() {
   // ========= ATTACH APPLY LOGIC ========
   applyBtn.onclick = () => {
     if (resetPending){
-      window.selectedCountry = "all";
-      window.selectedGroup = "all";
+      window.selectedCountry = ["all"];
+      window.selectedGroup = ["all"];
       resetPending = false;
     } else{
       // Store selected options
@@ -235,6 +235,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
