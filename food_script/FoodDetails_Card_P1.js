@@ -149,7 +149,7 @@ function matchesFilters(data, country, city, year, actType, status) {
   }
 
   // Year filter
-  if (!year.includes("all") && !year.includes(String(data.YearAdded))) {
+  if (!year.includes("all") && !year.includes(data.YearAdded)) {
     return false;
   }
 
@@ -199,4 +199,5 @@ document.addEventListener("FoodCardsLoaded", () => {
   );
 
   sections.forEach(section => observer.observe(section));
+
 })
