@@ -195,8 +195,16 @@ function initialiseFilters() {
 const BATCH_SIZE = 4; // or any number you want
 
 function setupShowMore(sectionElement) {
-  const pills = [...sectionElement.querySelectorAll(".filter-pill")];
+  let pills = [...sectionElement.querySelectorAll(".filter-pill")];
   const showMoreBtn = sectionElement.querySelector(".show-more");
+
+  // Reorder pills: active first, then inactive
+  pills.sort((a, b) => {
+    const aActive = a.classList.contains("active");
+    const bActive = b.classList.contains("active");
+    if (aActive === bActive) return 0;
+    return aActive ? -1 : 1;
+  });
 
   if (!showMoreBtn || pills.length <= BATCH_SIZE) {
     showMoreBtn.style.display = "none";
@@ -235,6 +243,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
