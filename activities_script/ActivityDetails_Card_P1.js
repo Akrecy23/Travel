@@ -107,8 +107,9 @@ async function loadActivityCards(country, city, year, actType, status) {
   });
   // Build grouped layout
   grid.innerHTML = "";
-  
-  const cityNames = Object.keys(window.cityGroups);
+  const cityNames = Object.keys(window.cityGroups).filter(
+    cityName => window.cityGroups[cityName].length > 0
+  );
   if (cityNames.length === 0) {
     // ✅ No cards at all → show single "No results"
     const msg = document.createElement("div");
@@ -200,4 +201,5 @@ document.addEventListener("ActivityCardsLoaded", () => {
   sections.forEach(section => observer.observe(section));
 
 })
+
 
