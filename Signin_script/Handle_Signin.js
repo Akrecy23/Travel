@@ -20,6 +20,8 @@ async function handleGoogleSignIn() {
     // If this is a new user, ask user to go to sign-up page
     if (result.additionalUserInfo.isNewUser) {
       alert("No account found. Please sign up first.");
+      // Delete the just-created Auth user
+      await user.delete();   // removes the UID from Firebase Auth
       return;
     }
     // Get unique UID
@@ -46,4 +48,5 @@ async function handleGoogleSignIn() {
     console.error('Google sign-up error:', error);
     alert(`Google sign-up failed: ${error.message}`);
   }
+
 }
