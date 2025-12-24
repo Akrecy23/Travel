@@ -338,27 +338,27 @@ document.addEventListener("NewTripFormReady", () => {
         expenseCounter++;
       }
 
-      // ===== Add country to Array_Country =====
-      const countryArrayRef = window.db
-        .collection("User").doc(currentUserId)
-        .collection("Suggested Activites").doc("Array_Country");
-      await countryArrayRef.update({
-        ["CountryList"]: firebase.firestore.FieldValue.arrayUnion(country)
-      })
-
-      // ===== Add city to Array_City =====
-      const cityArray = country + "Cities"
-      const cityArrayRef = window.db
-        .collection("User").doc(currentUserId)
-        .collection("Suggested Activites").doc("Array_City");
-      for (let i = 0; i < cities.length; i++) {
-        const cityName = cities[i];
-
-        await cityArrayRef.update({
+      // ===== Update Suggested Activities =====
+      const userDocRef = window.db.collection("User").doc(currentUserId);
+  
+      // Country
+      await userDocRef.collection("Suggested Activities").doc("Array_Country").set({
+        CountryList: firebase.firestore.FieldValue.arrayUnion(country)
+      }, { merge: true });
+  
+      // City
+      const cityArray = country + "Cities";
+      for (let cityName of cities) {
+        await userDocRef.collection("Suggested Activities").doc("Array_City").set({
           [cityArray]: firebase.firestore.FieldValue.arrayUnion(cityName)
-        });
+        }, { merge: true });
       }
-
+  
+      // Year
+      await userDocRef.collection("Suggested Activities").doc("Array_Year").set({
+        YearList: firebase.firestore.FieldValue.arrayUnion(year)
+      }, { merge: true });
+      
       alert("Trip saved successfully!");
       form.reset();
       modal.style.display = "none";
@@ -398,3 +398,4 @@ function formatInputToOneWord(input) {
   // Capitalize first letter
   return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
 }
+
