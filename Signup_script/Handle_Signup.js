@@ -33,28 +33,28 @@ async function handleGoogleSignUp() {
         nickname: nickname || user.displayName
       });
 
-      // Initialise Suggested Activities/Food Collections
+      // ===== Initialise Suggested Activities & Suggested Food =====
       const userDocRef = window.db.collection("User").doc(uid);
 
-      // Suggested Activities
-      await userDocRef.collection("Suggested Activities").doc("Array_Country").set(
-        { CountryList: [] },
-        { merge: true }
-      );
-      await userDocRef.collection("Suggested Activities").doc("Array_City").set(
-        {},
-        { merge: true }
-      );
+      const initCollections = async (collectionName) => {
+        await userDocRef.collection(collectionName).doc("Array_Country").set(
+          { CountryList: [] },
+          { merge: true }
+        );
+        await userDocRef.collection(collectionName).doc("Array_City").set(
+          {},
+          { merge: true }
+        );
+        await userDocRef.collection(collectionName).doc("Array_Year").set(
+          { YearList: [] },
+          { merge: true }
+        );
+      };
 
-      // Suggested Food
-      await userDocRef.collection("Suggested Food").doc("Array_Country").set(
-        { CountryList: [] },
-        { merge: true }
-      );
-      await userDocRef.collection("Suggested Food").doc("Array_City").set(
-        {},
-        { merge: true }
-      );
+      await Promise.all([
+        initCollections("Suggested Activities"),
+        initCollections("Suggested Food"),
+      ]);
       alert(`Account created successfully! Welcome, ${nickname || user.displayName || user.email}! 🎉`);
       
       // Save UID locally and Redirect to Home Page
@@ -71,3 +71,4 @@ async function handleGoogleSignUp() {
   }
 
 }
+
