@@ -26,6 +26,13 @@ async function renderTab(tabName, tripId) {
         <button class="btn-add-booking">+ Add ${tabName}</button>
       </div>
     `;
+    // attach listener to mimic "New" button
+    const addBtn = modalContent.querySelector(".btn-add-booking");
+    if (addBtn) {
+      addBtn.addEventListener("click", () => {
+        openNewBookingForm(tabName, tripId);
+      });
+    }
     return;
   }
 
@@ -239,4 +246,5 @@ async function renderTab(tabName, tripId) {
     document.dispatchEvent(new CustomEvent("BookingsRendered", {
     detail: { tabName, tripId }
     }));
+
 }
