@@ -103,11 +103,11 @@ document.addEventListener("FormReady", e => {
     form.parentElement.style.display = "none";
 
     // Refresh tab content
-    renderTab(tabName, yearId, countryId, groupId, tripId);
+    renderTab(tabName, tripId);
   });
 });
 
-function openNewBookingForm(tabName, currentUserId, yearId, countryId, groupId, tripId) {
+function openNewBookingForm(tabName, tripId) {
   currentTab = tabName;
   const formContainer = document.getElementById("newBookingFormContainer");
   if (!formContainer) return;
@@ -213,4 +213,5 @@ function closeFormOverlay(tripId) {
       btn.classList.toggle("active", btn.dataset.tab === currentTab);
     });
   }
+
 }
