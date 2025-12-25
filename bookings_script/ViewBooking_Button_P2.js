@@ -30,7 +30,7 @@ async function renderTab(tabName, tripId) {
     const addBtn = modalContent.querySelector(".btn-add-booking");
     if (addBtn) {
       addBtn.addEventListener("click", () => {
-        openNewBookingForm(tabName, tripId);
+        openNewBookingForm(tabName, tripId, true);
       });
     }
     return;
@@ -248,3 +248,4 @@ async function renderTab(tabName, tripId) {
     }));
 
 }
+
