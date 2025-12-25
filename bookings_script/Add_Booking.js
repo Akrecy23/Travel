@@ -107,7 +107,7 @@ document.addEventListener("FormReady", e => {
   });
 });
 
-function openNewBookingForm(tabName, tripId) {
+function openNewBookingForm(tabName, tripId, editableTab = false) {
   currentTab = tabName;
   const formContainer = document.getElementById("newBookingFormContainer");
   if (!formContainer) return;
@@ -117,7 +117,7 @@ function openNewBookingForm(tabName, tripId) {
     <form id="newBookingForm">
       <div class="form-header">
         <label>Trip:</label>
-        <input type="text" value="${tripId}" readonly>
+        <input type="text" value="${tripId}" ${editableTab ? "" : "readonly"}>
         <label>Tab:</label>
         <input type="text" value="${tabName}" readonly>
         <button type="button" class="close-form-btn" title="Close">✕</button>
@@ -215,3 +215,4 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
