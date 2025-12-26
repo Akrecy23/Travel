@@ -45,7 +45,7 @@ async function renderTab(tabName, tripId, tripTitle) {
       const direction = data.Type || "Outbound";
       const badgeClass = direction === "Outbound" ? "badge-outbound" : "badge-return";
 
-      const duration = calculateDuration(data.DepartureTime, data.ArrivalTime);
+      const duration = calculateDuration(data.DepDate, data.DepartureTime, data.ReturnDate, data.ArrivalTime);
 
       return `
         <div class="booking-card flight-card" data-doc-id="${doc.id}" data-collection="${collectionName}">
@@ -248,6 +248,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     }));
 
 }
+
 
 
 
