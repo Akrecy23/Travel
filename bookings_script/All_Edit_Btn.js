@@ -12,10 +12,10 @@ document.addEventListener("BookingsRendered", e => {
     const editBtn = card.querySelector(".edit-btn");
     if (!editBtn) return;
     editBtn.addEventListener("click", () => {
-      const col = card.dataset.collection; // "Flight", "Stay", "Other Bookings"
+      const col = card.dataset.collection; // "Transport", "Stay", "Other Bookings"
       const docId = card.dataset.docId;
 
-      if (col === "Flight") {
+      if (col === "Transport") {
         // Replace Airline, FlightNo, Date, BookingRef with inputs
         const airlineEl = card.querySelector(".info-item:nth-child(1) .info-value");
         const flightNoEl = card.querySelector(".info-item:nth-child(2) .info-value");
@@ -87,7 +87,7 @@ document.addEventListener("BookingsRendered", e => {
               Type: card.querySelector(".edit-status").value,
               Mode: card.querySelector(".edit-mode").value
             });
-            renderTab("Flights", tripId);
+            renderTab("Transport", tripId);
           },[
             airlineEl, flightNoEl, dateEl, refEl,
             departTimeEl, departAirportEl,
@@ -289,3 +289,4 @@ function addEditActions(card, onSave, elements, originals, specialRestore, col) 
     }
   });
 }
+
