@@ -24,7 +24,7 @@ async function openBookingsModal(tripId) {
   const modalTabs = document.getElementById("modalTabs");
 
   // Hardcoded tabs
-  const tabs = ["Flights", "Stay", "Others"];
+  const tabs = ["Transport", "Stay", "Others"];
   // Render tabs + New button
   modalTabs.innerHTML = `
     <div class="tabs-left">
@@ -48,7 +48,7 @@ async function openBookingsModal(tripId) {
   });
 
   // Initial render
-  renderTab("Flights", tripId, tripTitle);
+  renderTab("Transport", tripId, tripTitle);
 
   // Tab switching
   modalTabs.querySelectorAll(".tabs-left button").forEach(btn => {
@@ -97,6 +97,7 @@ document.addEventListener("BookingsRendered", e => {
     });
   });
 });
+
 
 
 
