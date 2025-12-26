@@ -46,6 +46,12 @@ async function renderTab(tabName, tripId, tripTitle) {
       const badgeClass = direction === "Outbound" ? "badge-outbound" : "badge-return";
 
       const duration = calculateDuration(data.DepartureTime, data.ArrivalTime);
+      const modeEmoji = data.Mode === "Airplane" 
+        ? "✈️" 
+        : data.Mode === "Ferry" 
+          ? "⛴️" 
+          : "❓"; // fallback, e.g. car
+
 
       return `
         <div class="booking-card flight-card" data-doc-id="${doc.id}" data-collection="${collectionName}">
@@ -82,7 +88,7 @@ async function renderTab(tabName, tripId, tripTitle) {
             </div>
             <div class="flight-duration">
               <div class="flight-line"></div>
-              <div class="flight-plane">✈️</div>
+              <div class="flight-plane">${modeEmoji}</div>
               <div class="duration-text">${duration || '-'}</div>
             </div>
             <div class="flight-point">
@@ -248,6 +254,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     }));
 
 }
+
 
 
 
