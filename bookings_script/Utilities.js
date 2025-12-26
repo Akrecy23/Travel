@@ -182,3 +182,15 @@ function validateOtherBookingTime(inputEl, ogTime) {
     return false;
   }
 }
+
+// Helper to map Mode to emoji + text
+function getModeDisplay(mode) {
+  const map = {
+    Airplane: "✈️ Airplane",
+    Ferry: "⛴️ Ferry",
+    Train: "🚆 Train",
+    Bus: "🚌 Bus",
+    Other: "❓ Other"
+  };
+  return map[mode] || "❓ Unknown";
+}
