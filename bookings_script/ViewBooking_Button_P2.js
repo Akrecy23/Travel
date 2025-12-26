@@ -1,7 +1,7 @@
 // THIS FILE BUILDS THE CARDS FOR EACH TAB
 
 // ===== Render Tab Content =====
-async function renderTab(tabName, tripId) {
+async function renderTab(tabName, tripId, tripTitle) {
   const modalContent = document.getElementById("modalContent");
   let collectionName;
   if (tabName === "Flights") {
@@ -30,7 +30,7 @@ async function renderTab(tabName, tripId) {
     const addBtn = modalContent.querySelector(".btn-add-booking");
     if (addBtn) {
       addBtn.addEventListener("click", () => {
-        openNewBookingForm(tabName, tripId, data.title, true);
+        openNewBookingForm(tabName, tripId, tripTitle, true);
       });
     }
     return;
@@ -248,5 +248,6 @@ async function renderTab(tabName, tripId) {
     }));
 
 }
+
 
 
