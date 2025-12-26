@@ -42,8 +42,7 @@ async function deleteTrip(tripId, card) {
       updateData[`collaborators.${currentUserId}`] = window.firebase.firestore.FieldValue.delete();
       await tripRef.update(updateData);
     }
-      console.log(`Access removed for user ${currentUserId} from trip ${tripId}`);
-    }
+    console.log(`Access removed for user ${currentUserId} from trip ${tripId}`);
 
     // --- UI + memory cleanup ---
     const sectionTitle = card.closest(".trips-section")?.querySelector(".section-title")?.textContent?.toLowerCase();
@@ -66,3 +65,4 @@ async function deleteTrip(tripId, card) {
   }
 
 }
+
