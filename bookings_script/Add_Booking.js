@@ -51,7 +51,8 @@ document.addEventListener("FormReady", e => {
         Airline: data.airline || "",
         ArrivalTime: formatTimeInput(data.arriveTime) || "",
         BookingRef: data.bookingRef || "",
-        Date: formatDate(data.flightDate) || "",
+        DepDate: formatDate(data.depDate) || "",
+        ReturnDate: formatDate(data.returnDate) || "",
         DepartureTime: formatTimeInput(data.departTime) || "",
         FlightNo: data.flightNo || "",
         FromAirport: data.departAirport || "",
@@ -144,7 +145,7 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
 
       <!-- Departure -->
       <h3>Departure</h3>
-      <label>Date:</label><input type="date" name="flightDate">
+      <label>Date:</label><input type="date" name="depDate">
       <label>Country:</label><input type="text" name="departCountry">
       <label>Airport/Harbour:</label><input type="text" name="departAirport">
       <label>Terminal:</label><input type="text" name="departTerminal">
@@ -152,7 +153,7 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
 
       <!-- Arrival -->
       <h3>Arrival</h3>
-      <label>Date:</label><input type="date" name="flightDate">
+      <label>Date:</label><input type="date" name="returnDate">
       <label>Country:</label><input type="text" name="arriveCountry">
       <label>Airport/Harbour:</label><input type="text" name="arriveAirport">
       <label>Terminal:</label><input type="text" name="arriveTerminal">
@@ -225,6 +226,7 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
 
