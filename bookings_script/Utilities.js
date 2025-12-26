@@ -188,9 +188,8 @@ function getModeDisplay(mode) {
   const map = {
     Airplane: "✈️ Airplane",
     Ferry: "⛴️ Ferry",
-    Train: "🚆 Train",
-    Bus: "🚌 Bus",
-    Other: "❓ Other"
+    Others: "🚗 Others"
   };
   return map[mode] || "❓ Unknown";
 }
+
