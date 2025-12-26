@@ -58,7 +58,7 @@ async function renderTab(tabName, tripId, tripTitle) {
           <span class="info-value">${data.ReturnDate ? formatSimpleDate(data.ReturnDate) : '-'}</span>
         </div>
       `;
-
+    if (data.Mode === "Airplane"){
       infoGrid += `
         <div class="info-item">
           <span class="info-label">From Terminal</span>
@@ -81,7 +81,8 @@ async function renderTab(tabName, tripId, tripTitle) {
           <span class="info-value">${data.BookingRef || '-'}</span>
         </div>
       `;
-    } else if (data.Mode === "Ferry") {
+    } 
+    else if (data.Mode === "Ferry") {
       infoGrid += `
         <div class="info-item">
           <span class="info-label">Service Operator</span>
@@ -288,6 +289,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     }));
 
 }
+
 
 
 
