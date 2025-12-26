@@ -16,11 +16,9 @@ document.addEventListener("BookingsRendered", e => {
       const docId = card.dataset.docId;
 
       if (col === "Transport") {
+        const mode = card.dataset.mode || "Airplane";
+        
         // Replace Airline, FlightNo, Date, BookingRef with inputs
-        const airlineEl = card.querySelector(".info-item:nth-child(1) .info-value");
-        const flightNoEl = card.querySelector(".info-item:nth-child(2) .info-value");
-        const dateEl = card.querySelector(".info-item:nth-child(3) .info-value");
-        const refEl = card.querySelector(".info-item:nth-child(4) .info-value");
         const departTimeEl = card.querySelector(".flight-point:first-child .flight-time");
         const departAirportEl = card.querySelector(".flight-point:first-child .flight-airport");
         const arriveTimeEl = card.querySelector(".flight-point:last-child .flight-time");
@@ -28,23 +26,19 @@ document.addEventListener("BookingsRendered", e => {
         const titleEl = card.querySelector(".card-title"); // shows FromCountry → ToCountry
         const statusEl = card.querySelector(".badge"); 
         const modeEl = card.querySelector(".flight-plane");
+        const depDateEl = card.querySelector(".info-item:nth-child(1) .info-value");
+        const retDateEl = card.querySelector(".info-item:nth-child(2) .info-value");
 
-        const originalAirline = airlineEl.textContent;
-        const originalFlightNo = flightNoEl.textContent;
-        const originalDate = dateEl.textContent;
-        const originalRef = refEl.textContent;
         const originalDepartTime = departTimeEl.textContent;
         const originalDepartAirport = departAirportEl.textContent;
         const originalArriveTime = arriveTimeEl.textContent;
         const originalArriveAirport = arriveAirportEl.textContent;
         const [originalFromCountry, originalToCountry] = titleEl.textContent.split("→").map(s => s.trim());
         const originalStatus = statusEl.textContent.trim();
-        const originalMode = card.dataset.mode || "Airplane";
-            
-        airlineEl.innerHTML = `<input type="text" class="edit-airline" value="${originalAirline}">`;
-        flightNoEl.innerHTML = `<input type="text" class="edit-flightno" value="${originalFlightNo}">`;
-        dateEl.innerHTML = `<input type="date" class="edit-date" value="${toDateInputValue(originalDate)}">`;
-        refEl.innerHTML = `<input type="text" class="edit-ref" value="${originalRef}">`;
+        const originalMode = mode;
+        const originalDepDate = depDateEl.textContent;
+        const originalRetDate = retDateEl.textContent;
+        
         departTimeEl.innerHTML = `<input type="time" class="edit-depart-time" value="${toTimeInputValue(originalDepartTime)}">`;
         departAirportEl.innerHTML = `<input type="text" class="edit-depart-airport" value="${originalDepartAirport}">`;
         arriveTimeEl.innerHTML = `<input type="time" class="edit-arrive-time" value="${toTimeInputValue(originalArriveTime)}">`;
@@ -67,42 +61,99 @@ document.addEventListener("BookingsRendered", e => {
             <option value="Other" ${originalMode === "Other" ? "selected" : ""}>Other</option>
           </select>
         `;
+        depDateEl.innerHTML = `<input type="date" class="edit-depart-date" value="${toDateInputValue(originalDepDate)}">`;
+        retDateEl.innerHTML = `<input type="date" class="edit-return-date" value="${toDateInputValue(originalRetDate)}">`;
+
+        // Collect restore targets and originals dynamically
+        const restoreEls = [
+          depDateEl, retDateEl,
+          departTimeEl, departAirportEl,
+          arriveTimeEl, arriveAirportEl,
+          statusEl, modeEl
+        ];
+        const restoreVals = [
+          originalDepDate, originalRetDate,
+          originalDepartTime, originalDepartAirport,
+          originalArriveTime, originalArriveAirport,
+          originalStatus, getModeDisplay(originalMode)
+        ];
+        
+        if (mode === "Airplane"){
+          const fromTermEl = card.querySelector(".info-item:nth-child(3) .info-value");
+          const toTermEl = card.querySelector(".info-item:nth-child(4) .info-value");
+          const airlineEl = card.querySelector(".info-item:nth-child(5) .info-value");
+          const flightNoEl = card.querySelector(".info-item:nth-child(6) .info-value");
+          const bookingRefEl = card.querySelector(".info-item:nth-child(7) .info-value");
+
+          const originalFromTerm = fromTermEl.textContent;
+          const originalToTerm = toTermEl.textContent;
+          const originalAirline = airlineEl.textContent;
+          const originalFlightNo = flightNoEl.textContent;
+          const originalBookingRef = bookingRefEl.textContent;
+
+          fromTermEl.innerHTML = `<input type="text" class="edit-from-terminal" value="${originalFromTerm}">`;
+          toTermEl.innerHTML = `<input type="text" class="edit-to-terminal" value="${originalToTerm}">`;
+          airlineEl.innerHTML = `<input type="text" class="edit-airline" value="${originalAirline}">`;
+          flightNoEl.innerHTML = `<input type="text" class="edit-flight-no" value="${originalFlightNo}">`;
+          bookingRefEl.innerHTML = `<input type="text" class="edit-booking-ref" value="${originalBookingRef}">`;
+
+          restoreEls.push(fromTermEl, toTermEl, airlineEl, flightNoEl, bookingRefEl);
+          restoreVals.push(originalFromTerm, originalToTerm, originalAirline, originalFlightNo, originalBookingRef);
+        } else if (mode === "Ferry"){
+          const servOpEl = card.querySelector(".info-item:nth-child(3) .info-value");
+          const bookingRefEl = card.querySelector(".info-item:nth-child(4) .info-value");
+
+          const originalServOp = servOpEl.textContent;
+          const originalBookingRef = bookingRefEl.textContent;
+
+          servOpEl.innerHTML = `<input type="text" class="edit-serv-op" value="${originalServOp}">`;
+          bookingRefEl.innerHTML = `<input type="text" class="edit-booking-ref" value="${originalBookingRef}">`;
+
+          restoreEls.push(servOpEl, bookingRefEl);
+          restoreVals.push(originalServOp, originalBookingRef);
+        } else {
+          const bookingRefEl = card.querySelector(".info-item:nth-child(3) .info-value");
+          const originalBookingRef = bookingRefEl.textContent;
+          bookingRefEl.innerHTML = `<input type="text" class="edit-booking-ref" value="${originalBookingRef}">`;
+          restoreEls.push(bookingRefEl);
+          restoreVals.push(originalBookingRef);
+        }
 
         // Add ✔ ✖ buttons
         addEditActions(card, async () => {
-          await window.db
-            .collection("Trips").doc(tripId)
+          const updateData = {
+            BookingRef: card.querySelector(".edit-ref").value.trim(),
+            DepDate: card.querySelector(".edit-depart-date").value.trim(),
+            DepartureTime: formatTimeInput(card.querySelector(".edit-depart-time").value.trim()),
+            FromAirport: card.querySelector(".edit-depart-airport").value.trim(),
+            ArrivalTime: formatTimeInput(card.querySelector(".edit-arrive-time").value.trim()),
+            ToAirport: card.querySelector(".edit-arrive-airport").value.trim(),
+            FromCountry: card.querySelector(".edit-from-country").value.trim(),
+            ReturnDate: card.querySelector(".edit-return-date").value.trim(),
+            ToCountry: card.querySelector(".edit-to-country").value.trim(),
+            Type: card.querySelector(".edit-status").value,
+            Mode: card.querySelector(".edit-mode").value
+          };
+          if (mode === "Airplane"){
+            updateData.FromTerminal = card.querySelector(".edit-from-terminal").value.trim();
+            updateData.ToTerminal = card.querySelector(".edit-to-terminal").value.trim();
+            updateData.Airline = card.querySelector(".edit-airline").value.trim();
+            updateData.FlightNo = card.querySelector(".edit-flight-no").value.trim();
+          } else if (mode === "Ferry") {
+            updateData.ServOp = card.querySelector(".edit-serv-op").value.trim();
+          }
+          
+          await window.db.collection("Trips").doc(tripId)
             .collection(col).doc(docId)
-            .update({
-              Airline: card.querySelector(".edit-airline").value.trim(),
-              FlightNo: card.querySelector(".edit-flightno").value.trim(),
-              Date: formatDate(card.querySelector(".edit-date").value.trim()),
-              BookingRef: card.querySelector(".edit-ref").value.trim(),
-              DepartureTime: formatTimeInput(card.querySelector(".edit-depart-time").value.trim()),
-              FromAirport: card.querySelector(".edit-depart-airport").value.trim(),
-              ArrivalTime: formatTimeInput(card.querySelector(".edit-arrive-time").value.trim()),
-              ToAirport: card.querySelector(".edit-arrive-airport").value.trim(),
-              FromCountry: card.querySelector(".edit-from-country").value.trim(),
-              ToCountry: card.querySelector(".edit-to-country").value.trim(),
-              Type: card.querySelector(".edit-status").value,
-              Mode: card.querySelector(".edit-mode").value
-            });
-            renderTab("Transport", tripId);
-          },[
-            airlineEl, flightNoEl, dateEl, refEl,
-            departTimeEl, departAirportEl,
-            arriveTimeEl, arriveAirportEl,
-            statusEl, modeEl
-          ],[
-            originalAirline, originalFlightNo, originalDate, originalRef,
-            originalDepartTime, originalDepartAirport,
-            originalArriveTime, originalArriveAirport,
-            originalStatus, getModeDisplay(originalMode)
-          ],
-          () => {
-            titleEl.innerHTML = `${originalFromCountry} → ${originalToCountry}`;
-          }, col);
-        } else if (col === "Stay") {
+            .update(updateData);
+
+          renderTab("Transport", tripId);
+        },restoreEls,
+          restoreVals,
+        () => {
+          titleEl.innerHTML = `${originalFromCountry} → ${originalToCountry}`;
+        }, col);
+      } else if (col === "Stay") {
           const typeEl = card.querySelector(".badge-stay");
           const nameEl = card.querySelector(".card-title");
           const inDateEl = card.querySelector(".stay-checkin .stay-date");
@@ -289,5 +340,6 @@ function addEditActions(card, onSave, elements, originals, specialRestore, col) 
     }
   });
 }
+
 
 
