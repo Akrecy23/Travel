@@ -137,6 +137,7 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
       <label>Travel Mode:</label>
       <label><input type="radio" name="travelType" value="Airplane"> Airplane</label>
       <label><input type="radio" name="travelType" value="Ferry"> Ferry</label>
+      <label><input type="radio" name="travelType" value="Others"> Others</label>
       <label>Type:</label>
       <label><input type="radio" name="flightType" value="Outbound"> Outbound</label>
       <label><input type="radio" name="flightType" value="Return"> Return</label>
@@ -223,6 +224,7 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
 
