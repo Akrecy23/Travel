@@ -47,6 +47,76 @@ async function renderTab(tabName, tripId, tripTitle) {
 
       const duration = calculateDuration(data.DepDate, data.DepartureTime, data.ReturnDate, data.ArrivalTime);
 
+      // Build info-grid based on Mode
+      let infoGrid = "";
+      if (data.Mode === "Airplane" || data.Mode === "Flight") {
+        infoGrid = `
+          <div class="info-item">
+            <span class="info-label">From Terminal</span>
+            <span class="info-value">${data.FromTerminal || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">To Terminal</span>
+            <span class="info-value">${data.ToTerminal || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Dep Date</span>
+            <span class="info-value">${data.DepDate ? formatSimpleDate(data.DepDate) : '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Return Date</span>
+            <span class="info-value">${data.ReturnDate ? formatSimpleDate(data.ReturnDate) : '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Airline</span>
+            <span class="info-value">${data.Airline || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Flight No</span>
+            <span class="info-value">${data.FlightNo || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Booking Ref</span>
+            <span class="info-value">${data.BookingRef || '-'}</span>
+          </div>
+        `;
+      } else if (data.Mode === "Ferry") {
+        infoGrid = `
+          <div class="info-item">
+            <span class="info-label">Dep Date</span>
+            <span class="info-value">${data.DepDate ? formatSimpleDate(data.DepDate) : '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Return Date</span>
+            <span class="info-value">${data.ReturnDate ? formatSimpleDate(data.ReturnDate) : '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Service Operator</span>
+            <span class="info-value">${data.ServOp || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Booking Ref</span>
+            <span class="info-value">${data.BookingRef || '-'}</span>
+          </div>
+        `;
+      } else {
+        // Others
+        infoGrid = `
+          <div class="info-item">
+            <span class="info-label">Dep Date</span>
+            <span class="info-value">${data.DepDate ? formatSimpleDate(data.DepDate) : '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Return Date</span>
+            <span class="info-value">${data.ReturnDate ? formatSimpleDate(data.ReturnDate) : '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Booking Ref</span>
+            <span class="info-value">${data.BookingRef || '-'}</span>
+          </div>
+        `;
+      }
+
       return `
         <div class="booking-card flight-card" data-doc-id="${doc.id}" data-collection="${collectionName}" data-mode="${data.Mode || 'Airplane'}">
           <div class="card-header">
@@ -92,26 +162,7 @@ async function renderTab(tabName, tripId, tripTitle) {
           </div>
           
           <div class="info-grid">
-            <div class="info-item">
-              <span class="info-label">Airline</span>
-              <span class="info-value">${data.Airline || '-'}</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Flight No</span>
-              <span class="info-value">${data.FlightNo || '-'}</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Date</span>
-              <span class="info-value">
-                ${data.DepDate && data.ReturnDate 
-                  ? `${formatSimpleDate(data.DepDate)} - ${formatSimpleDate(data.ReturnDate)}`
-                  : '-'}
-              </span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Booking Ref</span>
-              <span class="info-value">${data.BookingRef || '-'}</span>
-            </div>
+            ${infoGrid}
           </div>
         </div>
       `;
@@ -252,6 +303,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     }));
 
 }
+
 
 
 
