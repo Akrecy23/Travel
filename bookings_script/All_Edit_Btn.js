@@ -39,7 +39,7 @@ document.addEventListener("BookingsRendered", e => {
         const originalArriveAirport = arriveAirportEl.textContent;
         const [originalFromCountry, originalToCountry] = titleEl.textContent.split("→").map(s => s.trim());
         const originalStatus = statusEl.textContent.trim();
-        const originalMode = data.Mode || "Airplane";
+        const originalMode = card.dataset.mode || "Airplane";
             
         airlineEl.innerHTML = `<input type="text" class="edit-airline" value="${originalAirline}">`;
         flightNoEl.innerHTML = `<input type="text" class="edit-flightno" value="${originalFlightNo}">`;
@@ -289,4 +289,5 @@ function addEditActions(card, onSave, elements, originals, specialRestore, col) 
     }
   });
 }
+
 
