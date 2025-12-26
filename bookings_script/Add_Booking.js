@@ -61,7 +61,8 @@ document.addEventListener("FormReady", e => {
         ToCountry: data.arriveCountry || "",
         ToTerminal: data.arriveTerminal || "",
         Type: data.flightType || "",
-        Order: order
+        Order: order,
+        Mode: data.travelType || ""
       };
     } else if (tabName === "Stay") {
       bookingData = {
@@ -133,30 +134,33 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
     html += `
       <h3>Flight Details</h3>
       <!-- Part 1 -->
+      <label>Travel Mode:</label>
+      <label><input type="radio" name="travelType" value="Airplane"> Airplane</label>
+      <label><input type="radio" name="travelType" value="Ferry"> Ferry</label>
       <label>Type:</label>
       <label><input type="radio" name="flightType" value="Outbound"> Outbound</label>
       <label><input type="radio" name="flightType" value="Return"> Return</label>
-      <label>Date:</label><input type="date" name="flightDate">
 
       <!-- Departure -->
-      <h4>Departure</h4>
+      <h3>Departure</h3>
+      <label>Date:</label><input type="date" name="flightDate">
       <label>Country:</label><input type="text" name="departCountry">
-      <label>Airport:</label><input type="text" name="departAirport">
+      <label>Airport/Harbour:</label><input type="text" name="departAirport">
       <label>Terminal:</label><input type="text" name="departTerminal">
       <label>Time:</label><input type="time" name="departTime">
 
       <!-- Arrival -->
-      <h4>Arrival</h4>
+      <h3>Arrival</h3>
       <label>Country:</label><input type="text" name="arriveCountry">
-      <label>Airport:</label><input type="text" name="arriveAirport">
+      <label>Airport/Harbour:</label><input type="text" name="arriveAirport">
       <label>Terminal:</label><input type="text" name="arriveTerminal">
       <label>Time:</label><input type="time" name="arriveTime">
 
       <!-- Additional -->
-      <h4>Additional Info</h4>
-      <label>Airline:</label><input type="text" name="airline">
+      <h3>Additional Info</h3>
+      <label>Airline/Ferry:</label><input type="text" name="airline">
       <label>Booking Ref:</label><input type="text" name="bookingRef">
-      <label>Flight No:</label><input type="text" name="flightNo">
+      <label>Flight/Ferry No:</label><input type="text" name="flightNo">
     `;
   } else if (tabName === "Stay") {
     html += `
@@ -219,6 +223,7 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
 
