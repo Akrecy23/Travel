@@ -48,7 +48,7 @@ async function renderTab(tabName, tripId, tripTitle) {
       const duration = calculateDuration(data.DepDate, data.DepartureTime, data.ReturnDate, data.ArrivalTime);
 
       return `
-        <div class="booking-card flight-card" data-doc-id="${doc.id}" data-collection="${collectionName}">
+        <div class="booking-card flight-card" data-doc-id="${doc.id}" data-collection="${collectionName}" data-mode="${data.Mode || 'Airplane'}">
           <div class="card-header">
             <div>
               <span class="badge ${badgeClass}">${direction}</span>
@@ -252,6 +252,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     }));
 
 }
+
 
 
 
