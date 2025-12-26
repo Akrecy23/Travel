@@ -117,9 +117,13 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
     <form id="newBookingForm">
       <div class="form-header">
         <label>Trip:</label>
-        <input type="text" value="${tripTitle}" ${editableTab ? "" : "readonly"}>
+        <input type="text" value="${tripTitle}" readonly}>
         <label>Tab:</label>
-        <input type="text" value="${tabName}" readonly>
+        <select name="tabName" ${editableTab ? "" : "disabled"}>
+          <option value="Flights" ${tabName === "Flights" ? "selected" : ""}>Flights</option>
+          <option value="Stay" ${tabName === "Stay" ? "selected" : ""}>Stay</option>
+          <option value="Others" ${tabName === "Others" ? "selected" : ""}>Others</option>
+        </select>
         <button type="button" class="close-form-btn" title="Close">✕</button>
       </div>
       <div class="form-fields">
@@ -215,5 +219,6 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
