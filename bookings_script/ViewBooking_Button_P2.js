@@ -103,8 +103,8 @@ async function renderTab(tabName, tripId, tripTitle) {
             <div class="info-item">
               <span class="info-label">Date</span>
               <span class="info-value">
-                ${data.depDate && data.returnDate 
-                  ? `${formatSimpleDate(data.depDate)} - ${formatSimpleDate(data.returnDate)}`
+                ${data.DepDate && data.ReturnDate 
+                  ? `${formatSimpleDate(data.DepDate)} - ${formatSimpleDate(data.ReturnDate)}`
                   : '-'}
               </span>
             </div>
@@ -252,6 +252,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     }));
 
 }
+
 
 
 
