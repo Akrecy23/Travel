@@ -105,6 +105,15 @@ function formatDate(dateStr) {
   });
 }
 
+// Format "xxxxxx, mmm dd, yyyy" to mmm dd
+function formatSimpleDate(dateStr) {
+  if (!dateStr) return "";
+  const date = new Date(dateStr); // works with "Thursday, Jan 01, 2026"
+  return date.toLocaleDateString("en-US", {
+    month: "short", // Jan
+    day: "2-digit"  // 01
+  });
+}
 
 // Convert hh:mm AM/PM into HH:mm
 function toTimeInputValue(timeStr) {
@@ -200,5 +209,6 @@ function getModeDisplay(mode) {
   };
   return map[mode] || "❓ Unknown";
 }
+
 
 
