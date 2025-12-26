@@ -27,6 +27,7 @@ document.addEventListener("BookingsRendered", e => {
         const arriveAirportEl = card.querySelector(".flight-point:last-child .flight-airport");
         const titleEl = card.querySelector(".card-title"); // shows FromCountry → ToCountry
         const statusEl = card.querySelector(".badge"); 
+        const modeEl = card.querySelector(".flight-plane");
 
         const originalAirline = airlineEl.textContent;
         const originalFlightNo = flightNoEl.textContent;
@@ -38,6 +39,7 @@ document.addEventListener("BookingsRendered", e => {
         const originalArriveAirport = arriveAirportEl.textContent;
         const [originalFromCountry, originalToCountry] = titleEl.textContent.split("→").map(s => s.trim());
         const originalStatus = statusEl.textContent.trim();
+        const originalMode = data.Mode || "Airplane";
             
         airlineEl.innerHTML = `<input type="text" class="edit-airline" value="${originalAirline}">`;
         flightNoEl.innerHTML = `<input type="text" class="edit-flightno" value="${originalFlightNo}">`;
@@ -58,6 +60,13 @@ document.addEventListener("BookingsRendered", e => {
             <option value="Return" ${originalStatus === "Return" ? "selected" : ""}>Return</option>
           </select>
           `;
+        modeEl.innerHTML = `
+          <select class="edit-mode">
+            <option value="Airplane" ${originalMode === "Airplane" ? "selected" : ""}>Airplane</option>
+            <option value="Ferry" ${originalMode === "Ferry" ? "selected" : ""}>Ferry</option>
+            <option value="Other" ${originalMode === "Other" ? "selected" : ""}>Other</option>
+          </select>
+        `;
 
         // Add ✔ ✖ buttons
         addEditActions(card, async () => {
@@ -75,19 +84,20 @@ document.addEventListener("BookingsRendered", e => {
               ToAirport: card.querySelector(".edit-arrive-airport").value.trim(),
               FromCountry: card.querySelector(".edit-from-country").value.trim(),
               ToCountry: card.querySelector(".edit-to-country").value.trim(),
-              Type: card.querySelector(".edit-status").value
+              Type: card.querySelector(".edit-status").value,
+              Mode: card.querySelector(".edit-mode").value
             });
             renderTab("Flights", tripId);
           },[
             airlineEl, flightNoEl, dateEl, refEl,
             departTimeEl, departAirportEl,
             arriveTimeEl, arriveAirportEl,
-            statusEl
+            statusEl, modeEl
           ],[
             originalAirline, originalFlightNo, originalDate, originalRef,
             originalDepartTime, originalDepartAirport,
             originalArriveTime, originalArriveAirport,
-            originalStatus
+            originalStatus, getModeDisplay(originalMode)
           ],
           () => {
             titleEl.innerHTML = `${originalFromCountry} → ${originalToCountry}`;
