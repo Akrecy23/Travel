@@ -203,12 +203,13 @@ function validateOtherBookingTime(inputEl, ogTime) {
 // Helper to map Mode to emoji + text
 function getModeDisplay(mode) {
   const map = {
-    Airplane: "✈️ Airplane",
-    Ferry: "⛴️ Ferry",
-    Others: "🚗 Others"
+    Airplane: "✈️",
+    Ferry: "⛴️",
+    Others: "🚗"
   };
   return map[mode] || "❓ Unknown";
 }
+
 
 
 
