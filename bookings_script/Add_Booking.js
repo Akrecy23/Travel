@@ -153,7 +153,7 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
 
   if (tabName === "Transport") {
     html += `
-      <div id="step1">
+      <div id="step1" class="step1">
         <h3>Transport Details</h3>
         <label>Travel Mode:</label>
         <label><input type="radio" name="travelType" value="Airplane"> Airplane</label>
@@ -165,7 +165,7 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
         <label><input type="radio" name="flightType" value="Return"> Return</label>
         <br>
         <button type="button" class="backBtn">Back</button>
-        <button type="button" id="nextBtn">Next</button>
+        <button type="button" class="nextBtn">Next</button>
       </div>
 
       <!-- DEPARTURE -->
@@ -257,7 +257,7 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
         <button type="submit">Save</button>
       </div>
     `;
-    document.getElementById("nextBtn").addEventListener("click", () => {
+    document.querySelector(".step1 .nextBtn").addEventListener("click", () => {
       const mode = document.querySelector('input[name="travelType"]:checked')?.value;
       if (!mode) { alert("Select a travel mode first."); return; }
       document.getElementById("step1").classList.add("hidden");
@@ -366,6 +366,7 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
 
