@@ -1,29 +1,37 @@
 // THIS FILE CONTAINS ALL THE HELPER FUNCTIONS
 
 // Helper: Calculate duration from "hh:mm AM/PM" strings
-  function calculateDuration(departureTime, arrivalTime) {
-    if (!departureTime || !arrivalTime) return null;
-    try {
-      // Parse times into Date objects on the same day
-      const depart = parseTimeString(departureTime);
-      let arrive = parseTimeString(arrivalTime);
+function calculateDuration(departureDate, departureTime, arrivalDate, arrivalTime) {
+  if (!departureDate || !departureTime || !arrivalDate || !arrivalTime) return null;
+  try {
+    // Build full Date objects
+    const depart = new Date(`${departureDate} ${departureTime}`);
+    const arrive = new Date(`${arrivalDate} ${arrivalTime}`);
 
-      // If arrival is earlier than departure, assume it's next day (overnight flight)
-      if (arrive <= depart) {
-        arrive.setDate(arrive.getDate() + 1);
-      }
+    if (arrive <= depart) return null;
 
-      const diffMs = arrive - depart;
-      const diffMinutes = Math.floor(diffMs / (1000 * 60));
-      const hours = Math.floor(diffMinutes / 60);
-      const minutes = diffMinutes % 60;
+    const diffMs = arrive - depart;
+    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+    const days = Math.floor(diffMinutes / (60 * 24));
+    const hours = Math.floor((diffMinutes % (60 * 24)) / 60);
+    const minutes = diffMinutes % 60;
 
-      return `${hours}h ${minutes}m`;
-    } catch (err) {
-      console.error("Error calculating duration:", err);
-      return null;
+    // Only show days if > 24 hours
+    let result = "";
+    if (diffMinutes > 24 * 60) {
+      if (days > 0) result += `${days}d `;
+      if (hours > 0 || days > 0) result += `${hours}h `;
+      result += `${minutes}m`;
+    } else {
+      result = `${hours}h ${minutes}m`;
     }
+
+    return result.trim();
+  } catch (err) {
+    console.error("Error calculating duration:", err);
+    return null;
   }
+}
 
   // Helper: Convert "hh:mm AM/PM" into a Date object
   function parseTimeString(timeStr) {
@@ -192,4 +200,5 @@ function getModeDisplay(mode) {
   };
   return map[mode] || "❓ Unknown";
 }
+
 
