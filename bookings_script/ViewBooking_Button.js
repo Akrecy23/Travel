@@ -48,14 +48,14 @@ async function openBookingsModal(tripId) {
   });
 
   // Initial render
-  renderTab("Flights", tripId);
+  renderTab("Flights", tripId, tripTitle);
 
   // Tab switching
   modalTabs.querySelectorAll(".tabs-left button").forEach(btn => {
     btn.addEventListener("click", () => {
       modalTabs.querySelectorAll("button").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      renderTab(btn.dataset.tab, tripId);
+      renderTab(btn.dataset.tab, tripId, tripTitle);
     });
   });
 
@@ -92,11 +92,12 @@ document.addEventListener("BookingsRendered", e => {
       card.remove();
 
       if (modalContent.querySelectorAll(".booking-card").length === 0) {
-        renderTab(tabName, tripId);
+        renderTab(tabName, tripId, tripTitle);
       }
     });
   });
 });
+
 
 
 
