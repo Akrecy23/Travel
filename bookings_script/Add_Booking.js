@@ -24,7 +24,7 @@ document.addEventListener("FormReady", e => {
 
     // Map tabName to Firestore collection
     const collectionMap = {
-      Flights: "Flight",
+      Transport: "Transport",
       Stay: "Stay",
       Others: "Other Bookings"
     };
@@ -46,7 +46,7 @@ document.addEventListener("FormReady", e => {
 
     let bookingData = {};
 
-    if (tabName === "Flights") {
+    if (tabName === "Transport") {
       bookingData = {
         Airline: data.airline || "",
         ArrivalTime: formatTimeInput(data.arriveTime) || "",
@@ -130,9 +130,9 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
       <div class="form-fields">
   `;
 
-  if (tabName === "Flights") {
+  if (tabName === "Transport") {
     html += `
-      <h3>Flight Details</h3>
+      <h3>Transport Details</h3>
       <!-- Part 1 -->
       <label>Travel Mode:</label>
       <label><input type="radio" name="travelType" value="Airplane"> Airplane</label>
@@ -224,6 +224,7 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
 
