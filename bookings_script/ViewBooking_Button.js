@@ -44,7 +44,7 @@ async function openBookingsModal(tripId) {
     if (!tabName) return;
     console.log(`+ New clicked in tab: ${tabName}`);
     // Show or build the form here
-    openNewBookingForm(tabName, tripId, tripTitle, false);
+    openNewBookingForm(tabName, tripId, tripTitle, true);
   });
 
   // Initial render
@@ -97,6 +97,7 @@ document.addEventListener("BookingsRendered", e => {
     });
   });
 });
+
 
 
 
