@@ -384,7 +384,7 @@ function formatInputToOneWord(input) {
   return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
 }
 
-function createCityCountryYear(currentUserId, pathName, country, cities, year){
+async function createCityCountryYear(currentUserId, pathName, country, cities, year){
   // ===== Update Suggested Activities =====
   const userDocRef = window.db.collection("User").doc(currentUserId);
   
@@ -406,3 +406,4 @@ function createCityCountryYear(currentUserId, pathName, country, cities, year){
     YearList: firebase.firestore.FieldValue.arrayUnion(year)
   }, { merge: true });
 }
+
