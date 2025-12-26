@@ -4,8 +4,8 @@
 async function renderTab(tabName, tripId, tripTitle) {
   const modalContent = document.getElementById("modalContent");
   let collectionName;
-  if (tabName === "Flights") {
-    collectionName = "Flight";
+  if (tabName === "Transport") {
+    collectionName = "Transport";
   } else if (tabName === "Stay") {
     collectionName = "Stay";
   } else {
@@ -39,7 +39,7 @@ async function renderTab(tabName, tripId, tripTitle) {
   // Render cards based on tab type
   let cardsHTML = "";
   
-  if (tabName === "Flights") {
+  if (tabName === "Transport") {
     cardsHTML = snap.docs.map(doc => {
       const data = doc.data();
       const direction = data.Type || "Outbound";
@@ -248,6 +248,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     }));
 
 }
+
 
 
 
