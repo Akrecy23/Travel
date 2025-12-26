@@ -49,7 +49,7 @@ async function renderTab(tabName, tripId, tripTitle) {
 
       // Build info-grid based on Mode
       let infoGrid = "";
-      if (data.Mode === "Airplane" || data.Mode === "Flight") {
+      if (data.Mode === "Airplane") {
         infoGrid = `
           <div class="info-item">
             <span class="info-label">From Terminal</span>
@@ -303,6 +303,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     }));
 
 }
+
 
 
 
