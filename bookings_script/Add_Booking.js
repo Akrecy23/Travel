@@ -152,6 +152,7 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
 
       <!-- Arrival -->
       <h3>Arrival</h3>
+      <label>Date:</label><input type="date" name="flightDate">
       <label>Country:</label><input type="text" name="arriveCountry">
       <label>Airport/Harbour:</label><input type="text" name="arriveAirport">
       <label>Terminal:</label><input type="text" name="arriveTerminal">
@@ -224,6 +225,7 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
 
