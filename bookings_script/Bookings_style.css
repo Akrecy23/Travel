@@ -637,11 +637,94 @@
   color: #666;
   transition: color 0.2s ease;
 }
-
 #newBookingForm .close-form-btn:hover {
   color: #000;
 }
 
+/* Specifically for Transport */
+/* ===== Multi-step form sections ===== */
+#newBookingForm .step1,
+#newBookingForm .step2,
+#newBookingForm .step3,
+#newBookingForm .step4 {
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f9fafb;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+#newBookingForm .hidden {
+  display: none;
+}
+/* Headings inside steps */
+#newBookingForm .step1 h3,
+#newBookingForm .step2 h3,
+#newBookingForm .step3 h3,
+#newBookingForm .step4 h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #374151;
+}
+/* Labels and inputs inside steps */
+#newBookingForm .step1 label,
+#newBookingForm .step2 label,
+#newBookingForm .step3 label,
+#newBookingForm .step4 label {
+  display: block;
+  margin: 0.5rem 0 0.25rem;
+  font-weight: 500;
+  color: #444;
+}
+#newBookingForm .step1 input,
+#newBookingForm .step2 input,
+#newBookingForm .step3 input,
+#newBookingForm .step4 input {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: #fff;
+}
+#newBookingForm .step1 input[type="radio"],
+#newBookingForm .step2 input[type="radio"],
+#newBookingForm .step3 input[type="radio"],
+#newBookingForm .step4 input[type="radio"] {
+  width: auto;
+  margin-right: 0.25rem;
+}
+/* ===== Navigation buttons ===== */
+#newBookingForm .nextBtn,
+#newBookingForm .backBtn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+#newBookingForm .nextBtn {
+  background: #2563eb;
+  color: #fff;
+}
+#newBookingForm .nextBtn:hover {
+  background: #1e40af;
+}
+#newBookingForm .backBtn {
+  background: #f3f4f6;
+  color: #374151;
+}
+#newBookingForm .backBtn:hover {
+  background: #e5e7eb;
+}
+/* ===== Step transitions ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 /* Field groups */
 #newBookingForm .form-fields h3,
 #newBookingForm .form-fields h4 {
@@ -702,4 +785,5 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
+
 }
