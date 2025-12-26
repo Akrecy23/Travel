@@ -339,25 +339,10 @@ document.addEventListener("NewTripFormReady", () => {
       }
 
       // ===== Update Suggested Activities =====
-      const userDocRef = window.db.collection("User").doc(currentUserId);
-  
-      // Country
-      await userDocRef.collection("Suggested Activities").doc("Array_Country").set({
-        CountryList: firebase.firestore.FieldValue.arrayUnion(country)
-      }, { merge: true });
-  
-      // City
-      const cityArray = country + "Cities";
-      for (let cityName of cities) {
-        await userDocRef.collection("Suggested Activities").doc("Array_City").set({
-          [cityArray]: firebase.firestore.FieldValue.arrayUnion(cityName)
-        }, { merge: true });
-      }
-  
-      // Year
-      await userDocRef.collection("Suggested Activities").doc("Array_Year").set({
-        YearList: firebase.firestore.FieldValue.arrayUnion(year)
-      }, { merge: true });
+      await createCityCountryYear(currentUserId, "Suggested Activities", country, cities, year);
+
+      // ===== Update Suggested Food =====
+      await createCityCountryYear(currentUserId, "Suggested Food", country, cities, year);
       
       alert("Trip saved successfully!");
       form.reset();
@@ -399,3 +384,25 @@ function formatInputToOneWord(input) {
   return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
 }
 
+function createCityCountryYear(currentUserId, pathName, country, cities, year){
+  // ===== Update Suggested Activities =====
+  const userDocRef = window.db.collection("User").doc(currentUserId);
+  
+  // Country
+  await userDocRef.collection(pathName).doc("Array_Country").set({
+    CountryList: firebase.firestore.FieldValue.arrayUnion(country)
+  }, { merge: true });
+  
+  // City
+  const cityArray = country + "Cities";
+  for (let cityName of cities) {
+    await userDocRef.collection(pathName).doc("Array_City").set({
+      [cityArray]: firebase.firestore.FieldValue.arrayUnion(cityName)
+    }, { merge: true });
+  }
+  
+  // Year
+  await userDocRef.collection(pathName).doc("Array_Year").set({
+    YearList: firebase.firestore.FieldValue.arrayUnion(year)
+  }, { merge: true });
+}
