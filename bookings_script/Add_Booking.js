@@ -13,6 +13,55 @@ document.addEventListener("FormReady", e => {
   const form = document.getElementById("newBookingForm");
   if (!form) return;
 
+  document.querySelector(".step1 .nextBtn").addEventListener("click", () => {
+    const mode = document.querySelector('input[name="travelType"]:checked')?.value;
+    if (!mode) { alert("Select a travel mode first."); return; }
+    document.getElementById("step1").classList.add("hidden");
+    document.getElementById("step2-" + mode.toLowerCase()).classList.remove("hidden");
+  });
+    
+  document.querySelectorAll(".step2 .nextBtn").forEach(btn => {
+    btn.addEventListener("click", e => {
+      const mode = document.querySelector('input[name="travelType"]:checked').value;
+      document.getElementById("step2-" + mode.toLowerCase()).classList.add("hidden");
+      document.getElementById("step3-" + mode.toLowerCase()).classList.remove("hidden");
+    });
+  });
+    
+  document.querySelectorAll(".step3 .nextBtn").forEach(btn => {
+    btn.addEventListener("click", e => {
+      const mode = document.querySelector('input[name="travelType"]:checked').value;
+      document.getElementById("step3-" + mode.toLowerCase()).classList.add("hidden");
+      document.getElementById("step4-" + mode.toLowerCase()).classList.remove("hidden");
+    });
+  });
+  // Back from step2 → step1
+  document.querySelectorAll(".step2 .backBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const mode = document.querySelector('input[name="travelType"]:checked').value;
+      document.getElementById("step2-" + mode.toLowerCase()).classList.add("hidden");
+      document.getElementById("step1").classList.remove("hidden");
+    });
+  });
+    
+  // Back from step3 → step2
+  document.querySelectorAll(".step3 .backBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const mode = document.querySelector('input[name="travelType"]:checked').value;
+      document.getElementById("step3-" + mode.toLowerCase()).classList.add("hidden");
+      document.getElementById("step2-" + mode.toLowerCase()).classList.remove("hidden");
+    });
+  });
+  
+  // Back from step4 → step3
+  document.querySelectorAll(".step4 .backBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const mode = document.querySelector('input[name="travelType"]:checked').value;
+      document.getElementById("step4-" + mode.toLowerCase()).classList.add("hidden");
+      document.getElementById("step3-" + mode.toLowerCase()).classList.remove("hidden");
+    });
+  });
+
   form.addEventListener("submit", async ev => {
     ev.preventDefault();
 
@@ -257,54 +306,6 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
         <button type="submit">Save</button>
       </div>
     `;
-    document.querySelector(".step1 .nextBtn").addEventListener("click", () => {
-      const mode = document.querySelector('input[name="travelType"]:checked')?.value;
-      if (!mode) { alert("Select a travel mode first."); return; }
-      document.getElementById("step1").classList.add("hidden");
-      document.getElementById("step2-" + mode.toLowerCase()).classList.remove("hidden");
-    });
-    
-    document.querySelectorAll(".step2 .nextBtn").forEach(btn => {
-      btn.addEventListener("click", e => {
-        const mode = document.querySelector('input[name="travelType"]:checked').value;
-        document.getElementById("step2-" + mode.toLowerCase()).classList.add("hidden");
-        document.getElementById("step3-" + mode.toLowerCase()).classList.remove("hidden");
-      });
-    });
-    
-    document.querySelectorAll(".step3 .nextBtn").forEach(btn => {
-      btn.addEventListener("click", e => {
-        const mode = document.querySelector('input[name="travelType"]:checked').value;
-        document.getElementById("step3-" + mode.toLowerCase()).classList.add("hidden");
-        document.getElementById("step4-" + mode.toLowerCase()).classList.remove("hidden");
-      });
-    });
-    // Back from step2 → step1
-    document.querySelectorAll(".step2 .backBtn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const mode = document.querySelector('input[name="travelType"]:checked').value;
-        document.getElementById("step2-" + mode.toLowerCase()).classList.add("hidden");
-        document.getElementById("step1").classList.remove("hidden");
-      });
-    });
-    
-    // Back from step3 → step2
-    document.querySelectorAll(".step3 .backBtn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const mode = document.querySelector('input[name="travelType"]:checked').value;
-        document.getElementById("step3-" + mode.toLowerCase()).classList.add("hidden");
-        document.getElementById("step2-" + mode.toLowerCase()).classList.remove("hidden");
-      });
-    });
-    
-    // Back from step4 → step3
-    document.querySelectorAll(".step4 .backBtn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const mode = document.querySelector('input[name="travelType"]:checked').value;
-        document.getElementById("step4-" + mode.toLowerCase()).classList.add("hidden");
-        document.getElementById("step3-" + mode.toLowerCase()).classList.remove("hidden");
-      });
-    });
   } else if (tabName === "Stay") {
     html += `
       <h3>Stay Details</h3>
@@ -366,6 +367,7 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
 
