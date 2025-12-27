@@ -20,6 +20,15 @@ window.db = firebase.firestore();
 // =========== CONNECT TO AUTH =============
 window.AUTH_READY = false;
 window.auth = firebase.auth();
+// Set persistence once globally
+window.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  .then(() => {
+    console.log("Auth persistence set to LOCAL");
+  })
+  .catch(error => {
+    console.error("Error setting persistence:", error);
+  });
+
 auth.onAuthStateChanged(user => {
   if (user) {
     window.CURRENT_UID = user.uid;
