@@ -3,6 +3,15 @@
 // ======= INITIALISE FIREBASE AUTH =======
 const auth = firebase.auth();
 
+// Set persistence immediately after init
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  .then(() => {
+    console.log("Auth persistence set to LOCAL");
+  })
+  .catch(error => {
+    console.error("Error setting persistence:", error);
+  });
+
 // ======= HANDLE GOOGLE SIGN IN =========
 async function handleGoogleSignIn() {
   const provider = new firebase.auth.GoogleAuthProvider();
@@ -50,3 +59,4 @@ async function handleGoogleSignIn() {
   }
 
 }
+
