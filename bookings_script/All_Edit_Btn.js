@@ -122,25 +122,25 @@ document.addEventListener("BookingsRendered", e => {
         // Add ✔ ✖ buttons
         addEditActions(card, async () => {
           const updateData = {
-            BookingRef: card.querySelector(".edit-ref").value.trim(),
-            DepDate: card.querySelector(".edit-depart-date").value.trim(),
-            DepartureTime: formatTimeInput(card.querySelector(".edit-depart-time").value.trim()),
-            FromAirport: card.querySelector(".edit-depart-airport").value.trim(),
-            ArrivalTime: formatTimeInput(card.querySelector(".edit-arrive-time").value.trim()),
-            ToAirport: card.querySelector(".edit-arrive-airport").value.trim(),
-            FromCountry: card.querySelector(".edit-from-country").value.trim(),
-            ReturnDate: card.querySelector(".edit-return-date").value.trim(),
-            ToCountry: card.querySelector(".edit-to-country").value.trim(),
-            Type: card.querySelector(".edit-status").value,
-            Mode: card.querySelector(".edit-mode").value
+            BookingRef: card.querySelector(".edit-booking-ref")?.value.trim() || "",
+            DepDate: card.querySelector(".edit-depart-date")?.value.trim() || "",
+            ReturnDate: card.querySelector(".edit-return-date")?.value.trim() || "",
+            DepartureTime: formatTimeInput(card.querySelector(".edit-depart-time")?.value.trim() || ""),
+            ArrivalTime: formatTimeInput(card.querySelector(".edit-arrive-time")?.value.trim() || ""),
+            FromCountry: card.querySelector(".edit-from-country")?.value.trim() || "",
+            ToCountry: card.querySelector(".edit-to-country")?.value.trim() || "",
+            FromPickUp: card.querySelector(".edit-depart-airport")?.value.trim() || "",
+            ToDropOff: card.querySelector(".edit-arrive-airport")?.value.trim() || "",
+            Type: card.querySelector(".edit-status")?.value || "",
+            Mode: card.querySelector(".edit-mode")?.value || ""
           };
           if (mode === "Airplane"){
-            updateData.FromTerminal = card.querySelector(".edit-from-terminal").value.trim();
-            updateData.ToTerminal = card.querySelector(".edit-to-terminal").value.trim();
-            updateData.Airline = card.querySelector(".edit-airline").value.trim();
-            updateData.FlightNo = card.querySelector(".edit-flight-no").value.trim();
+            updateData.FromTerminal = card.querySelector(".edit-from-terminal")?.value.trim() || "";
+            updateData.ToTerminal   = card.querySelector(".edit-to-terminal")?.value.trim() || "";
+            updateData.Airline      = card.querySelector(".edit-airline")?.value.trim() || "";
+            updateData.FlightNo     = card.querySelector(".edit-flight-no")?.value.trim() || "";
           } else if (mode === "Ferry") {
-            updateData.ServOp = card.querySelector(".edit-serv-op").value.trim();
+            updateData.ServOp       = card.querySelector(".edit-serv-op")?.value.trim() || "";
           }
           
           await window.db.collection("Trips").doc(tripId)
