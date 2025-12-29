@@ -174,6 +174,9 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
       <label><input type="radio" name="travelType" value="Airplane"> Airplane</label>
       <label><input type="radio" name="travelType" value="Ferry"> Ferry</label>
       <label><input type="radio" name="travelType" value="Others"> Others</label>
+      <label>Type:</label>
+      <label><input type="radio" name="flightType" value="Outbound"> Outbound</label>
+      <label><input type="radio" name="flightType" value="Return"> Return</label>
       <div id="transportFields"></div>
     `;
   } else if (tabName === "Stay") {
@@ -263,9 +266,6 @@ function buildTransportForm(mode) {
       <label>Airline:</label><input type="text" name="airline">
       <label>Flight No:</label><input type="text" name="flightNo">
       <label>Booking Ref:</label><input type="text" name="bookingRef">
-      <label>Type:</label>
-      <label><input type="radio" name="flightType" value="Outbound"> Outbound</label>
-      <label><input type="radio" name="flightType" value="Return"> Return</label>
     `;
   } else if (mode === "Ferry") {
     html = `
@@ -284,9 +284,6 @@ function buildTransportForm(mode) {
       <h4>Additional Info</h4>
       <label>Service Operator:</label><input type="text" name="servOp">
       <label>Booking Ref:</label><input type="text" name="bookingRef">
-      <label>Type:</label>
-      <label><input type="radio" name="flightType" value="Outbound"> Outbound</label>
-      <label><input type="radio" name="flightType" value="Return"> Return</label>
     `;
   } else if (mode === "Others") {
     html = `
@@ -304,9 +301,6 @@ function buildTransportForm(mode) {
 
       <h4>Additional Info</h4>
       <label>Booking Ref:</label><input type="text" name="bookingRef">
-      <label>Type:</label>
-      <label><input type="radio" name="flightType" value="Outbound"> Outbound</label>
-      <label><input type="radio" name="flightType" value="Return"> Return</label>
     `;
   }
 
@@ -320,6 +314,7 @@ function toggleStepInputs() {
       step.querySelectorAll("input, textarea, select").forEach(el => { el.disabled = isHidden; }); 
     }); 
 }
+
 
 
 
