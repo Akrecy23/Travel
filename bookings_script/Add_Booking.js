@@ -1,7 +1,7 @@
 let currentTab = null;
 
 // Listen for when the form is created and ready
-document.addEventListener("FormReady", e => {
+document.addEventListener("FormReady", async e => {
   const currentUserId = window.CURRENT_UID;
   if (!currentUserId) {
     alert("You must be logged in to add a trip.");
@@ -13,62 +13,18 @@ document.addEventListener("FormReady", e => {
   const form = document.getElementById("newBookingForm");
   if (!form) return;
 
-  document.querySelector(".step1 .nextBtn").addEventListener("click", () => {
-    const mode = document.querySelector('input[name="travelType"]:checked')?.value;
-    if (!mode) { alert("Select a travel mode first."); return; }
-    document.getElementById("step1").classList.add("hidden");
-    document.getElementById("step2-" + mode.toLowerCase()).classList.remove("hidden");
-    toggleStepInputs();
-  });
-    
-  document.querySelectorAll(".step2 .nextBtn").forEach(btn => {
-    btn.addEventListener("click", e => {
-      const mode = document.querySelector('input[name="travelType"]:checked').value;
-      document.getElementById("step2-" + mode.toLowerCase()).classList.add("hidden");
-      document.getElementById("step3-" + mode.toLowerCase()).classList.remove("hidden");
-      toggleStepInputs();
+  // Transport: build fields on mode change
+  if (tabName === "Transport") {
+    const modeRadios = form.querySelectorAll('input[name="travelType"]');
+    modeRadios.forEach(r => {
+      r.addEventListener("change", (ev) => {
+        buildTransportForm(ev.target.value);
+      });
     });
-  });
-    
-  document.querySelectorAll(".step3 .nextBtn").forEach(btn => {
-    btn.addEventListener("click", e => {
-      const mode = document.querySelector('input[name="travelType"]:checked').value;
-      document.getElementById("step3-" + mode.toLowerCase()).classList.add("hidden");
-      document.getElementById("step4-" + mode.toLowerCase()).classList.remove("hidden");
-      toggleStepInputs();
-    });
-  });
-  // Back from step2 → step1
-  document.querySelectorAll(".step2 .backBtn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const mode = document.querySelector('input[name="travelType"]:checked').value;
-      document.getElementById("step2-" + mode.toLowerCase()).classList.add("hidden");
-      document.getElementById("step1").classList.remove("hidden");
-      toggleStepInputs();
-    });
-  });
-    
-  // Back from step3 → step2
-  document.querySelectorAll(".step3 .backBtn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const mode = document.querySelector('input[name="travelType"]:checked').value;
-      document.getElementById("step3-" + mode.toLowerCase()).classList.add("hidden");
-      document.getElementById("step2-" + mode.toLowerCase()).classList.remove("hidden");
-      toggleStepInputs();
-    });
-  });
-  
-  // Back from step4 → step3
-  document.querySelectorAll(".step4 .backBtn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const mode = document.querySelector('input[name="travelType"]:checked').value;
-      document.getElementById("step4-" + mode.toLowerCase()).classList.add("hidden");
-      document.getElementById("step3-" + mode.toLowerCase()).classList.remove("hidden");
-      toggleStepInputs();
-    });
-  });
+  }
 
-  form.addEventListener("submit", async ev => {
+  // Handle submit
+  form.addEventListener("submit", async (ev) => {
     ev.preventDefault();
 
     const formData = new FormData(form);
@@ -103,6 +59,11 @@ document.addEventListener("FormReady", e => {
 
     if (tabName === "Transport") {
       const mode = data.travelType || "";
+      if (!mode) {
+        alert("Please select a travel mode and fill its details.");
+        return;
+      }
+
       bookingData = {
         BookingRef: data.bookingRef || "",
         DepDate: formatDate(data.depDate) || "",
@@ -208,106 +169,12 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
 
   if (tabName === "Transport") {
     html += `
-      <div id="step1" class="step1">
-        <h3>Transport Details</h3>
-        <label>Travel Mode:</label>
-        <label><input type="radio" name="travelType" value="Airplane"> Airplane</label>
-        <label><input type="radio" name="travelType" value="Ferry"> Ferry</label>
-        <label><input type="radio" name="travelType" value="Others"> Others</label>
-        <br>
-        <label>Type:</label>
-        <label><input type="radio" name="flightType" value="Outbound"> Outbound</label>
-        <label><input type="radio" name="flightType" value="Return"> Return</label>
-        <br>
-        <button type="button" class="backBtn">Back</button>
-        <button type="button" class="nextBtn">Next</button>
-      </div>
-
-      <!-- DEPARTURE -->
-      <div id="step2-airplane" class="step2 hidden">
-        <h3>Departure (Airplane)</h3>
-        <label>Date:</label><input type="date" name="depDate">
-        <label>Country:</label><input type="text" name="departCountry">
-        <label>Airport:</label><input type="text" name="departAirport">
-        <label>Terminal:</label><input type="text" name="departTerminal">
-        <label>Time:</label><input type="time" name="departTime">
-        <button type="button" class="backBtn">Back</button>
-        <button type="button" class="nextBtn">Next</button>
-      </div>
-      
-      <div id="step2-ferry" class="step2 hidden">
-        <h3>Departure (Ferry)</h3>
-        <label>Date:</label><input type="date" name="depDate">
-        <label>Country:</label><input type="text" name="departCountry">
-        <label>Harbour:</label><input type="text" name="departHarbour">
-        <label>Time:</label><input type="time" name="departTime">
-        <button type="button" class="backBtn">Back</button>
-        <button type="button" class="nextBtn">Next</button>
-      </div>
-      
-      <div id="step2-others" class="step2 hidden">
-        <h3>Departure (Others)</h3>
-        <label>Date:</label><input type="date" name="depDate">
-        <label>Country:</label><input type="text" name="departCountry">
-        <label>Pick‑up Location:</label><input type="text" name="departPickup">
-        <label>Time:</label><input type="time" name="departTime">
-        <button type="button" class="backBtn">Back</button>
-        <button type="button" class="nextBtn">Next</button>
-      </div>
-
-      <!-- ARRIVAL -->
-      <div id="step3-airplane" class="step3 hidden">
-        <h3>Arrival (Airplane)</h3>
-        <label>Date:</label><input type="date" name="returnDate">
-        <label>Country:</label><input type="text" name="arriveCountry">
-        <label>Airport:</label><input type="text" name="arriveAirport">
-        <label>Terminal:</label><input type="text" name="arriveTerminal">
-        <label>Time:</label><input type="time" name="arriveTime">
-        <button type="button" class="backBtn">Back</button>
-        <button type="button" class="nextBtn">Next</button>
-      </div>
-      
-      <div id="step3-ferry" class="step3 hidden">
-        <h3>Arrival (Ferry)</h3>
-        <label>Date:</label><input type="date" name="returnDate">
-        <label>Country:</label><input type="text" name="arriveCountry">
-        <label>Harbour:</label><input type="text" name="arriveHarbour">
-        <label>Time:</label><input type="time" name="arriveTime">
-        <button type="button" class="backBtn">Back</button>
-        <button type="button" class="nextBtn">Next</button>
-      </div>
-      
-      <div id="step3-others" class="step3 hidden">
-        <h3>Arrival (Others)</h3>
-        <label>Date:</label><input type="date" name="returnDate">
-        <label>Country:</label><input type="text" name="arriveCountry">
-        <label>Drop‑off Location:</label><input type="text" name="arriveDropoff">
-        <label>Time:</label><input type="time" name="arriveTime">
-        <button type="button" class="backBtn">Back</button>
-        <button type="button" class="nextBtn">Next</button>
-      </div>
-
-      <!-- ADDITIONAL -->
-      <div id="step4-airplane" class="step4 hidden">
-        <h3>Additional Info (Airplane)</h3>
-        <label>Airline:</label><input type="text" name="airline">
-        <label>Flight No:</label><input type="text" name="flightNo">
-        <label>Booking Ref:</label><input type="text" name="bookingRef">
-        <button type="button" class="backBtn">Back</button>
-      </div>
-      
-      <div id="step4-ferry" class="step4 hidden">
-        <h3>Additional Info (Ferry)</h3>
-        <label>Service Operator:</label><input type="text" name="servOp">
-        <label>Booking Ref:</label><input type="text" name="bookingRef">
-        <button type="button" class="backBtn">Back</button>  
-      </div>
-      
-      <div id="step4-others" class="step4 hidden">
-        <h3>Additional Info (Others)</h3>
-        <label>Booking Ref:</label><input type="text" name="bookingRef">
-        <button type="button" class="backBtn">Back</button>
-      </div>
+      <h3>Transport Details</h3>
+      <label>Travel Mode:</label>
+      <label><input type="radio" name="travelType" value="Airplane"> Airplane</label>
+      <label><input type="radio" name="travelType" value="Ferry"> Ferry</label>
+      <label><input type="radio" name="travelType" value="Others"> Others</label>
+      <div id="transportFields"></div>
     `;
   } else if (tabName === "Stay") {
     html += `
@@ -371,14 +238,80 @@ function closeFormOverlay(tripId) {
   }
 }
 
-function toggleStepInputs() {
-  document.querySelectorAll("#newBookingForm .step1, #newBookingForm .step2, #newBookingForm .step3, #newBookingForm .step4")
-    .forEach(step => {
-      const isHidden = step.classList.contains("hidden");
-      step.querySelectorAll("input, textarea, select").forEach(el => {
-        el.disabled = isHidden;
-      });
-    });
+// DYNAMIC TRANSPORT FIELDS
+function buildTransportForm(mode) {
+  const container = document.getElementById("transportFields");
+  let html = "";
+
+  if (mode === "Airplane") {
+    html = `
+      <h4>Departure</h4>
+      <label>Date:</label><input type="date" name="depDate">
+      <label>Country:</label><input type="text" name="departCountry">
+      <label>Airport:</label><input type="text" name="departAirport">
+      <label>Terminal:</label><input type="text" name="departTerminal">
+      <label>Time:</label><input type="time" name="departTime">
+
+      <h4>Arrival</h4>
+      <label>Date:</label><input type="date" name="returnDate">
+      <label>Country:</label><input type="text" name="arriveCountry">
+      <label>Airport:</label><input type="text" name="arriveAirport">
+      <label>Terminal:</label><input type="text" name="arriveTerminal">
+      <label>Time:</label><input type="time" name="arriveTime">
+
+      <h4>Additional Info</h4>
+      <label>Airline:</label><input type="text" name="airline">
+      <label>Flight No:</label><input type="text" name="flightNo">
+      <label>Booking Ref:</label><input type="text" name="bookingRef">
+      <label>Type:</label>
+      <label><input type="radio" name="flightType" value="Outbound"> Outbound</label>
+      <label><input type="radio" name="flightType" value="Return"> Return</label>
+    `;
+  } else if (mode === "Ferry") {
+    html = `
+      <h4>Departure</h4>
+      <label>Date:</label><input type="date" name="depDate">
+      <label>Country:</label><input type="text" name="departCountry">
+      <label>Harbour:</label><input type="text" name="departHarbour">
+      <label>Time:</label><input type="time" name="departTime">
+
+      <h4>Arrival</h4>
+      <label>Date:</label><input type="date" name="returnDate">
+      <label>Country:</label><input type="text" name="arriveCountry">
+      <label>Harbour:</label><input type="text" name="arriveHarbour">
+      <label>Time:</label><input type="time" name="arriveTime">
+
+      <h4>Additional Info</h4>
+      <label>Service Operator:</label><input type="text" name="servOp">
+      <label>Booking Ref:</label><input type="text" name="bookingRef">
+      <label>Type:</label>
+      <label><input type="radio" name="flightType" value="Outbound"> Outbound</label>
+      <label><input type="radio" name="flightType" value="Return"> Return</label>
+    `;
+  } else if (mode === "Others") {
+    html = `
+      <h4>Departure</h4>
+      <label>Date:</label><input type="date" name="depDate">
+      <label>Country:</label><input type="text" name="departCountry">
+      <label>Pick-up Location:</label><input type="text" name="departPickup">
+      <label>Time:</label><input type="time" name="departTime">
+
+      <h4>Arrival</h4>
+      <label>Date:</label><input type="date" name="returnDate">
+      <label>Country:</label><input type="text" name="arriveCountry">
+      <label>Drop-off Location:</label><input type="text" name="arriveDropoff">
+      <label>Time:</label><input type="time" name="arriveTime">
+
+      <h4>Additional Info</h4>
+      <label>Booking Ref:</label><input type="text" name="bookingRef">
+      <label>Type:</label>
+      <label><input type="radio" name="flightType" value="Outbound"> Outbound</label>
+      <label><input type="radio" name="flightType" value="Return"> Return</label>
+    `;
+  }
+
+  container.innerHTML = html;
 }
+
 
 
