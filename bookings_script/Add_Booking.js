@@ -313,5 +313,13 @@ function buildTransportForm(mode) {
   container.innerHTML = html;
 }
 
+function toggleStepInputs() { 
+  document.querySelectorAll("#newBookingForm .step1, #newBookingForm .step2, #newBookingForm .step3, #newBookingForm .step4") 
+    .forEach(step => { 
+      const isHidden = step.classList.contains("hidden"); 
+      step.querySelectorAll("input, textarea, select").forEach(el => { el.disabled = isHidden; }); 
+    }); 
+}
+
 
 
