@@ -18,6 +18,7 @@ document.addEventListener("FormReady", e => {
     if (!mode) { alert("Select a travel mode first."); return; }
     document.getElementById("step1").classList.add("hidden");
     document.getElementById("step2-" + mode.toLowerCase()).classList.remove("hidden");
+    toggleStepInputs();
   });
     
   document.querySelectorAll(".step2 .nextBtn").forEach(btn => {
@@ -25,6 +26,7 @@ document.addEventListener("FormReady", e => {
       const mode = document.querySelector('input[name="travelType"]:checked').value;
       document.getElementById("step2-" + mode.toLowerCase()).classList.add("hidden");
       document.getElementById("step3-" + mode.toLowerCase()).classList.remove("hidden");
+      toggleStepInputs();
     });
   });
     
@@ -33,6 +35,7 @@ document.addEventListener("FormReady", e => {
       const mode = document.querySelector('input[name="travelType"]:checked').value;
       document.getElementById("step3-" + mode.toLowerCase()).classList.add("hidden");
       document.getElementById("step4-" + mode.toLowerCase()).classList.remove("hidden");
+      toggleStepInputs();
     });
   });
   // Back from step2 → step1
@@ -41,6 +44,7 @@ document.addEventListener("FormReady", e => {
       const mode = document.querySelector('input[name="travelType"]:checked').value;
       document.getElementById("step2-" + mode.toLowerCase()).classList.add("hidden");
       document.getElementById("step1").classList.remove("hidden");
+      toggleStepInputs();
     });
   });
     
@@ -50,6 +54,7 @@ document.addEventListener("FormReady", e => {
       const mode = document.querySelector('input[name="travelType"]:checked').value;
       document.getElementById("step3-" + mode.toLowerCase()).classList.add("hidden");
       document.getElementById("step2-" + mode.toLowerCase()).classList.remove("hidden");
+      toggleStepInputs();
     });
   });
   
@@ -59,6 +64,7 @@ document.addEventListener("FormReady", e => {
       const mode = document.querySelector('input[name="travelType"]:checked').value;
       document.getElementById("step4-" + mode.toLowerCase()).classList.add("hidden");
       document.getElementById("step3-" + mode.toLowerCase()).classList.remove("hidden");
+      toggleStepInputs();
     });
   });
 
@@ -362,5 +368,15 @@ function closeFormOverlay(tripId) {
       btn.classList.toggle("active", btn.dataset.tab === currentTab);
     });
   }
-
 }
+
+function toggleStepInputs() {
+  document.querySelectorAll("#newBookingForm .step1, #newBookingForm .step2, #newBookingForm .step3, #newBookingForm .step4")
+    .forEach(step => {
+      const isHidden = step.classList.contains("hidden");
+      step.querySelectorAll("input, textarea, select").forEach(el => {
+        el.disabled = isHidden;
+      });
+    });
+}
+
