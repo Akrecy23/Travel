@@ -73,7 +73,7 @@ async function openBookingsModal(tripId) {
 
 // ============== ATTACH DELETE LISTENERS ==============
 document.addEventListener("BookingsRendered", e => {
-  const { tabName, tripId } = e.detail;
+  const { tabName, tripId, tripTitle} = e.detail;
   const modalContent = document.getElementById("modalContent");
 
   modalContent.querySelectorAll(".booking-card").forEach(card => {
@@ -97,6 +97,7 @@ document.addEventListener("BookingsRendered", e => {
     });
   });
 });
+
 
 
 
