@@ -346,6 +346,7 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
 
   formContainer.innerHTML = html;
   formContainer.style.display = "block";
+  toggleStepInputs();
   formContainer.querySelector(".close-form-btn").addEventListener("click", () => {
     closeFormOverlay(tripId);
   });
@@ -379,4 +380,5 @@ function toggleStepInputs() {
       });
     });
 }
+
 
