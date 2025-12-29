@@ -115,23 +115,23 @@ document.addEventListener("FormReady", e => {
           ...bookingData,
           Airline: data.airline || "",
           FlightNo: data.flightNo || "",
-          FromAirport: data.departAirport || "",
+          FromPickUp: data.departAirport || "",
           FromTerminal: data.departTerminal || "",
-          ToAirport: data.arriveAirport || "",
+          ToDropOff: data.arriveAirport || "",
           ToTerminal: data.arriveTerminal || ""
         };
       } else if (mode === "Ferry") {
         bookingData = {
           ...bookingData,
-          FromAirport: data.departHarbour || "",
-          ToAirport: data.arriveHarbour || "",
+          FromPickUp: data.departHarbour || "",
+          ToDropOff: data.arriveHarbour || "",
           ServOp: data.servOp || ""
         };
       } else if (mode === "Others") {
         bookingData = {
           ...bookingData,
-          FromAirport: data.departPickup || "",
-          ToAirport: data.arriveDropoff || ""
+          FromPickUp: data.departPickup || "",
+          ToDropOff: data.arriveDropoff || ""
         };
       }
     } else if (tabName === "Stay") {
@@ -191,7 +191,7 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
         <input type="text" value="${tripTitle}" readonly}>
         <label>Tab:</label>
         <select name="tabName" ${editableTab ? "" : "disabled"}>
-          <option value="Flights" ${tabName === "Flights" ? "selected" : ""}>Flights</option>
+          <option value="Transport" ${tabName === "Transport" ? "selected" : ""}>Transport</option>
           <option value="Stay" ${tabName === "Stay" ? "selected" : ""}>Stay</option>
           <option value="Others" ${tabName === "Others" ? "selected" : ""}>Others</option>
         </select>
@@ -288,22 +288,19 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
         <label>Flight No:</label><input type="text" name="flightNo">
         <label>Booking Ref:</label><input type="text" name="bookingRef">
         <button type="button" class="backBtn">Back</button>
-        <button type="submit">Save</button>
       </div>
       
       <div id="step4-ferry" class="step4 hidden">
         <h3>Additional Info (Ferry)</h3>
         <label>Service Operator:</label><input type="text" name="servOp">
         <label>Booking Ref:</label><input type="text" name="bookingRef">
-        <button type="button" class="backBtn">Back</button>
-        <button type="submit">Save</button>
+        <button type="button" class="backBtn">Back</button>  
       </div>
       
       <div id="step4-others" class="step4 hidden">
         <h3>Additional Info (Others)</h3>
         <label>Booking Ref:</label><input type="text" name="bookingRef">
         <button type="button" class="backBtn">Back</button>
-        <button type="submit">Save</button>
       </div>
     `;
   } else if (tabName === "Stay") {
@@ -367,14 +364,3 @@ function closeFormOverlay(tripId) {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
