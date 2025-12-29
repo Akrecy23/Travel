@@ -285,24 +285,6 @@ async function renderTab(tabName, tripId, tripTitle) {
 
     // Dispatch a custom event once cards are ready
     document.dispatchEvent(new CustomEvent("BookingsRendered", {
-    detail: { tabName, tripId }
+    detail: { tabName, tripId, tripTitle}
     }));
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
