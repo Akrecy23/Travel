@@ -134,7 +134,7 @@ async function renderTab(tabName, tripId, tripTitle) {
           <div class="flight-timeline">
             <div class="flight-point">
               <div class="flight-time">${data.DepartureTime || '-'}</div>
-              <div class="flight-airport">${data.FromAirport || '-'}</div>
+              <div class="flight-airport">${data.FromPickUp || '-'}</div>
             </div>
             <div class="flight-duration">
               <div class="flight-line"></div>
@@ -143,7 +143,7 @@ async function renderTab(tabName, tripId, tripTitle) {
             </div>
             <div class="flight-point">
               <div class="flight-time">${data.ArrivalTime || '-'}</div>
-              <div class="flight-airport">${data.ToAirport || '-'}</div>
+              <div class="flight-airport">${data.ToDropOff || '-'}</div>
             </div>
           </div>
           
@@ -289,6 +289,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     }));
 
 }
+
 
 
 
