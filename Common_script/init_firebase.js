@@ -1,4 +1,4 @@
-// THIS SCRIPT INITIALISE CONNECTION TO FIREBASE CONSOLE
+// THIS SCRIPT INITIALISES CONNECTION TO FIREBASE CONSOLE
 // MUST RUN THIS FILE FIRST
 
 // ======== CONNECT TO FIREBASE ==========
@@ -39,3 +39,4 @@ auth.onAuthStateChanged(user => {
   // Fire event only when user has been authenticated
   document.dispatchEvent(new Event("UserAuthenticated"));
 });
+
