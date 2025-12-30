@@ -25,8 +25,8 @@ const authApp = firebase.initializeApp(firebaseAuthConfig); // default app
 const dataApp = firebase.initializeApp(firebaseDataConfig, "dataApp"); // secondary app
 
 // ======== CONNECT SERVICES ==========
-window.auth = firebase.auth(authApp);       // Auth uses unrestricted key
-window.db = firebase.firestore(dataApp);    // Firestore uses restricted key
+window.auth = authApp.auth();       // Auth uses unrestricted key
+window.db = dataApp.firestore();   // Firestore uses restricted key
 
 // ======== AUTH STATE HANDLING ==========
 window.AUTH_READY = false;
@@ -47,3 +47,4 @@ window.auth.onAuthStateChanged(user => {
   window.AUTH_READY = true;
   document.dispatchEvent(new Event("UserAuthenticated"));
 });
+
