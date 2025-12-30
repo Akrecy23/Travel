@@ -22,7 +22,7 @@ async function adjustTripDays(tripId, newStartDate, newEndDate) {
       await tripRef.collection("Expenses").doc(`Day ${i}`).set({ totalSum: 0 }, { merge: true });
 
       // Itinerary
-      await tripRef.collection("Itinerary").doc(`Day ${i}`).set({ Date: dayDate.toISOString().split("T")[0] }); // need edit here
+      await tripRef.collection("Itinerary").doc(`Day ${i}`).set({Date: formatDateString(dayDate)}, { merge: true }); // need edit here
     }
   } else if (newDayCount < oldDayCount) {
     // REMOVAL (reduced day(s))
