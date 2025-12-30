@@ -7,13 +7,41 @@ function formatDateString(dateStr) {
 }
 
 // Parse "Mar 12 - Mar 18, 2026" into start/end
+// Parse "Dec 28, 2025 - Jan 2, 2026" or "Dec 28 - Jan 2, 2025"
 function parseDateRange(rangeStr) {
   try {
     const [startPart, endPart] = rangeStr.split("-");
-    const year = rangeStr.match(/\d{4}/)[0];
-    const startDate = formatDateString(startPart.trim() + " " + year);
-    const endDate = formatDateString(endPart.trim());
-    return { tripStartDate: startDate, tripEndDate: endDate };
+    const trailingYearMatch = rangeStr.match(/(\d{4})\s*$/);
+    const trailingYear = trailingYearMatch ? parseInt(trailingYearMatch[1], 10) : undefined;
+
+    const startYearMatch = startPart.match(/(\d{4})/);
+    const endYearMatch = endPart.match(/(\d{4})/);
+
+    const startYear = startYearMatch ? parseInt(startYearMatch[1], 10) : trailingYear;
+    let endYear = endYearMatch ? parseInt(endYearMatch[1], 10) : trailingYear;
+
+    const startMD = startPart.replace(/,\s*\d{4}/, "").trim();
+    const endMD = endPart.replace(/,\s*\d{4}/, "").trim();
+
+    if (!endYear && startYear) endYear = startYear;
+
+    let startStr = `${startMD}, ${startYear}`;
+    let endStr = `${endMD}, ${endYear}`;
+
+    let startParsed = new Date(startStr);
+    let endParsed = new Date(endStr);
+
+    // If only one year was given and end < start, bump end year
+    if (!endYearMatch && startParsed && endParsed && endParsed < startParsed) {
+      endYear = startYear + 1;
+      endStr = `${endMD}, ${endYear}`;
+      endParsed = new Date(endStr);
+    }
+
+    return {
+      tripStartDate: formatDateString(startStr),
+      tripEndDate: formatDateString(endStr)
+    };
   } catch {
     return { tripStartDate: rangeStr, tripEndDate: "" };
   }
@@ -67,3 +95,4 @@ function getTripStatus(startDateStr, endDateStr) {
     countdown: `${diff} day${diff > 1 ? "s" : ""} till departure`
   };
 }
+
