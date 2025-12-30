@@ -60,7 +60,7 @@ async function openInvitationsModal() {
       `;
     }).join("");
 
-    // Attach listeners for accept/decline
+    // Attach listeners for accept
     content.querySelectorAll(".accept-btn").forEach(btn => {
       btn.addEventListener("click", async e => {
         const card = btn.closest(".invitation-card");
@@ -84,6 +84,7 @@ async function openInvitationsModal() {
             // Add collaborator to trip as a map keyed by UID
             await window.db.collection("Trips").doc(tripId).update({
               [`collaborators.${window.CURRENT_UID}`]: collaboratorObj
+              collaboratorIds: window.firebase.firestore.FieldValue.arrayUnion(window.CURRENT_UID)
             });
 
             // Delete invitation doc
@@ -95,13 +96,14 @@ async function openInvitationsModal() {
                 content.innerHTML = "<p>No invitations found.</p>";
             }
             } catch (err) {
-            console.error("Error accepting invitation:", err);
-            alert("Failed to accept invitation. Please try again.");
-            btn.disabled = false;
+              console.error("Error accepting invitation:", err);
+              alert("Failed to accept invitation. Please try again.");
+              btn.disabled = false;
             }
         });
         });
 
+        // Attach listeners for decline
         content.querySelectorAll(".decline-btn").forEach(btn => {
         btn.addEventListener("click", async e => {
             const card = btn.closest(".invitation-card");
@@ -121,9 +123,9 @@ async function openInvitationsModal() {
                 content.innerHTML = "<p>No invitations found.</p>";
             }
             } catch (err) {
-            console.error("Error declining invitation:", err);
-            alert("Failed to decline invitation. Please try again.");
-            btn.disabled = false;
+              console.error("Error declining invitation:", err);
+              alert("Failed to decline invitation. Please try again.");
+              btn.disabled = false;
             }
         });
     });
@@ -132,3 +134,4 @@ async function openInvitationsModal() {
     content.innerHTML = "<p>Something went wrong while loading invitations.</p>";
   }
 }
+
