@@ -34,9 +34,11 @@ auth.onAuthStateChanged(user => {
     window.CURRENT_UID = user.uid;
   } else {
     window.CURRENT_UID = null;
+    alert("Session expired. Please sign in again.");
   }
   window.AUTH_READY = true;
   // Fire event only when user has been authenticated
   document.dispatchEvent(new Event("UserAuthenticated"));
 });
+
 
