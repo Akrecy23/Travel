@@ -64,7 +64,7 @@ async function handleGoogleSignUp() {
     } else {
       // If account already exists, ask user to sign in
       alert("This account already exists. Please sign in instead.");
-      await auth.signOut();
+      await window.auth.signOut();
       return;
     }
   } catch (error) {
@@ -73,5 +73,6 @@ async function handleGoogleSignUp() {
   }
 
 }
+
 
 
