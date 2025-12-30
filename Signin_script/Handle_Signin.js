@@ -1,7 +1,7 @@
 // THIS SCRIPT CONTAINS CODE ON HANDLING USER SIGN IN
 
 // ======= INITIALISE FIREBASE AUTH =======
-const auth = firebase.auth();
+const auth = window.auth;
 
 // ======= HANDLE GOOGLE SIGN IN =========
 async function handleGoogleSignIn() {
@@ -50,5 +50,6 @@ async function handleGoogleSignIn() {
   }
 
 }
+
 
 
