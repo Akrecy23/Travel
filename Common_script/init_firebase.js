@@ -1,17 +1,9 @@
 // THIS SCRIPT INITIALISES CONNECTION TO FIREBASE CONSOLE
 // MUST RUN THIS FILE FIRST
 
-// ======== CONFIGS ==========
-// Unrestricted key for Auth (refresh must not be blocked)
-const firebaseAuthConfig = {
-  apiKey: "AIzaSyA1ihDzBAQ31SchaK3FbaR4QtJZzQqK0s4",
-  authDomain: "travel-328e8.firebaseapp.com",
-  projectId: "travel-328e8",
-};
-
-// Restricted key for Firestore/Storage (domain/API restrictions applied)
-const firebaseDataConfig = {
-  apiKey: "AIzaSyCyugbx_pPHi9pv3e9ljG2i6wziYnmTrvE",
+// ======== CONFIG ==========
+const firebaseConfig = {
+  apiKey: "AIzaSyCyugbx_pPHi9pv3e9ljG2i6wziYnmTrvE",   // restricted key
   authDomain: "travel-328e8.firebaseapp.com",
   projectId: "travel-328e8",
   storageBucket: "travel-328e8.firebasestorage.app",
@@ -20,13 +12,12 @@ const firebaseDataConfig = {
   measurementId: "G-9YWYBETLM3"
 };
 
-// ======== INITIALISE APPS ==========
-const authApp = firebase.initializeApp(firebaseAuthConfig); // default app
-const dataApp = firebase.initializeApp(firebaseDataConfig, "dataApp"); // secondary app
+// ======== INITIALISE APP ==========
+firebase.initializeApp(firebaseConfig);
 
 // ======== CONNECT SERVICES ==========
-window.auth = authApp.auth();       // Auth uses unrestricted key
-window.db = dataApp.firestore();   // Firestore uses restricted key
+window.auth = firebase.auth();        // Auth + Firestore share same app
+window.db   = firebase.firestore();
 
 // ======== AUTH STATE HANDLING ==========
 window.AUTH_READY = false;
@@ -47,4 +38,3 @@ window.auth.onAuthStateChanged(user => {
   window.AUTH_READY = true;
   document.dispatchEvent(new Event("UserAuthenticated"));
 });
-
