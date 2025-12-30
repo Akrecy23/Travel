@@ -50,7 +50,8 @@ async function openCollaboratorsModal(tripId) {
             try {
               // Remove collaborator from map
               await window.db.collection("Trips").doc(tripId).update({
-                [`collaborators.${uid}`]: window.firebase.firestore.FieldValue.delete()
+                [`collaborators.${uid}`]: window.firebase.firestore.FieldValue.delete(),
+                collaboratorIds: window.firebase.firestore.FieldValue.arrayRemove(uid)
               });
 
               card.remove();
