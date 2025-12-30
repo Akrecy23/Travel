@@ -1,8 +1,5 @@
 // THIS SCRIPT CONTAINS CODE ON HANDLING USER SIGN IN
 
-// ======= INITIALISE FIREBASE AUTH =======
-const auth = window.auth;
-
 // ======= HANDLE GOOGLE SIGN IN =========
 async function handleGoogleSignIn() {
   const provider = new firebase.auth.GoogleAuthProvider();
@@ -46,10 +43,11 @@ async function handleGoogleSignIn() {
     window.location.href = "home.html";
   } catch (error) {
     console.error('Google sign-up error:', error);
-    alert(`Google sign-up failed: ${error.message}`);
+    alert(`Google sign-in failed: ${error.message}`);
   }
 
 }
+
 
 
 
