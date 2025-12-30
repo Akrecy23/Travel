@@ -170,8 +170,17 @@ async function getTripDateInfo(tripStartDate, tripEndDate) {
 
   // Format date range
   const options = { month: "short", day: "numeric" };
-  const year = firstDate.getFullYear();
-  const dateRange = `${firstDate.toLocaleDateString("en-US", options)} – ${lastDate.toLocaleDateString("en-US", options)}, ${year}`;
+  const startY = firstDate.getFullYear();
+  const endY = lastDate.getFullYear();
+
+  let dateRange;
+  if (startY === endY) {
+    // Same year → show year once
+    dateRange = `${firstDate.toLocaleDateString("en-US", options)} – ${lastDate.toLocaleDateString("en-US", options)}, ${startY}`;
+  } else {
+    // Different years → show both
+    dateRange = `${firstDate.toLocaleDateString("en-US", options)}, ${startY} – ${lastDate.toLocaleDateString("en-US", options)}, ${endY}`;
+  }
 
   // Determine status based on current date
   let status = "Upcoming";
@@ -198,6 +207,7 @@ function parseDate(dateStr) {
   return new Date(cleaned);
 
 }
+
 
 
 
