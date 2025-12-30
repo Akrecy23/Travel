@@ -83,7 +83,7 @@ async function openInvitationsModal() {
 
             // Add collaborator to trip as a map keyed by UID
             await window.db.collection("Trips").doc(tripId).update({
-              [`collaborators.${window.CURRENT_UID}`]: collaboratorObj
+              [`collaborators.${window.CURRENT_UID}`]: collaboratorObj,
               collaboratorIds: window.firebase.firestore.FieldValue.arrayUnion(window.CURRENT_UID)
             });
 
@@ -134,4 +134,5 @@ async function openInvitationsModal() {
     content.innerHTML = "<p>Something went wrong while loading invitations.</p>";
   }
 }
+
 
