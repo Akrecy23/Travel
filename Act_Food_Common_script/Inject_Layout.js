@@ -99,7 +99,7 @@ function createHomeFrontLayout() {
   });
 
   // ===== AUTH LOGIC =====
-  const auth = window.auth();
+  const auth = window.auth;
 
   // ===== SIGN OUT BUTTON LOGIC =====
   const signOutBtn = document.getElementById("signOutBtn");
@@ -127,4 +127,5 @@ function createHomeFrontLayout() {
   // document.dispatchEvent(new Event("HomeFrontLayoutReady"));
 
 }
+
 
