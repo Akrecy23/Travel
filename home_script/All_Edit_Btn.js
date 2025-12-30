@@ -77,6 +77,10 @@ async function enableCardEditing(tripId, card) {
         await tripRef.update(updateData);
       }
 
+      if (tripStartDate && tripEndDate) {
+        await adjustTripDays(tripId, new Date(tripStartDate), new Date(tripEndDate));
+      }
+
       // Update card object in memory
       const tripData = window.tripData || {};
       const allArrays = ["current", "upcoming", "past"];
@@ -139,4 +143,5 @@ async function enableCardEditing(tripId, card) {
       card.classList.remove("editing-front");
     }
   });
+
 }
