@@ -23,10 +23,21 @@ document.addEventListener("HomeFrontLayoutReady", async () => {
   let currentCount = 0;
   let pastCount = 0;
 
-  const formatDate = date => {
-    const options = { month: "short", day: "numeric" };
-    return date.toLocaleDateString("en-US", options);
+  // helper inside Home_Front_Card.js
+  const formatMD = (d) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  
+  const buildDateRange = (start, end) => {
+    const startMD = formatMD(start);
+    const endMD = formatMD(end);
+    const startY = start.getFullYear();
+    const endY = end.getFullYear();
+  
+    if (startY === endY) {
+      return `${startMD} - ${endMD}, ${startY}`;
+    }
+    return `${startMD}, ${startY} - ${endMD}, ${endY}`;
   };
+
 
   // ✅ Fetch trips the user owns or collaborates on for current + next year
   const tripsRef = window.db.collection("Trips");
@@ -66,7 +77,7 @@ document.addEventListener("HomeFrontLayoutReady", async () => {
       tripId: tripId,
       title: title,
       location: countryName,
-      dateRange: `${formatDate(startDate)} - ${formatDate(endDate)}, ${year}`,
+      dateRange: buildDateRange(startDate, endDate),
       countdown,
       image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80",
       year,
@@ -249,5 +260,6 @@ document.addEventListener("HomeCardsReady", () => {
     });
   }
 });
+
 
 
