@@ -43,8 +43,8 @@ document.addEventListener("HomeFrontLayoutReady", async () => {
   const tripsRef = window.db.collection("Trips");
   const ownedQuery = tripsRef.where("ownerUid", "==", currentUserId)
                              .where("year", "in", [currentYear, nextYear]);
-  const collabQuery = tripsRef.where(`collaborators.${currentUserId}`, "!=", null)
-                              .where("year", "in", [currentYear, nextYear]);
+  const collabQuery = tripsRef.where("collaboratorIds", "array-contains", currentUserId)
+                              .where("year", "in", [currentYear, nextYear]);    
 
   const [ownedSnap, collabSnap] = await Promise.all([ownedQuery.get(), collabQuery.get()]);
 
@@ -260,6 +260,7 @@ document.addEventListener("HomeCardsReady", () => {
     });
   }
 });
+
 
 
 
