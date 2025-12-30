@@ -57,7 +57,7 @@ async function fetchTripsAndRenderTabs(yearId, countryFilters, groupFilters) {
     .get();
 
   const collabSnap = await window.db.collection("Trips")
-    .where(`collaborators.${currentUserId}`, "!=", null)   // field exists
+    .where("collaboratorIds", "array-contains", currentUserId)
     .where("year", "==", parseInt(yearId))
     .get();
 
@@ -204,6 +204,7 @@ function parseDate(dateStr) {
   return new Date(cleaned);
 
 }
+
 
 
 
