@@ -65,7 +65,7 @@ function loadYear() {
   const tripsRef = window.db.collection("Trips");
   // Query trips where user is owner or collaborator
   const ownedQuery = tripsRef.where("ownerUid", "==", currentUserId);
-  const collabQuery = tripsRef.where(`collaborators.${currentUserId}`, "!=", null);
+  const collabQuery = tripsRef.where("collaboratorIds", "array-contains", currentUserId);
   // Get a collection of unique years in each queried trips
   Promise.all([ownedQuery.get(), collabQuery.get()])
     .then(([ownedSnap, collabSnap]) => {
@@ -103,4 +103,5 @@ function loadYear() {
     });
 
 }
+
 
