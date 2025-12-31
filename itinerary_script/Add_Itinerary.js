@@ -10,7 +10,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
       </div>
       <form id="activityForm">
         <label>Time</label>
-        <input type="text" name="time" placeholder="e.g. 09:30 AM" required>
+        <input type="text" name="time" placeholder="e.g. 09:30 AM">
         <label>Description</label>
         <input type="text" name="description" placeholder="Activity description" required>
         <label>Address</label>
@@ -98,4 +98,5 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
     formModal.remove();
     renderDay(dayIndex);
   });
+
 }
