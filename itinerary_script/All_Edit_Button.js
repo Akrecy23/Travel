@@ -6,17 +6,17 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
   const tagEl = entry.querySelector(".box .tag");
 
   // Store originals
-  const originalTime = timeEl.textContent || "(Time)";
-  const originalDesc = descEl.textContent || "(Activity Header)";
-  const originalRemarks = remarksEl.textContent || "(Remarks)";
-  const originalTag = tagEl ? tagEl.textContent : "(Tag - About)";
+  const originalTime = timeEl.textContent || "";
+  const originalDesc = descEl.textContent || "";
+  const originalRemarks = remarksEl.textContent || "";
+  const originalTag = tagEl ? tagEl.textContent : "";
 
   // Replace with inputs
-  timeEl.innerHTML = `<input type="text" class="edit-time" value="${originalTime}">`;
-  descEl.innerHTML = `<input type="text" class="edit-description" value="${originalDesc}">`;
-  remarksEl.innerHTML = `<textarea class="edit-remarks">${originalRemarks}</textarea>`;
+  timeEl.innerHTML = `<input type="text" class="edit-time" placeholder="(Time)" value="${originalTime}">`;
+  descEl.innerHTML = `<input type="text" class="edit-description" placeholder="(Activity Header)" value="${originalDesc}">`;
+  remarksEl.innerHTML = `<textarea class="edit-remarks" placeholder="(Remarks)">${originalRemarks}</textarea>`;
   if (tagEl) {
-    tagEl.outerHTML = `<input type="text" class="edit-tag" value="${originalTag}">`;
+    tagEl.outerHTML = `<input type="text" class="edit-tag" placeholder="(Tag - About)" value="${originalTag}">`;
   } else {
     remarksEl.insertAdjacentHTML("afterend", `<input type="text" class="edit-tag" placeholder="Enter tag">`);
   }
@@ -80,4 +80,5 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
       actions.style.display = "flex";
     }
   });
+
 }
