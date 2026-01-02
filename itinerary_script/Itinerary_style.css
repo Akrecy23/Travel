@@ -359,8 +359,29 @@
 }
 .tag.Transport { background: #dbeafe; color: #1e3a8a; }
 .tag.Accommodation { background: #fce7f3; color: #9d174d; }
+/* Food Sub-Tags */
 .tag.Food { background: #fef9c3; color: #92400e; }
+.tag.Chinese     { background: #fde68a; color: #78350f; }   /* warm orange */
+.tag.Japanese    { background: #e0f2fe; color: #075985; }   /* cool blue */
+.tag.Italian     { background: #fcd34d; color: #7c2d12; }   /* golden brown */
+.tag.Indian      { background: #fee2e2; color: #7f1d1d; }   /* soft red */
+.tag.Mexican     { background: #fef3c7; color: #92400e; }   /* earthy orange */
+.tag.Korean      { background: #dbeafe; color: #1e3a8a; }   /* deep blue */
+.tag.Thai        { background: #d1fae5; color: #065f46; }   /* fresh green */
+.tag.Vegetarian  { background: #ecfccb; color: #365314; }   /* leafy green */
+.tag.Seafood     { background: #cffafe; color: #164e63; }   /* aqua */
+
+/* Activity Sub-Tags */
 .tag.Activity { background: #d1fae5; color: #065f46; }
+.tag.Workshop    { background: #e0e7ff; color: #3730a3; }   /* indigo */
+.tag.Shopping    { background: #fbcfe8; color: #9d174d; }   /* pink */
+.tag.Hiking      { background: #bbf7d0; color: #166534; }   /* forest green */
+.tag.Museum, .tag.Exhibition      { background: #f3e8ff; color: #6b21a8; }   /* purple */
+.tag.Concert     { background: #fee2e2; color: #b91c1c; }   /* red */
+.tag.Sports      { background: #e0f2fe; color: #0369a1; }   /* sporty blue */
+.tag.Beach       { background: #fef9c3; color: #92400e; }   /* sandy yellow */
+.tag.Cultural    { background: #fde68a; color: #78350f; }   /* earthy orange */
+.tag.Relaxation  { background: #d1fae5; color: #065f46; }   /* calming green */
 
 /* ========= ADD ITINERARY FORM ========== */
 .activity-form-modal {
@@ -433,4 +454,5 @@
 
 .activity-form-modal button[type="submit"]:hover {
   background: #004d40;
+
 }
