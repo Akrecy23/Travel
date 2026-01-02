@@ -66,13 +66,8 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
           About: newTag
         });
 
-      // Restore UI with new values
-      timeEl.textContent = newTime;
-      descEl.textContent = newDesc;
-      remarksEl.textContent = newRemarks;
-      entry.querySelector(".edit-tag").outerHTML = newTag
-        ? `<span class="tag Default ${newTag}">${newTag}</span>`
-        : "";
+      // Restore UI
+      window.renderDay(window.dayIndex);
     } catch (err) {
       console.error("Error updating activity:", err);
     } finally {
@@ -82,3 +77,4 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
   });
 
 }
+
