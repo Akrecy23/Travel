@@ -272,11 +272,11 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
 
         // Query trips owned or collaborated by user
         const ownedSnap = await window.db.collection("Trips")
-          .where("ownerUid", "==", currentUserId)
+          .where("ownerUid", "==", userId)
           .get();
       
         const collabSnap = await window.db.collection("Trips")
-          .where("collaboratorIds", "array-contains", currentUserId)
+          .where("collaboratorIds", "array-contains", userId)
           .get();
       
         const allTrips = [...ownedSnap.docs, ...collabSnap.docs];
@@ -421,3 +421,4 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
