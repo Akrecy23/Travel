@@ -18,7 +18,18 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
         <label>Remarks</label>
         <textarea name="remarks" placeholder="Additional notes"></textarea>
         <label>About</label>
-        <input type="text" name="about" placeholder="Tags or category">
+        <select name="about" id="aboutSelect" required>
+          <option value="">-- Select --</option>
+          <option value="Transport">Transport</option>
+          <option value="Accommodation">Accommodation</option>
+          <option value="Food">Food</option>
+          <option value="Activity">Activity</option>
+        </select>
+        <label>Tag</label>
+        <div id="tagWrapper" style="display:none;">
+          <label>Tag</label>
+          <input type="text" name="tag" id="tagInput" placeholder="">
+        </div>
         <div class="form-actions">
           <button type="submit">Save</button>
         </div>
@@ -30,6 +41,26 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
   formModal.querySelector(".close-form").addEventListener("click", () => {
     formModal.remove();
   });
+  
+  // Show/hide tag input depending on About selection
+  const aboutSelect = formModal.querySelector("#aboutSelect");
+  const tagWrapper = formModal.querySelector("#tagWrapper");
+  const tagInput = formModal.querySelector("#tagInput");
+
+  aboutSelect.addEventListener("change", () => {
+    const val = aboutSelect.value;
+    if (val === "Food") {
+      tagWrapper.style.display = "block";
+      tagInput.placeholder = "e.g. Chinese, Japanese, Italian";
+    } else if (val === "Activity") {
+      tagWrapper.style.display = "block";
+      tagInput.placeholder = "e.g. Workshop, Shopping, Hiking";
+    } else {
+      tagWrapper.style.display = "none";
+      tagInput.value = ""; // clear
+    }
+  });
+  
   // Handle form submission
   formModal.querySelector("#activityForm").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -39,6 +70,12 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
     const address = formData.get("address").trim();
     const remarks = formData.get("remarks").trim();
     const about = formData.get("about").trim();
+    let tag = formData.get("tag").trim();
+
+    // If About is Transport or Accommodation, tag = about
+    if (about === "Transport" || about === "Accommodation") {
+      tag = about;
+    }
 
     // Auto-format shorthand inputs like "930am" or "2pm"
     const shorthandRegex = /^(\d{1,2})(\d{2})?\s?(am|pm)$/i;
@@ -81,6 +118,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
       Address: address,
       Remarks: remarks,
       About: about,
+      Tag: tag,
       Order: activityCount + 1
     });
     // Push new activity to array
@@ -91,6 +129,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
       address: address,
       remarks: remarks,
       about: about,
+      tags: tag,
       order: activityCount + 1
     });
 
@@ -100,3 +139,4 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
   });
 
 }
+
