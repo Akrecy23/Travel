@@ -430,7 +430,8 @@
 }
 
 .activity-form-modal input,
-.activity-form-modal textarea {
+.activity-form-modal textarea,
+.activity-form-modal select {
   width: 100%;
   padding: 0.5rem;
   margin-top: 0.25rem;
@@ -454,5 +455,9 @@
 
 .activity-form-modal button[type="submit"]:hover {
   background: #004d40;
+}
 
+/* Tag dropdown wrapper spacing */
+.activity-form-modal #tagWrapper {
+  margin-top: 0.5rem;
 }
