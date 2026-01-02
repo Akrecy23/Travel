@@ -35,7 +35,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
   tagWrapper.style.marginTop = "0.5rem";
   tagWrapper.style.display = "none";
   tagWrapper.innerHTML = `<select class="edit-tag"></select>`;
-  remarksEl.insertAdjacentElement("afterend", tagWrapper);
+  aboutSelect.insertAdjacentElement("afterend", tagWrapper);
 
   const aboutSelect = entry.querySelector(".edit-about");
   const tagSelect = tagWrapper.querySelector(".edit-tag");
@@ -142,4 +142,5 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
     }
   });
 }
+
 
