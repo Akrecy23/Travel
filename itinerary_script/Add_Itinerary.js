@@ -24,6 +24,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
           <option value="Accommodation">Accommodation</option>
           <option value="Food">Food</option>
           <option value="Activity">Activity</option>
+          <option value="Others">Others</option>
         </select>
         <label>Tag</label>
         <div id="tagWrapper" style="display:none;">
@@ -73,7 +74,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
     let tag = formData.get("tag").trim();
 
     // If About is Transport or Accommodation, tag = about
-    if (about === "Transport" || about === "Accommodation") {
+    if (about === "Transport" || about === "Accommodation" || about === "Others") {
       tag = about;
     }
 
@@ -139,4 +140,5 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
   });
 
 }
+
 
