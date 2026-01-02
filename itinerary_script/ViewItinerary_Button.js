@@ -71,7 +71,7 @@ async function openItineraryModal(tripId) {
     <button class="${i === 0 ? "active" : ""}" data-day="${i}">${d.day}</button>
   `).join("");
   // ===== Render Day Content =====
-  function renderDay(dayIndex) {
+  window.renderDay = function(dayIndex) {
     if (days.length === 0) {
       modalContent.innerHTML = "<p>No itinerary days found.</p>";
       return;
@@ -206,17 +206,19 @@ async function openItineraryModal(tripId) {
         day.activities.length,
         dayIndex,
         days,          // pass the array in
-        renderDay      // pass the render callback
+        window.renderDay      // pass the render callback
       );
     });
   }
-  renderDay(0);
+  window.dayIndex = 0;
+  window.renderDay(window.dayIndex);
   // Tab switching
   modalTabs.querySelectorAll("button").forEach(btn => {
     btn.addEventListener("click", () => {
       modalTabs.querySelectorAll("button").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      renderDay(parseInt(btn.dataset.day));
+      window.dayIndex = parseInt(btn.dataset.day);
+      window.renderDay(window.dayIndex);
     });
   });
 
@@ -230,3 +232,4 @@ async function openItineraryModal(tripId) {
     }
   };
 }
+
