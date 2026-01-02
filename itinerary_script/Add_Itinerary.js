@@ -29,7 +29,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
         <label>Tag</label>
         <div id="tagWrapper" style="display:none;">
           <label>Tag</label>
-          <input type="text" name="tag" id="tagInput" placeholder="">
+          <select name="tag" id="tagSelect"></select>
         </div>
         <div class="form-actions">
           <button type="submit">Save</button>
@@ -46,20 +46,42 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
   // Show/hide tag input depending on About selection
   const aboutSelect = formModal.querySelector("#aboutSelect");
   const tagWrapper = formModal.querySelector("#tagWrapper");
-  const tagInput = formModal.querySelector("#tagInput");
+  const tagSelect = formModal.querySelector("#tagSelect");
+
+  // Populate tag dropdown depending on About selection
+  function populateTags(aboutVal) {
+    tagSelect.innerHTML = "";
+    if (aboutVal === "Food") {
+      [
+        "Chinese","Japanese","Italian","Indian","Mexican",
+        "Korean","Thai","Vegetarian","Seafood","Others"
+      ].forEach(opt => {
+        const o = document.createElement("option");
+        o.value = opt;
+        o.textContent = opt;
+        tagSelect.appendChild(o);
+      });
+      tagWrapper.style.display = "block";
+    } else if (aboutVal === "Activity") {
+      [
+        "Workshop","Shopping","Hiking","Museum","Exhibition","Concert",
+        "Sports","Beach","Cultural","Relaxation","Others"
+      ].forEach(opt => {
+        const o = document.createElement("option");
+        o.value = opt;
+        o.textContent = opt;
+        tagSelect.appendChild(o);
+      });
+      tagWrapper.style.display = "block";
+    } else {
+      tagWrapper.style.display = "none";
+      tagSelect.innerHTML = "";
+    }
+  }
 
   aboutSelect.addEventListener("change", () => {
     const val = aboutSelect.value;
-    if (val === "Food") {
-      tagWrapper.style.display = "block";
-      tagInput.placeholder = "e.g. Chinese, Japanese, Italian";
-    } else if (val === "Activity") {
-      tagWrapper.style.display = "block";
-      tagInput.placeholder = "e.g. Workshop, Shopping, Hiking";
-    } else {
-      tagWrapper.style.display = "none";
-      tagInput.value = ""; // clear
-    }
+    populateTags(val)
   });
   
   // Handle form submission
@@ -70,10 +92,10 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
     const description = formData.get("description").trim();
     const address = formData.get("address").trim();
     const remarks = formData.get("remarks").trim();
-    const about = formData.get("about").trim();
+    const about = formData.get("about");
     let tag = formData.get("tag").trim();
 
-    // If About is Transport or Accommodation, tag = about
+    // For Transport/Accommodation/Others, tag = about
     if (about === "Transport" || about === "Accommodation" || about === "Others") {
       tag = about;
     }
@@ -140,5 +162,6 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
   });
 
 }
+
 
 
