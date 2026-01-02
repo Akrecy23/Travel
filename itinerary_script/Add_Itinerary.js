@@ -25,7 +25,6 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
           <option value="Activity">Activity</option>
           <option value="Others">Others</option>
         </select>
-        <label>Tag</label>
         <div id="tagWrapper" style="display:none;">
           <label>Tag</label>
           <select name="tag" id="tagSelect"></select>
@@ -161,6 +160,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
   });
 
 }
+
 
 
 
