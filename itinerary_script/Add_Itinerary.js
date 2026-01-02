@@ -19,7 +19,6 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
         <textarea name="remarks" placeholder="Additional notes"></textarea>
         <label>About</label>
         <select name="about" id="aboutSelect" required>
-          <option value="">-- Select --</option>
           <option value="Transport">Transport</option>
           <option value="Accommodation">Accommodation</option>
           <option value="Food">Food</option>
@@ -162,6 +161,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
   });
 
 }
+
 
 
 
