@@ -103,7 +103,7 @@ function initialiseFilters() {
   const ownedQuery = tripsRef.where("year", "==", yearNum)
                              .where("ownerUid", "==", currentUserId);
   const collabQuery = tripsRef.where("year", "==", yearNum)
-                              .where("collaborators", "array-contains", currentUserId);
+                              .where("collaboratorIds", "array-contains", currentUserId);
   Promise.all([ownedQuery.get(), collabQuery.get()])
     .then(([ownedSnap, collabSnap]) => {
       const countries = new Set();
@@ -241,6 +241,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
