@@ -249,45 +249,54 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         // Fetch country of food
         const countryId = card.dataset.country;
 
-        // Fetch years from Firestore
-        const yearsSnap = await window.db
-          .collection("User").doc(userId)
-          .collection("Year").get();
+        // Query trips owned or collaborated by user
+        const ownedSnap = await window.db.collection("Trips")
+          .where("ownerUid", "==", currentUserId)
+          .get();
+      
+        const collabSnap = await window.db.collection("Trips")
+          .where("collaboratorIds", "array-contains", currentUserId)
+          .get();
+      
+        const allTrips = [...ownedSnap.docs, ...collabSnap.docs];
+
+        // After fetching allTrips (owned + collab)
         const yearDropdown = tripExpand.querySelector(".year-dropdown");
         const tripDropdown = tripExpand.querySelector(".trip-dropdown");
         yearDropdown.innerHTML = "";
-        // Populate year dropdown with doc IDs
-        yearsSnap.forEach(doc => {
+        tripDropdown.innerHTML = "";
+        
+        // Collect unique years from trip documents
+        const yearSet = new Set();
+        for (const tripDoc of allTrips) {
+          const tripData = tripDoc.data();
+          if (tripData.year) {
+            yearSet.add(tripData.year); // year is stored as number or string in trip doc
+          }
+        }
+        
+        // Populate year dropdown with unique years
+        Array.from(yearSet).sort().forEach(yearVal => {
           const opt = document.createElement("option");
-          opt.value = doc.id;      // Year string (e.g., "2023")
-          opt.textContent = doc.id;
+          opt.value = yearVal;
+          opt.textContent = yearVal;
           yearDropdown.appendChild(opt);
         });
+        
         // Add year listener once: When year selected, fetch trips
         if (!yearDropdown.dataset.listenerAttached){
           yearDropdown.addEventListener("yearChange", async () => {
             const selectedYear = yearDropdown.value;
             // Clear trip dropdown first
             tripDropdown.innerHTML = "";
-            const groupsSnap = await window.db
-              .collection("User").doc(userId)
-              .collection("Year").doc(selectedYear)
-              .collection("Country").doc(countryId)
-              .collection("Group")
-              .get();
-
-            // Populate trips from all groups
-            for (const groupDoc of groupsSnap.docs) {
-              const tripsSnap = await groupDoc.ref.collection("Trip").get();
-
-              tripsSnap.forEach(tripDoc => {
-                const opt = document.createElement("option");
-                opt.value = tripDoc.id;
-                opt.textContent = tripDoc.id;
-                opt.dataset.groupId = groupDoc.id; // store group ID for itinerary lookup
-                tripDropdown.appendChild(opt);
-              });
-            }
+            const tripsForYear = allTrips.filter(doc => doc.data().year === selectedYear);
+            tripsForYear.forEach(tripDoc => {
+              const opt = document.createElement("option");
+              opt.value = tripDoc.id;
+              opt.textContent = tripDoc.data().title || tripDoc.id;
+              tripDropdown.appendChild(opt);
+            });
+            
             // Clear itinerary days list first
             const dayRow = tripExpand.querySelector(".day-select-row");
             dayRow.innerHTML = "";
@@ -295,17 +304,11 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
             if (!tripDropdown.dataset.listenerAttached) {
               tripDropdown.addEventListener("tripChange", async () => {
                 const selectedTripId = tripDropdown.value;
-                const groupId = tripDropdown.selectedOptions[0].dataset.groupId;
-
                 dayRow.innerHTML = "";
 
                 // Fetch itinerary days
                 const itinerarySnap = await window.db
-                  .collection("User").doc(userId)
-                  .collection("Year").doc(selectedYear)
-                  .collection("Country").doc(countryId)
-                  .collection("Group").doc(groupId)
-                  .collection("Trip").doc(selectedTripId)
+                  .collection("Trips").doc(selectedTripId)
                   .collection("Itinerary")
                   .get();
 
@@ -343,10 +346,6 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
             // Get selected Year
             const selectedYear = yearDropdown.value;
 
-            // Get Group
-            const selectedOption = tripDropdown.selectedOptions[0];
-            const groupId = selectedOption.dataset.groupId;
-
             // Get selected Trip
             const selectedTrip = tripDropdown.value;
 
@@ -362,13 +361,10 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
               });
               // Add to Itinerary
               const itineraryDayRef = window.db
-                .collection("User").doc(userId)
-                .collection("Year").doc(selectedYear)
-                .collection("Country").doc(countryId)
-                .collection("Group").doc(groupId)
-                .collection("Trip").doc(selectedTrip)
+                .collection("Trips").doc(selectedTrip)
                 .collection("Itinerary").doc(dayRadio)
-                .collection("Activities")
+                .collection("Activities");
+              
               // Count existing docs to determine next Order
               const existingSnap = await itineraryDayRef.get();
               const nextOrder = existingSnap.size + 1;
