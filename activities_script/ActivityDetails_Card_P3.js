@@ -306,7 +306,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         
         // Add year listener once: When year selected, fetch trips
         if (!yearDropdown.dataset.listenerAttached){
-          yearDropdown.addEventListener("yearChange", async () => {
+          yearDropdown.addEventListener("change", async () => {
             const selectedYear = yearDropdown.value;
             // Clear trip dropdown first
             tripDropdown.innerHTML = "";
@@ -323,7 +323,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
             dayRow.innerHTML = "";
             // Add Trip listener once: When Trip selected, fetch Itinerary Days
             if (!tripDropdown.dataset.listenerAttached) {
-              tripDropdown.addEventListener("tripChange", async () => {
+              tripDropdown.addEventListener("change", async () => {
                 const selectedTripId = tripDropdown.value;
                 dayRow.innerHTML = "";
 
@@ -349,7 +349,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
             }
             if (tripDropdown.options.length > 0) {
               tripDropdown.selectedIndex = 0; // ensure first option is selected
-              tripDropdown.dispatchEvent(new Event("tripChange")); // 🔑 trigger change once
+              tripDropdown.dispatchEvent(new Event("change")); // 🔑 trigger change once
             }
           })
           yearDropdown.dataset.listenerAttached = "true";
@@ -358,7 +358,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         // After populating dropdown options
         if (yearDropdown.options.length > 0) {
           yearDropdown.selectedIndex = 0; // ensure first option is selected
-          yearDropdown.dispatchEvent(new Event("yearChange")); // 🔑 trigger change once
+          yearDropdown.dispatchEvent(new Event("change")); // 🔑 trigger change once
         }
         // Confirm button
         const confirmBtn = tripExpand.querySelector(".trip-confirm-btn");
@@ -421,4 +421,5 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
