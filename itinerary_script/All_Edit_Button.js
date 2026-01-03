@@ -95,7 +95,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
     descEl.textContent = originalDesc;
     remarksEl.textContent = originalRemarks;
     if (originalTag) {
-      tagWrapper.outerHTML = `<span class="tag Default ${originalTag}">${originalTag}</span>`;
+      tagWrapper.innerHTML = `<span class="tag Default ${originalTag}">${originalTag}</span>`;
     } else {
       tagWrapper.remove();
     }
@@ -141,6 +141,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
     }
   });
 }
+
 
 
 
