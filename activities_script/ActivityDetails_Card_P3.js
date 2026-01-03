@@ -244,9 +244,8 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         }
         
         window.location.href = mapsUrl;
-      }
-    });
-  }
+      });
+    }
       
 
     // ========== ADDRESS EDIT ==========
@@ -476,6 +475,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
 
 
