@@ -194,6 +194,61 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       card.classList.remove("flipped");
     });
 
+    // ========== MAP CONTAINER ===========
+    const mapContainer = card.querySelector(`.map-container#map-${data.id}`);
+    if (mapContainer) {
+      mapContainer.addEventListener("click", () => {
+        const address = card.getAttribute("data-address");
+        if (!address) {
+          console.warn("No address available for directions");
+          return;
+        }
+        
+        const encodedAddress = encodeURIComponent(address);
+        const ua = navigator.userAgent;
+        let mapsUrl;
+      
+        // iOS
+        if (/iPhone|iPad|iPod/i.test(ua)) {
+          const googleMapsUrl = `comgooglemaps://?q=${encodedAddress}`;
+          const appleMapsUrl = `http://maps.apple.com/?q=${encodedAddress}`;
+        
+          let opened = false;
+          const handleVisibility = () => {
+            opened = true;
+            document.removeEventListener("visibilitychange", handleVisibility);
+          };
+          document.addEventListener("visibilitychange", handleVisibility);
+        
+          // Try Google Maps
+          window.location.href = googleMapsUrl;
+      
+          // After 500ms, if still visible → Google Maps is NOT installed → open Apple Maps
+          setTimeout(() => {
+            if (!opened) {
+              window.location.href = appleMapsUrl;
+            }
+          }, 3000);
+        
+          return;
+        }
+        
+        // Android
+        else if (/Android/i.test(ua)) {
+          mapsUrl = `geo:0,0?q=${encodedAddress}`;
+        }
+        
+        // Desktop
+        else {
+          mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+        }
+        
+        window.location.href = mapsUrl;
+      }
+    });
+  }
+      
+
     // ========== ADDRESS EDIT ==========
     const addrEditBtn = card.querySelector(".addr-edit-btn");
     const addressLabel = card.querySelector(".address-label");
@@ -421,6 +476,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
 
 
