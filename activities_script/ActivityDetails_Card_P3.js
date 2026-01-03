@@ -198,8 +198,8 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
     const mapContainer = card.querySelector(`.map-container#map-${data.id}`);
     if (mapContainer) {
       mapContainer.addEventListener("click", () => {
-        const address = card.getAttribute("data-address");
-        if (!address) {
+        const address = data.Address || "";
+        if (address == "") {
           console.warn("No address available for directions");
           return;
         }
@@ -475,6 +475,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
 
 
