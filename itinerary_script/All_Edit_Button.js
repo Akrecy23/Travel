@@ -28,7 +28,8 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
     </select>
   `;
   remarksEl.insertAdjacentHTML("afterend", aboutSelectHTML);
-
+  const aboutSelect = entry.querySelector(".edit-about");
+  
   // Tag dropdown wrapper
   const tagWrapper = document.createElement("div");
   tagWrapper.className = "edit-tag-wrapper";
@@ -36,8 +37,6 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
   tagWrapper.style.display = "none";
   tagWrapper.innerHTML = `<select class="edit-tag"></select>`;
   aboutSelect.insertAdjacentElement("afterend", tagWrapper);
-
-  const aboutSelect = entry.querySelector(".edit-about");
   const tagSelect = tagWrapper.querySelector(".edit-tag");
 
   function populateTags(aboutVal) {
@@ -142,5 +141,6 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
     }
   });
 }
+
 
 
