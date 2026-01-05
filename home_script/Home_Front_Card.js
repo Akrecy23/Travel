@@ -79,7 +79,9 @@ document.addEventListener("HomeFrontLayoutReady", async () => {
       location: countryName,
       dateRange: buildDateRange(startDate, endDate),
       countdown,
-      image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80",
+      image: data.imageURL && data.imageURL.trim() !== ""
+           ? data.imageURL
+           : "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80",
       year,
       group: groupName,
       country: countryName,
@@ -148,7 +150,10 @@ document.addEventListener("HomeFrontLayoutReady", async () => {
     <div class="card-slider">
       ${cardData.map(card => `
         <div class="hero-card">
-          <img src="${card.image}" alt="${card.title}" class="hero-image">
+          <img src="${card.image}" 
+             alt="${card.title}" 
+             class="hero-image"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80';">
           <div class="hero-overlay"></div>
           <div class="hero-content">
             <h2 class="hero-title">${card.title}</h2>
@@ -260,6 +265,7 @@ document.addEventListener("HomeCardsReady", () => {
     });
   }
 });
+
 
 
 
