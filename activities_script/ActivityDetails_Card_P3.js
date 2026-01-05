@@ -132,7 +132,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
     const deleteBtn = card.querySelector(".top-delete-btn");
     if (deleteBtn) {
       deleteBtn.addEventListener("click", async () => {
-        const confirmed = confirm(`Delete ${data.id}?`);
+        const confirmed = confirm(`Delete ${data.Name}?`);
         if (!confirmed) return;
 
         try{
@@ -475,6 +475,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
 
 
