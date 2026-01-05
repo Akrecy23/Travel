@@ -298,13 +298,38 @@
   border-radius: 12px;
   padding: 1.25rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, border 0.2s ease;
+  cursor: grab;
 }
-
 .booking-card:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
-
+.booking-card:active {
+  cursor: grabbing;
+}
+/* Highlight drop target when dragging over */
+.booking-card.drag-over-top {
+  border-top: 2px solid #ccc;
+}
+.booking-card.drag-over-bottom {
+  border-bottom: 2px solid #ccc;
+}
+.booking-card .drag-handle {
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.booking-card:active .drag-handle {
+  cursor: grabbing;
+}
+.booking-card .drag-handle svg {
+  stroke: #666;
+  width: 1rem;
+  height: 1rem;
+}
 /* Card Header */
 .card-header {
   display: flex;
@@ -787,3 +812,4 @@
   to { opacity: 1; transform: translateY(0); }
 
 }
+
