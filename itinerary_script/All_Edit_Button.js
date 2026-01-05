@@ -1,5 +1,5 @@
 // FUNCTION FOR EDITING OF BACK SIDE OF CARDS (ACTIVITY DETAILS)
-async function enableActivityEditing(entry, tripId, dayId, activityId) {
+async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
   const timeEl = entry.querySelector(".time");
   const descEl = entry.querySelector(".box-title h4");
   const remarksEl = entry.querySelector(".box p");
@@ -163,6 +163,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
     }
   });
 }
+
 
 
 
