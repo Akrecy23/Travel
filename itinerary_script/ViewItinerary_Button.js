@@ -136,7 +136,7 @@ async function openItineraryModal(tripId) {
       // For edit button
       entry.querySelector(".edit-btn").addEventListener("click", () => {
         console.log("Edit activity:", activity.id);
-        enableActivityEditing(entry, tripId, day.day, activity.id);
+        enableActivityEditing(entry, tripId, day.day, activity.id, days);
       });
       // For delete button
       entry.querySelector(".delete-btn").addEventListener("click", async () => {
@@ -289,5 +289,6 @@ async function openItineraryModal(tripId) {
     }
   };
 }
+
 
 
