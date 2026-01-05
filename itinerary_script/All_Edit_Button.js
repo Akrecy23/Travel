@@ -44,7 +44,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
     if (aboutVal === "Food") {
       [
         "Chinese","Japanese","Italian","Indian","Mexican",
-        "Korean","Thai","Vegetarian","Seafood","Desserts","Night Market","Others"
+        "Korean","Thai","Vegetarian","Seafood","Desserts","NightMarket","Others"
       ].forEach(opt => {
         const o = document.createElement("option");
         o.value = opt;
@@ -163,6 +163,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
     }
   });
 }
+
 
 
 
