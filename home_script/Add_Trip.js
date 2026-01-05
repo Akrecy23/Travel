@@ -46,6 +46,12 @@ document.addEventListener("HomeBackLayoutReady", () => {
               <select name="group" id="groupSelect" required></select>
             </div>
 
+            <!-- Optional Image URL (Thumbnail) -->
+            <div class="form-group full-width">
+              <label>Image/Thumbnail URL</label>
+              <input type="text" name="tripImage" placeholder="Enter url link" />
+            </div>
+
             <!-- Submit -->
             <div class="form-group full-width">
               <button type="submit" class="submit-btn">Save Trip</button>
@@ -226,6 +232,7 @@ document.addEventListener("NewTripFormReady", () => {
     const cityInput = form.city.value.trim();
     const country = countrySelect.value;
     const group = groupSelect.value;
+    const imageLink = (form.tripImage.value || "").trim();
 
     if (!tripName || !departureDate || !returnDate || !cityInput || !country || !group) {
       alert("Please fill in all fields.");
@@ -300,7 +307,8 @@ document.addEventListener("NewTripFormReady", () => {
         cities,
         tripStartDate: formattedDeparture,
         tripEndDate: formattedReturn,
-        year
+        year,
+        imageURL: imageLink
       });
 
       // ===== Create Itinerary subcollection =====
@@ -406,4 +414,5 @@ async function createCityCountryYear(currentUserId, pathName, country, cities, y
     YearList: firebase.firestore.FieldValue.arrayUnion(year)
   }, { merge: true });
 }
+
 
