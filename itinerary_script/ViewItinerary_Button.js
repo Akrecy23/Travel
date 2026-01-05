@@ -114,6 +114,11 @@ async function openItineraryModal(tripId) {
                 </div>
               </div>
               <p>${a.remarks}</p>
+              ${a.address ? `
+                <div class="address-row">
+                  <span class="address-link" data-address="${a.address}">${a.address}</span>
+                </div>
+              ` : ""}
               <div>${a.tags ? `<span class="tag Default ${a.tags}">${a.tags}</span>` : ""}</div>
             </div>
           </div>
@@ -137,6 +142,58 @@ async function openItineraryModal(tripId) {
       entry.querySelector(".delete-btn").addEventListener("click", async () => {
         deleteActivity(tripId, day.day, activity.id, entry);
       });
+      // For address click -> open maps
+      const addrEl = entry.querySelector(".address-link");
+      if (addrEl) {
+        addrEl.addEventListener("click", () => {
+          const address = addrEl.dataset.address || "";
+          if (!address) {
+            console.warn("No address available for directions");
+            return;
+          }
+      
+          const encodedAddress = encodeURIComponent(address);
+          const ua = navigator.userAgent;
+          let mapsUrl;
+      
+          // iOS
+          if (/iPhone|iPad|iPod/i.test(ua)) {
+            const googleMapsUrl = `comgooglemaps://?q=${encodedAddress}`;
+            const appleMapsUrl = `http://maps.apple.com/?q=${encodedAddress}`;
+      
+            let opened = false;
+            const handleVisibility = () => {
+              opened = true;
+              document.removeEventListener("visibilitychange", handleVisibility);
+            };
+            document.addEventListener("visibilitychange", handleVisibility);
+      
+            // Try Google Maps
+            window.location.href = googleMapsUrl;
+      
+            // After 3s, if still visible → Google Maps not installed → open Apple Maps
+            setTimeout(() => {
+              if (!opened) {
+                window.location.href = appleMapsUrl;
+              }
+            }, 3000);
+      
+            return;
+          }
+      
+          // Android
+          else if (/Android/i.test(ua)) {
+            mapsUrl = `geo:0,0?q=${encodedAddress}`;
+          }
+      
+          // Desktop
+          else {
+            mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+          }
+      
+          window.location.href = mapsUrl;
+        });
+      }
     });
 
     // For Drag & Drop button
@@ -232,4 +289,5 @@ async function openItineraryModal(tripId) {
     }
   };
 }
+
 
