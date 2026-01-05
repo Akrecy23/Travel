@@ -352,6 +352,13 @@
   cursor: pointer;
   margin-left: 0.5rem;
 }
+/* Status row: tag + arrow aligned */
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* pushes arrow to far right */
+  margin-top: 0.5rem;
+}
 /* Tags */
 .tag {
   display: inline-block;
@@ -392,6 +399,17 @@
 .tag.Beach       { background: #fef9c3; color: #92400e; }   /* sandy yellow */
 .tag.Cultural    { background: #fde68a; color: #78350f; }   /* earthy orange */
 .tag.Relaxation  { background: #d1fae5; color: #065f46; }   /* calming green */
+
+/* Arrow container */
+.status-row .status-arrow {
+  display: flex;
+  align-items: center;
+}
+.status-arrow svg {
+  width: 20px;
+  height: 20px;
+  stroke: #374151; /* dark gray, matches Default tag text */
+}
 
 /* ========= ADD ITINERARY FORM ========== */
 .activity-form-modal {
@@ -471,6 +489,7 @@
 .activity-form-modal #tagWrapper {
   margin-top: 0.5rem;
 }
+
 
 
 
