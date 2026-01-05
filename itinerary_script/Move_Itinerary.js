@@ -1,8 +1,14 @@
 // Function to open the Move Itinerary modal
-function openMoveItineraryModal() {
-  // Create overlay
+function openMoveItineraryModal(tripId, currentDayId, activityId, days, renderDay) {
   const moveModal = document.createElement("div");
   moveModal.className = "move-itinerary-modal";
+
+  // Build dropdown options excluding current day
+  const optionsHtml = days
+    .filter(d => d.day !== currentDayId)
+    .map(d => `<option value="${d.day}">${d.day}</option>`)
+    .join("");
+
   moveModal.innerHTML = `
     <div class="form-box">
       <div class="form-header">
@@ -10,15 +16,10 @@ function openMoveItineraryModal() {
         <button class="close-form">✕</button>
       </div>
       <form id="moveForm">
-        <label>Current Day</label>
-        <input type="text" name="currentDay" placeholder="e.g. Day 1" required>
-
-        <label>Target Day</label>
-        <input type="text" name="targetDay" placeholder="e.g. Day 2" required>
-
-        <label>Notes</label>
-        <textarea name="notes" placeholder="Reason for moving"></textarea>
-
+        <label>Move to Day:</label>
+        <select name="targetDay" required>
+          ${optionsHtml}
+        </select>
         <div class="form-actions">
           <button type="submit">Move</button>
         </div>
@@ -34,20 +35,65 @@ function openMoveItineraryModal() {
   });
 
   // Handle form submission
-  moveModal.querySelector("#moveForm").addEventListener("submit", (e) => {
+  moveModal.querySelector("#moveForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    const targetDayId = new FormData(e.target).get("targetDay");
 
-    const payload = {
-      currentDay: formData.get("currentDay"),
-      targetDay: formData.get("targetDay"),
-      notes: formData.get("notes"),
-    };
+    try {
+      // References
+      const currentDayRef = window.db.collection("Trips").doc(tripId)
+        .collection("Itinerary").doc(currentDayId)
+        .collection("Activities").doc(activityId);
 
-    console.log("Move itinerary submitted:", payload);
+      const targetDayRef = window.db.collection("Trips").doc(tripId)
+        .collection("Itinerary").doc(targetDayId)
+        .collection("Activities");
 
-    // TODO: Add Firestore update logic here to move the activity
+      // Get activity data
+      const actSnap = await currentDayRef.get();
+      if (!actSnap.exists) throw new Error("Activity not found");
+      const actData = actSnap.data();
 
-    moveModal.remove(); // close after save
+      // Remove from current day
+      await currentDayRef.delete();
+
+      // Re‑index current day’s remaining activities
+      const currentActsSnap = await window.db.collection("Trips").doc(tripId)
+        .collection("Itinerary").doc(currentDayId)
+        .collection("Activities").orderBy("Order").get();
+
+      let orderCounter = 1;
+      const batch = window.db.batch();
+      currentActsSnap.forEach(doc => {
+        batch.update(doc.ref, { Order: orderCounter++ });
+      });
+      await batch.commit();
+
+      // Add to target day with last order + 1
+      const targetActsSnap = await targetDayRef.orderBy("Order").get();
+      const newOrder = targetActsSnap.size + 1;
+      await targetDayRef.doc(activityId).set({
+        ...actData,
+        Order: newOrder
+      });
+
+      // Update local arrays
+      const currentDayObj = days.find(d => d.day === currentDayId);
+      currentDayObj.activities = currentDayObj.activities.filter(a => a.id !== activityId);
+      currentDayObj.activities.forEach((a, idx) => a.order = idx + 1);
+
+      const targetDayObj = days.find(d => d.day === targetDayId);
+      targetDayObj.activities.push({ ...actData, id: activityId, order: newOrder });
+
+      // Refresh UI
+      renderDay(days.findIndex(d => d.day === currentDayId));
+      renderDay(days.findIndex(d => d.day === targetDayId));
+
+    } catch (err) {
+      console.error("Error moving activity:", err);
+      alert("Failed to move activity. Please try again.");
+    }
+
+    moveModal.remove();
   });
 }
