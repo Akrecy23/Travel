@@ -18,7 +18,8 @@ async function handleGoogleSignIn() {
     if (result.additionalUserInfo.isNewUser) {
       alert("No account found. Please sign up first.");
       // Delete the just-created Auth user
-      await user.delete();   // removes the UID from Firebase Auth
+      //await user.delete();   // removes the UID from Firebase Auth
+      await window.auth.signOut()
       return;
     }
     // Get unique UID
@@ -47,6 +48,7 @@ async function handleGoogleSignIn() {
   }
 
 }
+
 
 
 
