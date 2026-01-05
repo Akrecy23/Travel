@@ -62,7 +62,7 @@ document.addEventListener("FormReady", e => {
 })
 
 
-function openNewExpenseForm(tabName, tripId) {
+function openNewExpenseForm(tabName, tripId, tripTitle) {
   currentTab = tabName;
   const formContainer = document.getElementById("newExpenseFormContainer");
   if (!formContainer) return;
@@ -76,7 +76,7 @@ function openNewExpenseForm(tabName, tripId) {
       </div>
       <div class="form-header">
         <label>Trip:</label>
-        <input type="text" value="${tripId}" readonly>
+        <input type="text" value="${tripTitle}" readonly>
         <label>Expenses for:</label>
         <input type="text" value="${tabName}" readonly>
       </div>
@@ -121,4 +121,5 @@ function closeFormOverlay(tripId) {
       btn.classList.toggle("active", btn.dataset.expense === currentTab);
     });
   }
+
 }
