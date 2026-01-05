@@ -91,7 +91,8 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
     const address = formData.get("address").trim();
     const remarks = formData.get("remarks").trim();
     const about = formData.get("about");
-    let tag = formData.get("tag").trim();
+    let tag = formData.get("tag");
+    tag = tag ? tag.trim() : "";
 
     // For Transport/Accommodation/Others, tag = about
     if (about === "Transport" || about === "Accommodation" || about === "Others") {
@@ -160,6 +161,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
   });
 
 }
+
 
 
 
