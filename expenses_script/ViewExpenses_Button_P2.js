@@ -146,7 +146,7 @@ window.renderTab = async function (expenseId, tripId, tripTitle) {
       tripTotalEl.innerHTML = `<strong>Trip Total:</strong> SGD ${(currentTripTotal - deletedAmount).toFixed(2)}`;
 
       if (modalContent.querySelectorAll(".spending-card").length === 0) {
-        renderTab(expenseId, tripId);
+        renderTab(expenseId, tripId, tripTitle);
       }
     });
   });
@@ -157,4 +157,3 @@ window.renderTab = async function (expenseId, tripId, tripTitle) {
     openNewExpenseForm(expenseId, tripId, tripTitle);
   });
 };
-
