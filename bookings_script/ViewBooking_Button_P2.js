@@ -15,6 +15,7 @@ async function renderTab(tabName, tripId, tripTitle) {
   const snap = await window.db
     .collection("Trips").doc(tripId)
     .collection(collectionName)
+    .orderBy("Order")
     .get();
 
   // Empty state if no bookings
@@ -347,3 +348,4 @@ async function renderTab(tabName, tripId, tripTitle) {
     detail: { tabName, tripId, tripTitle}
     }));
 }
+
