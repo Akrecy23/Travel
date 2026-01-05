@@ -119,7 +119,22 @@ async function openItineraryModal(tripId) {
                   <span class="address-link" data-address="${a.address}">${a.address}</span>
                 </div>
               ` : ""}
-              <div>${a.tags ? `<span class="tag Default ${a.tags}">${a.tags}</span>` : ""}</div>
+              <div class="status-row">
+                <div>${a.tags ? `<span class="tag Default ${a.tags}">${a.tags}</span>` : ""}</div>
+                <span class="status-arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="64" height="32" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="Bubbly right arrow outline">
+                    <path d="M8 16h30
+                             m0 0
+                             c0 -6 4 -8 8 -6
+                             l12 8
+                             c2 1.5 2 6.5 0 8
+                             l-12 8
+                             c-4 2 -8 0 -8 -6
+                             m0 0
+                             h-30"/>
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         `).join("")}
@@ -289,6 +304,7 @@ async function openItineraryModal(tripId) {
     }
   };
 }
+
 
 
 
