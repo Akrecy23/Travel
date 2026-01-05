@@ -4,16 +4,21 @@ async function enableCardEditing(tripId, card) {
   card.classList.add("editing-front");
 
   // Reference DOM nodes
+  const imageEl = card.querySelector(".trip-image");
   const tripTitleEl = card.querySelector(".trip-name");
   const countryEl = card.querySelectorAll(".trip-details .trip-detail")[0];
   const dateRangeEl = card.querySelectorAll(".trip-details .trip-detail")[1];
 
   // Store originals
+  const originalImageURL = imageEl ? imageEl.getAttribute("src") : "";
   const originalTitle = tripTitleEl.textContent;
   const originalCountry = countryEl.textContent || "Enter country";
   const originalDateRange = dateRangeEl.textContent || "Enter date range";
 
   // Replace with inputs
+  if (imageEl) {
+    imageEl.outerHTML = `<input type="text" class="edit-trip-image" value="${originalImageURL}">`;
+  }
   tripTitleEl.innerHTML = `<input type="text" class="edit-trip-title" value="${originalTitle}">`;
   countryEl.innerHTML = `<input type="text" class="edit-trip-country" value="${originalCountry}">`;
   dateRangeEl.innerHTML = `<input type="text" class="edit-trip-dateRange" value="${originalDateRange}">`;
@@ -33,6 +38,9 @@ async function enableCardEditing(tripId, card) {
 
   // Cancel → restore
   editActions.querySelector(".front-cancel-btn").addEventListener("click", () => {
+    if (imageInput) {
+      imageInput.outerHTML = `<img src="${originalImageURL}" alt="${originalTitle}" class="trip-image">`;
+    }
     tripTitleEl.textContent = originalTitle;
     countryEl.textContent = originalCountry || "No location available.";
     dateRangeEl.textContent = originalDateRange || "No date range available.";
@@ -43,6 +51,10 @@ async function enableCardEditing(tripId, card) {
 
   // Tick → update Firestore
   editActions.querySelector(".front-tick-btn").addEventListener("click", async () => {
+    const newImageURL = card.querySelector(".edit-trip-image")?.value.trim();
+    const finalImageURL = newImageURL
+      ? newImageURL
+      : "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80";
     const newTitle = card.querySelector(".edit-trip-title").value.trim();
     const newCountry = card.querySelector(".edit-trip-country").value.trim();
     const newDateRange = card.querySelector(".edit-trip-dateRange").value.trim();
@@ -66,6 +78,9 @@ async function enableCardEditing(tripId, card) {
 
       // Update Firestore doc directly
       const updateData = {};
+      if (finalImageURL !== originalImageURL) {
+        updateData.imageURL = finalImageURL;
+      }
       if (newTitle && newTitle !== originalTitle) updateData.title = newTitle;
       if (newCountry && newCountry !== originalCountry) updateData.country = newCountry;
       if (tripStartDate && tripEndDate) {
@@ -98,6 +113,7 @@ async function enableCardEditing(tripId, card) {
       }
 
       if (updatedCard) {
+        updatedCard.image = finalImageURL;
         updatedCard.title = newTitle || updatedCard.title;
         updatedCard.location = newCountry || updatedCard.location;
         updatedCard.dateRange = newDateRange || updatedCard.dateRange;
@@ -143,5 +159,4 @@ async function enableCardEditing(tripId, card) {
       card.classList.remove("editing-front");
     }
   });
-
 }
