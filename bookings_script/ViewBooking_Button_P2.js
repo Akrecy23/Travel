@@ -104,7 +104,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     }
 
       return `
-        <div class="booking-card flight-card" data-doc-id="${doc.id}" data-collection="${collectionName}" data-mode="${data.Mode || 'Airplane'}">
+        <div class="booking-card flight-card" data-doc-id="${doc.id}" data-collection="${collectionName}" data-mode="${data.Mode || 'Airplane'}" draggable="true">
           <div class="card-header">
             <div>
               <span class="badge ${badgeClass}">${direction}</span>
@@ -160,7 +160,7 @@ async function renderTab(tabName, tripId, tripTitle) {
       const nights = calculateNights(data.inDate, data.outDate);
 
       return `
-        <div class="booking-card stay-card" data-doc-id="${doc.id}" data-collection="${collectionName}">
+        <div class="booking-card stay-card" data-doc-id="${doc.id}" data-collection="${collectionName}" draggable="true">
           <div class="card-header">
             <div>
               <span class="badge badge-stay">🏨 ${stayType}</span>
@@ -232,7 +232,7 @@ async function renderTab(tabName, tripId, tripTitle) {
         const typeEmoji = getTypeEmoji(bookingType);
         
         return `
-          <div class="booking-card other-card" data-doc-id="${doc.id}" data-collection="${collectionName}">
+          <div class="booking-card other-card" data-doc-id="${doc.id}" data-collection="${collectionName}" draggable="true">
             <div class="card-header">
               <div>
                 <span class="badge badge-other">${typeEmoji} ${bookingType}</span>
@@ -282,6 +282,65 @@ async function renderTab(tabName, tripId, tripTitle) {
       }).join("");
     }
     modalContent.innerHTML = `<div class="frames-grid">${cardsHTML}</div>`;
+
+    // After rendering cards
+    const cards = modalContent.querySelectorAll(".booking-card");
+    let draggedCard = null;
+    
+    cards.forEach(card => {
+      card.addEventListener("dragstart", e => {
+        draggedCard = card;
+        e.dataTransfer.effectAllowed = "move";
+      });
+    
+      card.addEventListener("dragover", e => {
+        e.preventDefault();
+        const bounding = card.getBoundingClientRect();
+        const offset = e.clientY - bounding.top;
+        if (offset > bounding.height / 2) {
+          card.style["border-bottom"] = "2px solid #ccc";
+          card.style["border-top"] = "";
+        } else {
+          card.style["border-top"] = "2px solid #ccc";
+          card.style["border-bottom"] = "";
+        }
+      });
+    
+      card.addEventListener("dragleave", () => {
+        card.style["border-bottom"] = "";
+        card.style["border-top"] = "";
+      });
+    
+      card.addEventListener("drop", async e => {
+        e.preventDefault();
+        card.style["border-bottom"] = "";
+        card.style["border-top"] = "";
+        if (draggedCard && draggedCard !== card) {
+          const bounding = card.getBoundingClientRect();
+          const offset = e.clientY - bounding.top;
+          if (offset > bounding.height / 2) {
+            card.parentNode.insertBefore(draggedCard, card.nextSibling);
+          } else {
+            card.parentNode.insertBefore(draggedCard, card);
+          }
+    
+          // 🔑 Update Firestore order
+          const newOrderIds = Array.from(modalContent.querySelectorAll(".booking-card"))
+            .map(el => el.getAttribute("data-doc-id"));
+    
+          const col = card.dataset.collection;
+          const updates = newOrderIds.map((id, index) => {
+            const ref = window.db
+              .collection("Trips").doc(tripId)
+              .collection(col).doc(id);
+            return ref.update({ Order: index + 1 });
+          });
+    
+          await Promise.all(updates);
+          console.log("Booking order updated in Firestore");
+        }
+      });
+    });
 
     // Dispatch a custom event once cards are ready
     document.dispatchEvent(new CustomEvent("BookingsRendered", {
