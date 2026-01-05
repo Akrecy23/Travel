@@ -209,6 +209,14 @@ async function openItineraryModal(tripId) {
           window.location.href = mapsUrl;
         });
       }
+      // For arrow click -> open Move Itinerary modal
+      const arrowEl = entry.querySelector(".status-arrow");
+      if (arrowEl) {
+        arrowEl.addEventListener("click", () => {
+          console.log("Move activity:", activity.id);
+          openMoveItineraryModal(tripId, day.day, activity.id, days);
+        });
+      }
     });
 
     // For Drag & Drop button
@@ -304,6 +312,7 @@ async function openItineraryModal(tripId) {
     }
   };
 }
+
 
 
 
