@@ -1,5 +1,5 @@
 // Function to open the Move Itinerary modal
-function openMoveItineraryModal(tripId, currentDayId, activityId, days, renderDay) {
+function openMoveItineraryModal(tripId, currentDayId, activityId, days) {
   const moveModal = document.createElement("div");
   moveModal.className = "move-itinerary-modal";
 
@@ -86,8 +86,8 @@ function openMoveItineraryModal(tripId, currentDayId, activityId, days, renderDa
       targetDayObj.activities.push({ ...actData, id: activityId, order: newOrder });
 
       // Refresh UI
-      renderDay(days.findIndex(d => d.day === currentDayId));
-      renderDay(days.findIndex(d => d.day === targetDayId));
+      window.renderDay(days.findIndex(d => d.day === currentDayId));
+      window.renderDay(days.findIndex(d => d.day === targetDayId));
 
     } catch (err) {
       console.error("Error moving activity:", err);
