@@ -57,7 +57,7 @@ async function openExpensesModal(tripId) {
 
   // Initial render
   if (sortedExpenses.length > 0) {
-    window.renderTab(sortedExpenses[0].id, tripId);
+    window.renderTab(sortedExpenses[0].id, tripId, tripTitle);
   }
 
   // Tab switching
@@ -68,7 +68,7 @@ async function openExpensesModal(tripId) {
 
       window.selectedTab = btn.dataset.expense;
 
-      window.renderTab(btn.dataset.expense, tripId);
+      window.renderTab(btn.dataset.expense, tripId, tripTitle);
     });
   });
 
@@ -82,4 +82,5 @@ async function openExpensesModal(tripId) {
   };
 
 }
+
 
