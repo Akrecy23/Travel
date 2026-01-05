@@ -134,6 +134,15 @@
 .activity-cancel-btn {
   color: #dc2626 !important; /* red */
 }
+.address-link {
+  color: #0077cc;       /* blue text */
+  text-decoration: underline;  /* underline to indicate it's clickable */
+  cursor: pointer;      /* pointer cursor on hover */
+}
+.address-link:hover {
+  color: #005fa3;       /* darker blue on hover */
+  text-decoration: none; /* remove underline on hover */
+}
 /* Shorter length */
 .edit-time {
   width: 5rem;        /* adjust as needed */
@@ -461,3 +470,4 @@
 .activity-form-modal #tagWrapper {
   margin-top: 0.5rem;
 }
+
