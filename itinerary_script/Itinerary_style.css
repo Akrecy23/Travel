@@ -410,6 +410,9 @@
   height: 20px;
   stroke: #374151; /* dark gray, matches Default tag text */
 }
+.status-arrow: hover {
+  cursor: pointer
+}
 
 /* ========= ADD ITINERARY FORM ========== */
 .activity-form-modal {
@@ -489,6 +492,7 @@
 .activity-form-modal #tagWrapper {
   margin-top: 0.5rem;
 }
+
 
 
 
