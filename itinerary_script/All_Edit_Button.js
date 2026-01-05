@@ -131,7 +131,29 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
           Tag: newTag
         });
 
-      // Restore UI
+      // 🔑 Re-fetch the latest activities for this day
+      const activitiesSnap = await window.db
+        .collection("Trips").doc(tripId)
+        .collection("Itinerary").doc(dayId)
+        .collection("Activities")
+        .orderBy("Order")
+        .get();
+      
+      days[window.dayIndex].activities = activitiesSnap.docs.map(actDoc => {
+        const actData = actDoc.data();
+        return {
+          id: actDoc.id,
+          order: actData.Order ?? 9999,
+          time: actData.Time || "",
+          description: actData.Description || "",
+          address: actData.Address || "",
+          remarks: actData.Remarks || "",
+          tags: actData.Tag || "",
+          about: actData.About || ""
+        };
+      });
+      
+      // 🔑 Now rebuild the HTML with fresh data
       window.renderDay(window.dayIndex);
     } catch (err) {
       console.error("Error updating activity:", err);
@@ -141,6 +163,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId) {
     }
   });
 }
+
 
 
 
