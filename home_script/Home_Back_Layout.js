@@ -39,7 +39,8 @@ document.addEventListener("CreateHomeBackLayout", () => {
       return `
         <div class="trip-card" data-trip-id="${card.tripId}">
           <div class="trip-image-container">
-            <img src="${card.image}" alt="${card.title}" class="trip-image">
+            <img src="${card.image}" alt="${card.title}" class="trip-image"
+               onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80';">
             <span class="trip-badge ${badgeLabel.toLowerCase()}">${badgeLabel}</span>
             <div class="trip-actions">
               <button class="edit-btn" title="Edit">
@@ -195,6 +196,7 @@ document.addEventListener("CreateHomeBackLayout", () => {
   // Dispatch event listener to signal layout ready
   document.dispatchEvent(new Event("HomeBackLayoutReady"));
 });
+
 
 
 
