@@ -83,12 +83,27 @@ function openMoveItineraryModal(tripId, currentDayId, activityId, days) {
       currentDayObj.activities.forEach((a, idx) => a.order = idx + 1);
 
       const targetDayObj = days.find(d => d.day === targetDayId);
-      targetDayObj.activities.push({ ...actData, id: activityId, order: newOrder });
+      targetDayObj.activities.push({
+        id: activityId,
+        time: actData.Time || "",
+        description: actData.Description || "",
+        address: actData.Address || "",
+        remarks: actData.Remarks || "",
+        tags: actData.Tag || "",
+        about: actData.About || "",
+        order: newOrder
+      });
 
       // Refresh UI
       window.renderDay(days.findIndex(d => d.day === currentDayId));
-      window.renderDay(days.findIndex(d => d.day === targetDayId));
-
+      // Switch tab highlight to target day
+      const targetIndex = days.findIndex(d => d.day === targetDayId);
+      const modalTabs = document.getElementById("modalTabs");
+      modalTabs.querySelectorAll("button").forEach(btn => {
+      btn.classList.toggle("active", parseInt(btn.dataset.day, 10) === targetIndex);
+    });
+    // Render the target day
+    window.renderDay(targetIndex);
     } catch (err) {
       console.error("Error moving activity:", err);
       alert("Failed to move activity. Please try again.");
