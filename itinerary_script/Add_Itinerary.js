@@ -99,32 +99,34 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
       tag = about;
     }
 
-    // Auto-format shorthand inputs like "930am" or "2pm"
-    const shorthandRegex = /^(\d{1,2})(\d{2})?\s?(am|pm)$/i;
-    const match = time.match(shorthandRegex);
-    if (match) {
-      let hour = parseInt(match[1], 10);
-      let minutes = match[2] ? match[2] : "00";
-      let suffix = match[3].toUpperCase();
-      // Pad hour and minutes
-      const hourStr = hour < 10 ? "0" + hour : String(hour);
-      time = `${hourStr}:${minutes} ${suffix}`;
-    } else {
-      // Case 2: already has colon but missing space, e.g. "12:33PM"
-      const fullRegex = /^(\d{1,2}:[0-5][0-9])\s?(AM|PM)$/i;
-      const fullMatch = time.match(fullRegex);
-      if (fullMatch) {
-        time = `${fullMatch[1]} ${fullMatch[2].toUpperCase()}`;
+    if (time) {
+      // Auto-format shorthand inputs like "930am" or "2pm"
+      const shorthandRegex = /^(\d{1,2})(\d{2})?\s?(am|pm)$/i;
+      const match = time.match(shorthandRegex);
+      if (match) {
+        let hour = parseInt(match[1], 10);
+        let minutes = match[2] ? match[2] : "00";
+        let suffix = match[3].toUpperCase();
+        // Pad hour and minutes
+        const hourStr = hour < 10 ? "0" + hour : String(hour);
+        time = `${hourStr}:${minutes} ${suffix}`;
+      } else {
+        // Case 2: already has colon but missing space, e.g. "12:33PM"
+        const fullRegex = /^(\d{1,2}:[0-5][0-9])\s?(AM|PM)$/i;
+        const fullMatch = time.match(fullRegex);
+        if (fullMatch) {
+          time = `${fullMatch[1]} ${fullMatch[2].toUpperCase()}`;
+        }
       }
-    }
-    // Validate final format: hh:mm AM/PM
-    const timeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i;
-    if (!timeRegex.test(time)) {
-        alert("Please enter time in the format hh:mm AM or hh:mm PM (e.g. 09:30 AM).");
-        const timeInput = e.target.querySelector("input[name='time']");
-        timeInput.value = "";
-        timeInput.placeholder = "e.g. 09:30 AM";
-        return; // stop submission
+      // Validate final format: hh:mm AM/PM
+      const timeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i;
+      if (!timeRegex.test(time)) {
+          alert("Please enter time in the format hh:mm AM or hh:mm PM (e.g. 09:30 AM).");
+          const timeInput = e.target.querySelector("input[name='time']");
+          timeInput.value = "";
+          timeInput.placeholder = "e.g. 09:30 AM";
+          return; // stop submission
+      }
     }
 
     // Save to Firestore
@@ -161,6 +163,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
   });
 
 }
+
 
 
 
