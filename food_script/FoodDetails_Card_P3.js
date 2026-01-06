@@ -429,6 +429,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
                 Order: nextOrder,
                 Remarks: data.Remarks,
                 Time: "",
+                UserId: userId
               });
               // Collapse UI
               tripExpand.classList.add("hidden");
@@ -453,4 +454,5 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
       });
     }
 }
+
 
