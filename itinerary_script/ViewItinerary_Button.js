@@ -277,6 +277,34 @@ async function openItineraryModal(tripId) {
         }
       });
     });
+    // Auto-scroll when dragging near top/bottom of modalContent
+    let scrollRAF;
+    modalContent.addEventListener("dragover", e => {
+      const rect = modalContent.getBoundingClientRect();
+      const scrollZone = 50; // px from edge
+      const speed = 8;       // scroll speed per frame
+    
+      if (scrollRAF) cancelAnimationFrame(scrollRAF);
+    
+      function step() {
+        if (e.clientY < rect.top + scrollZone) {
+          modalContent.scrollTop -= speed;
+          scrollRAF = requestAnimationFrame(step);
+        } else if (e.clientY > rect.bottom - scrollZone) {
+          modalContent.scrollTop += speed;
+          scrollRAF = requestAnimationFrame(step);
+        }
+      }
+      step();
+    });
+    
+    modalContent.addEventListener("drop", () => {
+      if (scrollRAF) cancelAnimationFrame(scrollRAF);
+    });
+    modalContent.addEventListener("dragleave", () => {
+      if (scrollRAF) cancelAnimationFrame(scrollRAF);
+    });
+    
     // Add itinerary button
     const addBtn = modalContent.querySelector(".add-itinerary-btn");
     addBtn.addEventListener("click", () => {
@@ -312,8 +340,3 @@ async function openItineraryModal(tripId) {
     }
   };
 }
-
-
-
-
-
