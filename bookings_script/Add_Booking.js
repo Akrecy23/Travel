@@ -201,7 +201,17 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
   } else if (tabName === "Others") {
     html += `
       <h3>Other Booking Details</h3>
-      <label>Type:</label><input type="text" name="otherType">
+      <label>Type:</label>
+      <select name="otherType">
+        <option value="Aquarium">Aquarium</option>
+        <option value="Exhibition">Exhibition</option>
+        <option value="ThemePark">ThemePark</option>
+        <option value="Zoo">Zoo</option>
+        <option value="Activities">Activities</option>
+        <option value="Food">Food</option>
+        <option value="Others">Others</option>
+        <option value="Transport">Transport</option>
+      </select>
       <label>Name:</label><input type="text" name="otherName">
       <label>Date:</label><input type="date" name="otherDate">
       <label>Start Time:</label><input type="time" name="otherStartTime">
@@ -319,6 +329,7 @@ function toggleStepInputs() {
       step.querySelectorAll("input, textarea, select").forEach(el => { el.disabled = isHidden; }); 
     }); 
 }
+
 
 
 
