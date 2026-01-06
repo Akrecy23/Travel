@@ -164,7 +164,7 @@ async function renderTab(tabName, tripId, tripTitle) {
         <div class="booking-card stay-card" data-doc-id="${doc.id}" data-collection="${collectionName}" draggable="true">
           <div class="card-header">
             <div>
-              <span class="badge badge-stay">🏨 ${stayType}</span>
+              <span class="badge ${getBadgeClass('Stay', stayType)}">🏨 ${stayType}</span>
               <h4 class="card-title">${data.Name || doc.id}</h4>
             </div>
             <div class="card-actions">
@@ -236,7 +236,7 @@ async function renderTab(tabName, tripId, tripTitle) {
           <div class="booking-card other-card" data-doc-id="${doc.id}" data-collection="${collectionName}" draggable="true">
             <div class="card-header">
               <div>
-                <span class="badge badge-other">${typeEmoji} ${bookingType}</span>
+                <span class="badge ${getBadgeClass('Others', bookingType)}">${typeEmoji} ${bookingType}</span>
                 <h4 class="card-title">${data.Name || doc.id}</h4>
               </div>
               <div class="card-actions">
@@ -348,4 +348,5 @@ async function renderTab(tabName, tripId, tripTitle) {
     detail: { tabName, tripId, tripTitle}
     }));
 }
+
 
