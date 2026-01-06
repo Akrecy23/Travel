@@ -451,6 +451,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
                 Order: nextOrder,
                 Remarks: data.Remarks,
                 Time: "",
+                UserId: userId
               });
               // Collapse UI
               tripExpand.classList.add("hidden");
@@ -475,6 +476,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
 
 
