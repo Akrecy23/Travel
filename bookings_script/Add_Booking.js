@@ -182,7 +182,12 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
   } else if (tabName === "Stay") {
     html += `
       <h3>Stay Details</h3>
-      <label>Type:</label><input type="text" name="stayType">
+      <label>Type:</label>
+      <select name="stayType">
+        <option value="Hotel">Hotel</option>
+        <option value="Hostel">Hostel</option>
+        <option value="Airbnb">Airbnb</option>
+      </select>
       <label>Name:</label><input type="text" name="stayName">
       <label>Address:</label><input type="text" name="stayAddress">
       <label>Check In Date:</label><input type="date" name="checkInDate">
@@ -314,6 +319,7 @@ function toggleStepInputs() {
       step.querySelectorAll("input, textarea, select").forEach(el => { el.disabled = isHidden; }); 
     }); 
 }
+
 
 
 
