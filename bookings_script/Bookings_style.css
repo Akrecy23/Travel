@@ -375,26 +375,27 @@
   font-size: 0.75rem;
   font-weight: 600;
 }
-
 .badge-outbound {
   background: #dbeafe;
   color: #1e40af;
 }
-
 .badge-return {
   background: #fef3c7;
   color: #92400e;
 }
-
-.badge-stay {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.badge-other {
-  background: #fce7f3;
-  color: #9f1239;
-}
+/* ======== Stay Badges ========= */
+.badge-hotel { background: #e0f2fe; color: #0369a1; } /* blue */
+.badge-hostel { background: #ede9fe; color: #5b21b6; } /* purple */
+.badge-airbnb { background: #fee2e2; color: #b91c1c; } /* red */
+/* ======== Others Badges ========= */
+.badge-aquarium { background: #cffafe; color: #0e7490; } /* aqua */
+.badge-exhibition { background: #fef9c3; color: #854d0e; } /* yellow */
+.badge-themepark { background: #fbcfe8; color: #9d174d; } /* pink */
+.badge-zoo { background: #d9f99d; color: #3f6212; } /* green */
+.badge-activities { background: #e0e7ff; color: #3730a3; } /* indigo */
+.badge-food { background: #fde68a; color: #92400e; } /* brown */
+.badge-transport { background: #f5d0fe; color: #86198f; } /* purple */
+.badge-others { background: #f3f4f6; color: #374151; } /* grey */
 
 /* ========== FLIGHT CARD SPECIFIC ========== */
 .flight-timeline {
@@ -812,4 +813,5 @@
   to { opacity: 1; transform: translateY(0); }
 
 }
+
 
