@@ -82,6 +82,37 @@ document.addEventListener("dropdownReady", () => {
       }
     });
   }
+  document.querySelectorAll(".filter-category").forEach(cat => {
+    cat.addEventListener("click", () => {
+      const filterRight = document.querySelector(".filter-right");
+      if (!filterRight) return;
+
+      const targetSection = [...filterRight.querySelectorAll(".filter-section")]
+        .find(sec => sec.querySelector(".filter-header")?.textContent === cat.textContent);
+
+      if (targetSection) {
+        const rect = targetSection.getBoundingClientRect();
+        const containerRect = filterRight.getBoundingClientRect();
+
+        const fullyVisible =
+          rect.top >= containerRect.top &&
+          rect.bottom <= containerRect.bottom;
+
+        if (!fullyVisible) {
+          const maxScroll = filterRight.scrollHeight - filterRight.clientHeight;
+          const targetTop = targetSection.offsetTop;
+
+          filterRight.scrollTo({
+            top: Math.min(targetTop, maxScroll),
+            behavior: "smooth"
+          });
+          // Highlight the section briefly
+          targetSection.classList.add("highlight");
+          setTimeout(() => targetSection.classList.remove("highlight"), 1500);
+        }
+      }
+    });
+  });
   // Close modal when clicking outside panel
   filterModal.addEventListener("click", (e) => {
     if (e.target === filterModal) {
@@ -356,4 +387,5 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
