@@ -345,9 +345,18 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
 
           // Only create the div if updatedAddedTo is not empty
           if (updatedAddedTo.length > 0) {
+            const titles = [];
+            for (const tripId of updatedAddedTo) {
+              const tripSnap = await window.db.collection("Trips").doc(tripId).get();
+              if (tripSnap.exists) {
+                const tripData = tripSnap.data();
+                titles.push(tripData.title || tripId); // fallback to ID if no title
+              }
+            }
+        
             const info = document.createElement("div");
             info.className = "added-info";
-            info.textContent = `Already added to: ${updatedAddedTo.join(", ")}`;
+            info.textContent = `Already added to: ${titles.join(", ")}`;
             addedInfoRow.appendChild(info);
           }
         }
@@ -507,3 +516,4 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
