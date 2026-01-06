@@ -293,42 +293,33 @@
 }
 /* Frame header with buttons aligned right */
 /* ========== BOOKING CARDS ========== */
+.card-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.drag-handle {
+  cursor: grab;
+  font-size: 1.25rem;
+  line-height: 1;
+  user-select: none;
+  color: #666;
+  padding: 0.25rem;
+}
+.drag-handle:active { cursor: grabbing; }
+/* Highlight drop target when dragging over */
+.card-wrapper.drag-over-top {
+  border-top: 2px solid #ccc;
+}
+.card-wrapper.drag-over-bottom {
+  border-bottom: 2px solid #ccc;
+}
 .booking-card {
   background: white;
   border-radius: 12px;
   padding: 1.25rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease, border 0.2s ease;
-  cursor: grab;
-}
-.booking-card:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-.booking-card:active {
-  cursor: grabbing;
-}
-/* Highlight drop target when dragging over */
-.booking-card.drag-over-top {
-  border-top: 2px solid #ccc;
-}
-.booking-card.drag-over-bottom {
-  border-bottom: 2px solid #ccc;
-}
-.booking-card .drag-handle {
-  cursor: grab;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
-}
-.booking-card:active .drag-handle {
-  cursor: grabbing;
-}
-.booking-card .drag-handle svg {
-  stroke: #666;
-  width: 1rem;
-  height: 1rem;
 }
 /* Card Header */
 .card-header {
@@ -339,7 +330,6 @@
   padding-bottom: 0.75rem;
   border-bottom: 1px solid #e5e7eb;
 }
-
 .card-title {
   margin: 0.5rem 0 0 0;
   font-size: 1.125rem;
@@ -813,5 +803,6 @@
   to { opacity: 1; transform: translateY(0); }
 
 }
+
 
 
