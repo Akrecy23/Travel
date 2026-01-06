@@ -427,12 +427,17 @@ gap: 0.5rem;
   cursor: pointer;    /* optional if you want it clickable */
   padding-top: 0.25rem;
 }
+.filter-section.highlight {
+  background-color: #fff8e1;   /* pale yellow */
+  transition: background-color 1s ease;
+}
 
 @keyframes slideUp {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
 
 }
+
 
 
 
