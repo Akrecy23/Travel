@@ -86,7 +86,8 @@ document.addEventListener("HomeFrontLayoutReady", async () => {
       group: groupName,
       country: countryName,
       tripStartDate: startDate,
-      tripEndDate: endDate
+      tripEndDate: endDate,
+      cities: data.cities || []
     };
 
     // Classify trip
@@ -265,6 +266,7 @@ document.addEventListener("HomeCardsReady", () => {
     });
   }
 });
+
 
 
 
