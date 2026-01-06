@@ -36,6 +36,9 @@ document.addEventListener("CreateHomeBackLayout", () => {
     // For Current/Upcoming trips, show full markup
     return trips.map(card => {
       const { countdown } = getTripStatus(card.tripStartDate, card.tripEndDate);
+      const citiesLabel = (card.cities && card.cities.length > 0)
+        ? card.cities.join(", ")
+        : "No cities";
       return `
         <div class="trip-card" data-trip-id="${card.tripId}">
           <div class="trip-image-container">
@@ -72,9 +75,7 @@ document.addEventListener("CreateHomeBackLayout", () => {
             </div>
             <div class="trip-details">
               <div class="trip-detail">${card.location}</div>
-              ${card.cities && card.cities.length > 0 ? `
-                <div class="trip-detail-cities">${card.cities.join(", ")}</div>
-              ` : ""}
+              <div class="trip-detail">${citiesLabel}</div>
               <div class="trip-detail">${card.dateRange}</div>
             </div>
             <div class="trip-countdown">${countdown}</div>
@@ -199,3 +200,4 @@ document.addEventListener("CreateHomeBackLayout", () => {
   // Dispatch event listener to signal layout ready
   document.dispatchEvent(new Event("HomeBackLayoutReady"));
 });
+
