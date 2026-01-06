@@ -7,21 +7,24 @@ async function enableCardEditing(tripId, card) {
   const imageEl = card.querySelector(".trip-image");
   const tripTitleEl = card.querySelector(".trip-name");
   const countryEl = card.querySelectorAll(".trip-details .trip-detail")[0];
+  const citiesEl = card.querySelector(".trip-detail-cities");
   const dateRangeEl = card.querySelectorAll(".trip-details .trip-detail")[1];
 
   // Store originals
   const originalImageURL = imageEl ? imageEl.getAttribute("src") : "";
   const originalTitle = tripTitleEl.textContent;
-  const originalCountry = countryEl.textContent || "Enter country";
-  const originalDateRange = dateRangeEl.textContent || "Enter date range";
+  const originalCountry = countryEl.textContent || "";
+  const originalCities = citiesEl.textContent || "";
+  const originalDateRange = dateRangeEl.textContent || "";
 
   // Replace with inputs
   if (imageEl) {
-    imageEl.outerHTML = `<input type="text" class="edit-trip-image" value="${originalImageURL}">`;
+    imageEl.outerHTML = `<input type="text" class="edit-trip-image" value="${originalImageURL}" placeholder="Enter image URL">`;
   }
-  tripTitleEl.innerHTML = `<input type="text" class="edit-trip-title" value="${originalTitle}">`;
-  countryEl.innerHTML = `<input type="text" class="edit-trip-country" value="${originalCountry}">`;
-  dateRangeEl.innerHTML = `<input type="text" class="edit-trip-dateRange" value="${originalDateRange}">`;
+  tripTitleEl.innerHTML = `<input type="text" class="edit-trip-title" value="${originalTitle}" placeholder="Enter trip name">`;
+  countryEl.innerHTML = `<input type="text" class="edit-trip-country" value="${originalCountry}" placeholder="Enter country">`;
+  citiesEl.innerHTML = `<input type="text" class="edit-trip-cities" value="${originalCities}" placeholder="Enter city">`;
+  dateRangeEl.innerHTML = `<input type="text" class="edit-trip-dateRange" value="${originalDateRange}" placeholder="Enter date range">`;
 
   // Hide original footer buttons during editing
   const actionsContainer = card.querySelector(".trip-actions");
@@ -44,6 +47,7 @@ async function enableCardEditing(tripId, card) {
     }
     tripTitleEl.textContent = originalTitle;
     countryEl.textContent = originalCountry || "No location available.";
+    citiesEl.textContent = originalCities || "No cities available.";
     dateRangeEl.textContent = originalDateRange || "No date range available.";
     editActions.remove();
     if (actionsContainer) actionsContainer.style.display = "flex";
@@ -58,7 +62,19 @@ async function enableCardEditing(tripId, card) {
       : "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80";
     const newTitle = card.querySelector(".edit-trip-title").value.trim();
     const newCountry = card.querySelector(".edit-trip-country").value.trim();
+    const newCitiesRaw  = card.querySelector(".edit-trip-cities")?.value.trim();
     const newDateRange = card.querySelector(".edit-trip-dateRange").value.trim();
+
+    // ✅ First check cities input
+    const citiesPattern = /^\([^()]+\)(,\([^()]+\))*$/;
+    if (newCitiesRaw && !citiesPattern.test(newCitiesRaw)) {
+      alert("Cities must be in the format (City) or (City),(City)");
+      return; // stop here if invalid
+    }
+    // Convert "(Taipei),(Taichung)" → ["Taipei","Taichung"]
+    const newCities = newCitiesRaw
+      ? newCitiesRaw.match(/\(([^()]+)\)/g).map(s => s.replace(/[()]/g, ""))
+      : [];
 
     const currentUserId = window.CURRENT_UID;
     if (!currentUserId) {
@@ -84,6 +100,7 @@ async function enableCardEditing(tripId, card) {
       }
       if (newTitle && newTitle !== originalTitle) updateData.title = newTitle;
       if (newCountry && newCountry !== originalCountry) updateData.country = newCountry;
+      if (newCities.join(", ") !== originalCities) updateData.cities = newCities;
       if (tripStartDate && tripEndDate) {
         updateData.tripStartDate = tripStartDate;
         updateData.tripEndDate = tripEndDate;
@@ -117,6 +134,9 @@ async function enableCardEditing(tripId, card) {
         updatedCard.image = finalImageURL;
         updatedCard.title = newTitle || updatedCard.title;
         updatedCard.location = newCountry || updatedCard.location;
+        if (newCities.length > 0) {
+          updatedCard.cities = newCities;
+        }
         updatedCard.dateRange = newDateRange || updatedCard.dateRange;
 
         if (tripStartDate && tripEndDate) {
@@ -161,4 +181,3 @@ async function enableCardEditing(tripId, card) {
     }
   });
 }
-
