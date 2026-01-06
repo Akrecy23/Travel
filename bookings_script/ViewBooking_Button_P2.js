@@ -50,56 +50,66 @@ async function renderTab(tabName, tripId, tripTitle) {
 
       // Build info-grid based on Mode
       let infoGrid = `
-        <div class="info-item">
-          <span class="info-label">Dep Date</span>
-          <span class="info-value">${data.DepDate ? formatSimpleDate(data.DepDate) : '-'}</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Return Date</span>
-          <span class="info-value">${data.ReturnDate ? formatSimpleDate(data.ReturnDate) : '-'}</span>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Dep Date</span>
+            <span class="info-value">${data.DepDate ? formatSimpleDate(data.DepDate) : '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Return Date</span>
+            <span class="info-value">${data.ReturnDate ? formatSimpleDate(data.ReturnDate) : '-'}</span>
+          </div>
         </div>
       `;
     if (data.Mode === "Airplane"){
       infoGrid += `
-        <div class="info-item">
-          <span class="info-label">From Terminal</span>
-          <span class="info-value">${data.FromTerminal || '-'}</span>
+        <div class="info-grid-2">
+          <div class="info-item">
+            <span class="info-label">From Terminal</span>
+            <span class="info-value">${data.FromTerminal || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">To Terminal</span>
+            <span class="info-value">${data.ToTerminal || '-'}</span>
+          </div>
         </div>
-        <div class="info-item">
-          <span class="info-label">To Terminal</span>
-          <span class="info-value">${data.ToTerminal || '-'}</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Airline</span>
-          <span class="info-value">${data.Airline || '-'}</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Flight No</span>
-          <span class="info-value">${data.FlightNo || '-'}</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Booking Ref</span>
-          <span class="info-value">${data.BookingRef || '-'}</span>
+        <div class="info-grid-3">
+          <div class="info-item">
+            <span class="info-label">Airline</span>
+            <span class="info-value">${data.Airline || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Flight No</span>
+            <span class="info-value">${data.FlightNo || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Booking Ref</span>
+            <span class="info-value">${data.BookingRef || '-'}</span>
+          </div>
         </div>
       `;
     } 
     else if (data.Mode === "Ferry") {
       infoGrid += `
-        <div class="info-item">
-          <span class="info-label">Service Operator</span>
-          <span class="info-value">${data.ServOp || '-'}</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Booking Ref</span>
-          <span class="info-value">${data.BookingRef || '-'}</span>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Service Operator</span>
+            <span class="info-value">${data.ServOp || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Booking Ref</span>
+            <span class="info-value">${data.BookingRef || '-'}</span>
+          </div>
         </div>
       `;
     } else {
       // Others
       infoGrid += `
-        <div class="info-item">
-          <span class="info-label">Booking Ref</span>
-          <span class="info-value">${data.BookingRef || '-'}</span>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Booking Ref</span>
+            <span class="info-value">${data.BookingRef || '-'}</span>
+          </div>
         </div>
       `;
     }
@@ -209,7 +219,7 @@ async function renderTab(tabName, tripId, tripTitle) {
               </div>
             </div>
             
-            <div class="info-grid">
+            <div class="info-grid-3">
               <div class="info-item full-width">
                 <span class="info-label">📍 Address</span>
                 <span class="info-value">${data.Address || '-'}</span>
@@ -361,3 +371,4 @@ async function renderTab(tabName, tripId, tripTitle) {
     detail: { tabName, tripId, tripTitle}
     }));
 }
+
