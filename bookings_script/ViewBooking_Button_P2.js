@@ -160,9 +160,8 @@ async function renderTab(tabName, tripId, tripTitle) {
               </div>
             </div>
             
-            <div class="info-grid">
-              ${infoGrid}
-            </div>
+            ${infoGrid}
+            
           </div>
         </div>
       `;
@@ -371,4 +370,5 @@ async function renderTab(tabName, tripId, tripTitle) {
     detail: { tabName, tripId, tripTitle}
     }));
 }
+
 
