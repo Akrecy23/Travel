@@ -38,8 +38,9 @@ async function enableCardEditing(tripId, card) {
 
   // Cancel → restore
   editActions.querySelector(".front-cancel-btn").addEventListener("click", () => {
-    if (imageInput) {
-      imageInput.outerHTML = `<img src="${originalImageURL}" alt="${originalTitle}" class="trip-image">`;
+    const imageInputEl = card.querySelector(".edit-trip-image");
+    if (imageInputEl) {
+      imageInputEl.outerHTML = `<img src="${originalImageURL}" alt="${originalTitle}" class="trip-image">`;
     }
     tripTitleEl.textContent = originalTitle;
     countryEl.textContent = originalCountry || "No location available.";
@@ -160,3 +161,4 @@ async function enableCardEditing(tripId, card) {
     }
   });
 }
+
