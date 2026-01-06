@@ -231,7 +231,7 @@ async function renderTab(tabName, tripId, tripTitle) {
                 <span class="info-label">🛏️ Beds</span>
                 <span class="info-value">${data.BedNo || '-'}</span>
               </div>
-              <div class="info-item full-width">
+              <div class="info-item">
                 <span class="info-label">📋 Booking Ref</span>
                 <span class="info-value">${data.BookingRef || '-'}</span>
               </div>
@@ -370,6 +370,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     detail: { tabName, tripId, tripTitle}
     }));
 }
+
 
 
 
