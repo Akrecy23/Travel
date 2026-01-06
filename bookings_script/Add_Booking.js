@@ -209,8 +209,8 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
         <option value="Zoo">Zoo</option>
         <option value="Activities">Activities</option>
         <option value="Food">Food</option>
-        <option value="Others">Others</option>
         <option value="Transport">Transport</option>
+        <option value="Others">Others</option>
       </select>
       <label>Name:</label><input type="text" name="otherName">
       <label>Date:</label><input type="date" name="otherDate">
@@ -329,6 +329,7 @@ function toggleStepInputs() {
       step.querySelectorAll("input, textarea, select").forEach(el => { el.disabled = isHidden; }); 
     }); 
 }
+
 
 
 
