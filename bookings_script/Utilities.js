@@ -210,7 +210,26 @@ function getModeDisplay(mode) {
   return map[mode] || "❓ Unknown";
 }
 
-
-
-
-
+function getBadgeClass(tabName, type) {
+  if (tabName === "Stay") {
+    switch (type) {
+      case "Hotel": return "badge-hotel";
+      case "Hostel": return "badge-hostel";
+      case "Airbnb": return "badge-airbnb";
+      default: return "badge-stay"; // fallback
+    }
+  } else if (tabName === "Others") {
+    switch (type) {
+      case "Aquarium": return "badge-aquarium";
+      case "Exhibition": return "badge-exhibition";
+      case "ThemePark": return "badge-themepark";
+      case "Zoo": return "badge-zoo";
+      case "Activities": return "badge-activities";
+      case "Food": return "badge-food";
+      case "Transport": return "badge-transport";
+      case "Others": return "badge-others";
+      default: return "badge-other"; // fallback
+    }
+  }
+  return "badge"; // default
+}
