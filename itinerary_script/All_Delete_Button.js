@@ -10,6 +10,10 @@ async function deleteActivity(tripId, dayId, activityId, entry){
     // Get the activity doc first
     const actSnap = await activitiesRef.doc(activityId).get();
     const actData = actSnap.data();
+    if (!actData) {
+      console.warn("No activity data found");
+      return;
+    }
     // Delete the activity
     await activitiesRef.doc(activityId).delete();
     console.log(`Activity ${activityId} deleted successfully`);
@@ -22,38 +26,19 @@ async function deleteActivity(tripId, dayId, activityId, entry){
       updates.push(doc.ref.update({ Order: index + 1 }));
     });
     await Promise.all(updates);
-    // 🔑 Only if About/tag is "Food", update Suggested Food
-    if (actData?.About === "Food") {
-      const foodType = actData?.Tag; // stored when adding
-      if (foodType) {
-        const foodRef = window.db
-          .collection("Suggested Food").doc("Category")
-          .collection(foodType)
-          .doc(activityId); // assuming activityId == food doc id
 
-        await foodRef.update({
-          AddedTo: window.firebase.firestore.FieldValue.arrayRemove(tripId)
-        });
-          console.log(`Removed ${tripId} from AddedTo field in food doc`);
-      }
-    }
-    // 🔑 If About/tag is "Activity", update Suggested Activities
-    if (actData?.About === "Activity") {
-      const activityType = actData?.Tag; // stored when adding
-      if (activityType) {
-        const activityRef = window.db
-          .collection("Suggested Activities").doc("Category")
-          .collection(activityType)
-          .doc(activityId); // assuming activityId == activity doc id
-
-        await activityRef.update({
-          AddedTo: window.firebase.firestore.FieldValue.arrayRemove(tripId)
-        });
-        console.log(`Removed ${tripId} from AddedTo field in activity doc`);
-      }
+    if (actData.About === "Food" || actData.About === "Activity"){
+      // Save into "Deleted Itinerary" Collection
+      const deletedRef = window.db
+        .collection("Trips").doc(tripId)
+        .collection("Deleted Itinerary").doc(activityId);
+      await deletedRef.set({
+        ...actData,
+        deletedBy: window.CURRENT_UID,
+        deletedAt: new Date()
+      });
     }
   } catch (err) {
     console.error("Error deleting activity:", err);
   }
 }
-
