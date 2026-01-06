@@ -292,6 +292,22 @@ font-size: 1.5rem;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
+/* Style for image input replacement */
+.edit-trip-image {
+  width: 100%;                 /* same width as the image */
+  height: 10rem;               /* same height as .trip-image */
+  border-top-left-radius: 8px; /* match card corners */
+  border-top-right-radius: 8px;
+  box-sizing: border-box;
+  display: flex;               /* enable flexbox for centering */
+  align-items: center;         /* vertical centering */
+  justify-content: center;     /* horizontal centering */
+  font-size: 1rem;             /* readable text size */
+  text-align: center;          /* center text inside */
+  padding: 0.5rem;             /* breathing room */
+  border: 1px solid #ccc;      /* subtle border */
+  background-color: #f9fafb;   /* light background */
+}
 .trip-badge {
   position: absolute;
   top: 0.75rem;
@@ -650,3 +666,4 @@ font-size: 1.5rem;
 .invitation-actions .decline-btn:hover {
   background: #c0392b;
 }
+
