@@ -63,7 +63,7 @@ async function renderTab(tabName, tripId, tripTitle) {
       `;
     if (data.Mode === "Airplane"){
       infoGrid += `
-        <div class="info-grid-2">
+        <div class="info-grid">
           <div class="info-item">
             <span class="info-label">From Terminal</span>
             <span class="info-value">${data.FromTerminal || '-'}</span>
@@ -370,5 +370,6 @@ async function renderTab(tabName, tripId, tripTitle) {
     detail: { tabName, tripId, tripTitle}
     }));
 }
+
 
 
