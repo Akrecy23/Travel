@@ -50,29 +50,27 @@ document.addEventListener("dropdownReady", () => {
   }
   document.querySelectorAll(".filter-category").forEach(cat => {
     cat.addEventListener("click", () => {
-      const filterRight = document.querySelector(".filter-right");
-      if (!filterRight) return;
-
-      const targetSection = [...filterRight.querySelectorAll(".filter-section")]
+      const filterBody = document.querySelector(".filter-body");
+      const targetSection = [...document.querySelectorAll(".filter-section")]
         .find(sec => sec.querySelector(".filter-header")?.textContent === cat.textContent);
-
-      if (targetSection) {
+      
+      if (targetSection && filterBody) {
         const rect = targetSection.getBoundingClientRect();
-        const containerRect = filterRight.getBoundingClientRect();
-
+        const containerRect = filterBody.getBoundingClientRect();
+      
         const fullyVisible =
           rect.top >= containerRect.top &&
           rect.bottom <= containerRect.bottom;
-
+      
         if (!fullyVisible) {
-          const maxScroll = filterRight.scrollHeight - filterRight.clientHeight;
+          const maxScroll = filterBody.scrollHeight - filterBody.clientHeight;
           const targetTop = targetSection.offsetTop;
-
-          filterRight.scrollTo({
+      
+          filterBody.scrollTo({
             top: Math.min(targetTop, maxScroll),
             behavior: "smooth"
           });
-          // Highlight the section briefly
+      
           targetSection.classList.add("highlight");
           setTimeout(() => targetSection.classList.remove("highlight"), 1500);
         }
@@ -272,6 +270,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
