@@ -404,7 +404,15 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
             const selectedYear = parseInt(yearDropdown.value, 10); 
             // Clear trip dropdown first
             tripDropdown.innerHTML = "";
-            const tripsForYear = allTrips.filter(doc => doc.data().year === selectedYear);
+            const tripsForYear = allTrips.filter(doc => {
+              const tripData = doc.data();
+              return (
+                tripData.year === selectedYear &&
+                Array.isArray(tripData.cities) &&
+                tripData.cities.includes(card.dataset.city) // card.dataset.city is the city the card belongs to
+              );
+            });
+
             tripsForYear.forEach(tripDoc => {
               const opt = document.createElement("option");
               opt.value = tripDoc.id;
@@ -516,4 +524,5 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
