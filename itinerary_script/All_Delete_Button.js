@@ -1,6 +1,6 @@
 // FUNCTION FOR DELETING INDIVIDUAL ITINERARY ACTIVITY
-async function deleteActivity(tripId, dayId, activityId, entry){
-  const confirmed = confirm(`Delete ${activityId}?`);
+async function deleteActivity(tripId, dayId, activityId, entry, name){
+  const confirmed = confirm(`Delete ${name}?`);
   if (!confirmed) return;
   try {
     const activitiesRef = window.db
@@ -42,3 +42,4 @@ async function deleteActivity(tripId, dayId, activityId, entry){
     console.error("Error deleting activity:", err);
   }
 }
+
