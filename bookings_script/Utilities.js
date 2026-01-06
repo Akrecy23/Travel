@@ -66,14 +66,14 @@ function calculateDuration(departureDate, departureTime, arrivalDate, arrivalTim
   // Helper function to get emoji for booking type
   function getTypeEmoji(type) {
     const typeMap = {
-      'ticket': '🎫',
-      'attraction': '🎫',
-      'tour': '🚌',
+      'aquarium': '🪼',
+      'exhibition': '🏛️',
+      'themepark': '🎢',
+      'zoo': '🦁',
+      'activities': '🎯',
+      'food': '🍽️',
       'transport': '🚗',
-      'train': '🚄',
-      'bus': '🚌',
-      'rental': '🚗',
-      'default': '📄'
+      'others': '🎫'
     };
     const key = type.toLowerCase();
     return typeMap[key] || typeMap.default;
@@ -209,6 +209,7 @@ function getModeDisplay(mode) {
   };
   return map[mode] || "❓ Unknown";
 }
+
 
 
 
