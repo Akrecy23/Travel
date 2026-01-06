@@ -247,8 +247,8 @@ document.addEventListener("BookingsRendered", e => {
               <option value="Zoo" ${originalType.includes("Zoo") ? "selected" : ""}>Zoo</option>
               <option value="Activities" ${originalType.includes("Activities") ? "selected" : ""}>Activities</option>
               <option value="Food" ${originalType.includes("Food") ? "selected" : ""}>Food</option>
-              <option value="Others" ${originalType.includes("Others") ? "selected" : ""}>Others</option>
               <option value="Transport" ${originalType.includes("Transport") ? "selected" : ""}>Transport</option>
+              <option value="Others" ${originalType.includes("Others") ? "selected" : ""}>Others</option>
             </select>
           `;
           nameEl.innerHTML = `<input type="text" class="edit-name" value="${originalName}">`;
@@ -345,6 +345,7 @@ function addEditActions(card, onSave, elements, originals, specialRestore, col) 
     }
   });
 }
+
 
 
 
