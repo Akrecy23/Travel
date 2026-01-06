@@ -241,9 +241,14 @@ document.addEventListener("BookingsRendered", e => {
           // Replace with inputs
           typeEl.innerHTML = `
             <select class="edit-type">
-            <option value="Ticket" ${originalType.includes("Ticket") ? "selected" : ""}>Ticket</option>
-            <option value="Tour" ${originalType.includes("Tour") ? "selected" : ""}>Tour</option>
-            <option value="Activity" ${originalType.includes("Activity") ? "selected" : ""}>Activity</option>
+              <option value="Aquarium" ${originalType.includes("Aquarium") ? "selected" : ""}>Aquarium</option>
+              <option value="Exhibition" ${originalType.includes("Exhibition") ? "selected" : ""}>Exhibition</option>
+              <option value="ThemePark" ${originalType.includes("ThemeParks") ? "selected" : ""}>ThemeParks</option>
+              <option value="Zoo" ${originalType.includes("Zoo") ? "selected" : ""}>Zoo</option>
+              <option value="Activities" ${originalType.includes("Activities") ? "selected" : ""}>Activities</option>
+              <option value="Food" ${originalType.includes("Food") ? "selected" : ""}>Food</option>
+              <option value="Others" ${originalType.includes("Others") ? "selected" : ""}>Others</option>
+              <option value="Transport" ${originalType.includes("Transport") ? "selected" : ""}>Transport</option>
             </select>
           `;
           nameEl.innerHTML = `<input type="text" class="edit-name" value="${originalName}">`;
@@ -340,6 +345,7 @@ function addEditActions(card, onSave, elements, originals, specialRestore, col) 
     }
   });
 }
+
 
 
 
