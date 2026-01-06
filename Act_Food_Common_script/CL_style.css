@@ -339,6 +339,7 @@ gap: 0.5rem;
   padding-top: 0.5rem;     /* lowers the text down a bit */
   padding-left: 0.5rem;    /* pushes it to the right */
   line-height: 1.4;        /* adds vertical breathing room */
+  cursor: pointer;
 }
 .filter-tab {
   padding: 1rem;
@@ -433,5 +434,6 @@ gap: 0.5rem;
   to { transform: translateY(0); }
 
 }
+
 
 
