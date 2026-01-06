@@ -73,7 +73,7 @@ document.addEventListener("CreateHomeBackLayout", () => {
             <div class="trip-details">
               <div class="trip-detail">${card.location}</div>
               ${card.cities && card.cities.length > 0 ? `
-                <div class="trip-detail">${card.cities.join(", ")}</div>
+                <div class="trip-detail-cities">${card.cities.join(", ")}</div>
               ` : ""}
               <div class="trip-detail">${card.dateRange}</div>
             </div>
@@ -199,10 +199,3 @@ document.addEventListener("CreateHomeBackLayout", () => {
   // Dispatch event listener to signal layout ready
   document.dispatchEvent(new Event("HomeBackLayoutReady"));
 });
-
-
-
-
-
-
-
