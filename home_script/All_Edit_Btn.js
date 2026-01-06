@@ -7,8 +7,8 @@ async function enableCardEditing(tripId, card) {
   const imageEl = card.querySelector(".trip-image");
   const tripTitleEl = card.querySelector(".trip-name");
   const countryEl = card.querySelectorAll(".trip-details .trip-detail")[0];
-  const citiesEl = card.querySelector(".trip-detail-cities");
-  const dateRangeEl = card.querySelectorAll(".trip-details .trip-detail")[1];
+  const citiesEl = card.querySelectorAll(".trip-details .trip-detail")[1];
+  const dateRangeEl = card.querySelectorAll(".trip-details .trip-detail")[2];
 
   // Store originals
   const originalImageURL = imageEl ? imageEl.getAttribute("src") : "";
@@ -65,16 +65,17 @@ async function enableCardEditing(tripId, card) {
     const newCitiesRaw  = card.querySelector(".edit-trip-cities")?.value.trim();
     const newDateRange = card.querySelector(".edit-trip-dateRange").value.trim();
 
-    // ✅ First check cities input
-    const citiesPattern = /^\([^()]+\)(,\([^()]+\))*$/;
-    if (newCitiesRaw && !citiesPattern.test(newCitiesRaw)) {
-      alert("Cities must be in the format (City) or (City),(City)");
-      return; // stop here if invalid
+    // ✅ Handle cities input
+    let newCities = [];
+    if (newCitiesRaw && newCitiesRaw.toLowerCase() !== "no cities") {
+      const citiesPattern = /^\([^()]+\)(,\([^()]+\))*$/;
+      if (!citiesPattern.test(newCitiesRaw)) {
+        alert("Cities must be in the format (City) or (City),(City), or 'No cities'");
+        return; // stop here if invalid
+      }
+      // Convert "(Taipei),(Taichung)" → ["Taipei","Taichung"]
+      newCities = newCitiesRaw.match(/\(([^()]+)\)/g).map(s => s.replace(/[()]/g, ""));
     }
-    // Convert "(Taipei),(Taichung)" → ["Taipei","Taichung"]
-    const newCities = newCitiesRaw
-      ? newCitiesRaw.match(/\(([^()]+)\)/g).map(s => s.replace(/[()]/g, ""))
-      : [];
 
     const currentUserId = window.CURRENT_UID;
     if (!currentUserId) {
@@ -100,7 +101,7 @@ async function enableCardEditing(tripId, card) {
       }
       if (newTitle && newTitle !== originalTitle) updateData.title = newTitle;
       if (newCountry && newCountry !== originalCountry) updateData.country = newCountry;
-      if (newCities.join(", ") !== originalCities) updateData.cities = newCities;
+      if (newCitiesRaw !== originalCities) updateData.cities = newCities;
       if (tripStartDate && tripEndDate) {
         updateData.tripStartDate = tripStartDate;
         updateData.tripEndDate = tripEndDate;
@@ -134,9 +135,7 @@ async function enableCardEditing(tripId, card) {
         updatedCard.image = finalImageURL;
         updatedCard.title = newTitle || updatedCard.title;
         updatedCard.location = newCountry || updatedCard.location;
-        if (newCities.length > 0) {
-          updatedCard.cities = newCities;
-        }
+        updatedCard.cities = newCities; // always overwrite, even if empty
         updatedCard.dateRange = newDateRange || updatedCard.dateRange;
 
         if (tripStartDate && tripEndDate) {
@@ -181,3 +180,4 @@ async function enableCardEditing(tripId, card) {
     }
   });
 }
+
