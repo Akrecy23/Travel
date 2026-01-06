@@ -315,10 +315,41 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         addedInfoRow.innerHTML = "";
         // Show list of trips Activity has been added into
         if (Array.isArray(data.AddedTo) && data.AddedTo.length > 0) {
-          const info = document.createElement("div");
-          info.className = "added-info";
-          info.textContent = `Already added to: ${data.AddedTo.join(", ")}`;
-          addedInfoRow.appendChild(info);
+          // Clean AddedTo array by checking Deleted Itinerary
+          const activityRef = window.db
+            .collection("User").doc(userId)
+            .collection("Suggested Activities").doc(data.id);
+
+          let updatedAddedTo = [...data.AddedTo]; // local copy
+        
+          for (const tripId of data.AddedTo) {
+            const deletedSnap = await window.db
+              .collection("Trips").doc(tripId)
+              .collection("Deleted Itinerary").doc(data.id)
+              .get();
+        
+            if (deletedSnap.exists) {
+              // Remove tripId from AddedTo if activity is deleted in that trip
+              await activityRef.update({
+                AddedTo: window.firebase.firestore.FieldValue.arrayRemove(tripId)
+              });
+              // Also delete the Deleted Itinerary doc
+              await window.db
+                .collection("Trips").doc(tripId)
+                .collection("Deleted Itinerary").doc(data.id)
+                .delete();
+              // Update local copy
+              updatedAddedTo = updatedAddedTo.filter(id => id !== tripId);
+            }
+          }
+
+          // Only create the div if updatedAddedTo is not empty
+          if (updatedAddedTo.length > 0) {
+            const info = document.createElement("div");
+            info.className = "added-info";
+            info.textContent = `Already added to: ${updatedAddedTo.join(", ")}`;
+            addedInfoRow.appendChild(info);
+          }
         }
 
         // Fetch country of activity
@@ -476,12 +507,3 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
-
-
-
-
-
-
-
-
-
