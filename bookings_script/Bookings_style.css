@@ -278,6 +278,7 @@
   display: flex;
   flex-direction: column; /* one per row */
   gap: 1rem;
+  max-width: 100%;
 }
 .frame {
   background: #f9fafb;
@@ -297,6 +298,7 @@
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
+  width: 100%;
 }
 .drag-handle {
   cursor: grab;
@@ -305,6 +307,7 @@
   user-select: none;
   color: #666;
   padding: 0.25rem;
+  flex-shrink: 0;
 }
 .drag-handle:active { cursor: grabbing; }
 /* Highlight drop target when dragging over */
@@ -315,6 +318,7 @@
   border-bottom: 2px solid #ccc;
 }
 .booking-card {
+  flex: 1;
   background: white;
   border-radius: 12px;
   padding: 1.25rem;
@@ -803,6 +807,7 @@
   to { opacity: 1; transform: translateY(0); }
 
 }
+
 
 
 
