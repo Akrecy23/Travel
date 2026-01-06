@@ -365,11 +365,40 @@ async function renderTab(tabName, tripId, tripTitle) {
       });
     });
 
+    // Auto-scroll when dragging near top/bottom of modal
+    let scrollRAF;
+    modalContent.addEventListener("dragover", e => {
+      const rect = modalContent.getBoundingClientRect();
+      const scrollZone = 50; // px from edge
+      const speed = 8;       // scroll speed per frame
+    
+      if (scrollRAF) cancelAnimationFrame(scrollRAF);
+    
+      function step() {
+        if (e.clientY < rect.top + scrollZone) {
+          modalContent.scrollTop -= speed;
+          scrollRAF = requestAnimationFrame(step);
+        } else if (e.clientY > rect.bottom - scrollZone) {
+          modalContent.scrollTop += speed;
+          scrollRAF = requestAnimationFrame(step);
+        }
+      }
+      step();
+    });
+    
+    modalContent.addEventListener("drop", () => {
+      if (scrollRAF) cancelAnimationFrame(scrollRAF);
+    });
+    modalContent.addEventListener("dragleave", () => {
+      if (scrollRAF) cancelAnimationFrame(scrollRAF);
+    });
+
     // Dispatch a custom event once cards are ready
     document.dispatchEvent(new CustomEvent("BookingsRendered", {
     detail: { tabName, tripId, tripTitle}
     }));
 }
+
 
 
 
