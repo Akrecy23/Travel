@@ -155,7 +155,7 @@ async function openItineraryModal(tripId) {
       });
       // For delete button
       entry.querySelector(".delete-btn").addEventListener("click", async () => {
-        deleteActivity(tripId, day.day, activity.id, entry);
+        deleteActivity(tripId, day.day, activity.id, entry, activity.description);
       });
       // For address click -> open maps
       const addrEl = entry.querySelector(".address-link");
@@ -340,3 +340,4 @@ async function openItineraryModal(tripId) {
     }
   };
 }
+
