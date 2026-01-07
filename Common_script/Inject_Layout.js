@@ -131,6 +131,8 @@ function createHomeFrontLayout() {
 
   // Get current page name (xxxx.html)
   const currentPage = location.pathname.split("/").pop();
+  // Save scroll position before navigating
+  const tabsContainer = document.querySelector(".category-pills");
   // Navigation logic for tabs
   const tabs = document.querySelectorAll(".pill");
   // Loop through each tab
@@ -145,12 +147,23 @@ function createHomeFrontLayout() {
     tab.addEventListener("click", (e) => {
       e.preventDefault();
       tabs.forEach(p => p.classList.remove("active"));
-      tab.classList.add("active");
       // If tab name = page name, highlight it (set active)
+      tab.classList.add("active");
+      // Save current scroll position in sessionStorage
+      sessionStorage.setItem("tabsScrollLeft", tabsContainer.scrollLeft);
+      // Navigate
       if (page) {
         window.location.href = page;
       }
     });
+  });
+
+  // Restore scroll position after page load
+  window.addEventListener("DOMContentLoaded", () => {
+    const savedScroll = sessionStorage.getItem("tabsScrollLeft");
+    if (savedScroll !== null) {
+      tabsContainer.scrollLeft = parseInt(savedScroll, 10);
+    }
   });
 
   // ===== AUTH LOGIC =====
@@ -179,4 +192,5 @@ function createHomeFrontLayout() {
     }
   });
 }
+
 
