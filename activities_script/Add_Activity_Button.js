@@ -334,10 +334,6 @@ document.addEventListener("ActivityFormReady", async () => {
         [cityArray]: firebase.firestore.FieldValue.arrayUnion(selectedCity)
       });
 
-      // ================ SAVE TO ACTIVITYTYPE (if new type)=============
-      const typeRef = window.db.collection("ActivityType").doc(typeValue);
-      await typeRef.set({}, { merge: true });
-
       alert("Activity saved successfully!");
       form.reset();
       modal.style.display = "none";
@@ -348,5 +344,6 @@ document.addEventListener("ActivityFormReady", async () => {
     }
   });
 });
+
 
 
