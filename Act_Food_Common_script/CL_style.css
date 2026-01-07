@@ -252,7 +252,7 @@ body {
 }
 .search-btn.active,
 .filter-btn.active {
-  background-color: #f3f4f6; /* grey background */
+  background-color: #cbd5e1; /* grey background */
 }
 /* ======== SEARCH BAR ======== */
 .search-bar {
@@ -441,4 +441,5 @@ body {
   to { transform: translateY(0); }
 
 }
+
 
