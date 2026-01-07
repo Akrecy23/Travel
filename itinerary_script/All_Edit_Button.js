@@ -2,13 +2,15 @@
 async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
   const timeEl = entry.querySelector(".time");
   const descEl = entry.querySelector(".box-title h4");
-  const remarksEl = entry.querySelector(".box p");
+  const remarksEl = entry.querySelector(".remarks-text");
+  const addrEl = entry.querySelector(".addr-text");
   const tagEl = entry.querySelector(".box .tag");
 
   // Store originals
   const originalTime = timeEl.textContent || "";
   const originalDesc = descEl.textContent || "";
   const originalRemarks = remarksEl.textContent || "";
+  const originalAddress = addrEl.textContent || "";
   const originalTag = tagEl ? tagEl.textContent : "";
   const originalAbout = entry.getAttribute("data-about") || "";
 
@@ -16,7 +18,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
   timeEl.innerHTML = `<input type="text" class="edit-time" placeholder="(Time)" value="${originalTime}">`;
   descEl.innerHTML = `<input type="text" class="edit-description" placeholder="(Activity Header)" value="${originalDesc}">`;
   remarksEl.innerHTML = `<textarea class="edit-remarks" placeholder="(Remarks)">${originalRemarks}</textarea>`;
-  
+  addrEl.innerHTML = `<input type="text" class="edit-addr" placeholder="(Address)" value="${originalAddress}">`;
   // About dropdown
   const aboutSelectHTML = `
     <select class="edit-about">
@@ -27,9 +29,12 @@ async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
       <option value="Others" ${originalAbout==="Others"?"selected":""}>Others</option>
     </select>
   `;
-  remarksEl.insertAdjacentHTML("afterend", aboutSelectHTML);
+  addrEl.insertAdjacentHTML("afterend", aboutSelectHTML);
   const aboutSelect = entry.querySelector(".edit-about");
-  
+  if (originalAbout) {
+    aboutSelect.value = originalAbout.charAt(0).toUpperCase() + originalAbout.slice(1).toLowerCase();
+  }
+
   // Tag dropdown wrapper
   const tagWrapper = document.createElement("div");
   tagWrapper.className = "edit-tag-wrapper";
@@ -94,10 +99,17 @@ async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
     timeEl.textContent = originalTime;
     descEl.textContent = originalDesc;
     remarksEl.textContent = originalRemarks;
-    if (originalTag) {
-      tagWrapper.innerHTML = `<span class="tag Default ${originalTag}">${originalTag}</span>`;
+    if (originalAddress) {
+      addrEl.innerHTML = `<span class="address-link" data-address="${originalAddress}">${originalAddress}</span>`;
     } else {
-      tagWrapper.remove();
+      addrEl.textContent = "";
+    }
+    // Remove the edit dropdown wrapper completely
+    tagWrapper.remove();
+    // Restore the original tag if it existed
+    if (originalTag) {
+      const statusRow = entry.querySelector(".status-row div");
+      statusRow.innerHTML = `<span class="tag Default ${originalTag}">${originalTag}</span>`;
     }
     aboutSelect.remove();
     editActions.remove();
@@ -109,6 +121,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
     const newTime = entry.querySelector(".edit-time").value.trim();
     const newDesc = entry.querySelector(".edit-description").value.trim();
     const newRemarks = entry.querySelector(".edit-remarks").value.trim();
+    const newAddress = entry.querySelector(".edit-addr").value.trim();
     const newAbout = aboutSelect.value;
     let newTag = "";
 
@@ -127,6 +140,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
           Time: newTime,
           Description: newDesc,
           Remarks: newRemarks,
+          Address: newAddress,
           About: newAbout,
           Tag: newTag
         });
@@ -163,12 +177,3 @@ async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
     }
   });
 }
-
-
-
-
-
-
-
-
-
