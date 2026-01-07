@@ -125,7 +125,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
     const deleteBtn = card.querySelector(".top-delete-btn");
     if (deleteBtn) {
       deleteBtn.addEventListener("click", async () => {
-        const confirmed = confirm(`Delete ${docId}?`);
+        const confirmed = confirm(`Delete ${data.Name}?`);
         if (!confirmed) return;
         try{
           const foodRef = window.db
@@ -532,6 +532,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
       });
     }
 }
+
 
 
 
