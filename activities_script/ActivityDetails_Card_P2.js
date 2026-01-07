@@ -6,6 +6,7 @@ function createActivityCard(data) {
   const card = document.createElement("div");
   card.className = "activity-card";
   card.dataset.country = data.Country;
+  card.dataset.city = data.City;
   const typeClass = (data.Type || "").toLowerCase().replace(/\s+/g, "-");
   
   // Collect all statuses that apply
@@ -210,4 +211,5 @@ function createActivityCard(data) {
   return card;
 
 }
+
 
