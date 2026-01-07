@@ -369,11 +369,11 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
 
         // Query trips owned or collaborated by user
         const ownedSnap = await window.db.collection("Trips")
-          .where("ownerUid", "==", currentUserId)
+          .where("ownerUid", "==", userId)
           .get();
       
         const collabSnap = await window.db.collection("Trips")
-          .where("collaboratorIds", "array-contains", currentUserId)
+          .where("collaboratorIds", "array-contains", userId)
           .get();
       
         const allTrips = [...ownedSnap.docs, ...collabSnap.docs];
@@ -383,6 +383,12 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         const tripDropdown = tripExpand.querySelector(".trip-dropdown");
         yearDropdown.innerHTML = "";
         tripDropdown.innerHTML = "";
+
+        // Always add a default option
+        const defaultOpt = document.createElement("option");
+        defaultOpt.value = "";
+        defaultOpt.textContent = "Select year";
+        yearDropdown.appendChild(defaultOpt);
         
         // Collect unique years from trip documents
         const yearSet = new Set();
@@ -526,6 +532,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
       });
     }
 }
+
 
 
 
