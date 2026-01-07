@@ -34,7 +34,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         const originalName = nameEl.textContent;
         const originalType = typeEl.textContent;
         const [originalOpen, originalClose] = timeEl.textContent.split("–").map(s => s.trim());
-        const originalDuration = durationEl.textContent.replace("Duration: ", "");
+        const originalDuration = durationEl.textContent.replace("Est. Duration: ", "");
         const originalCost = costEl.textContent.replace("SGD ", "");
         const originalInOut = inOutEl?.textContent || "";
         const originalText = remarksText.textContent;
@@ -550,3 +550,4 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
