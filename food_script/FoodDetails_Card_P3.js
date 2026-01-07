@@ -115,7 +115,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         const confirmed = confirm(`Delete ${docId}?`);
         if (!confirmed) return;
         try{
-          const activityRef = window.db
+          const foodRef = window.db
           .collection("User").doc(userId)
             .collection("Suggested Food").doc(data.id)
           // Delete the food
@@ -291,33 +291,45 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         card.classList.add("expanded");
         const addedInfoRow = tripExpand.querySelector(".added-info-row");
         addedInfoRow.innerHTML = "";
-        // Show list of trips Activity has been added into
+        // Show list of trips Food has been added into
         if (Array.isArray(data.AddedTo) && data.AddedTo.length > 0) {
           // Clean AddedTo array by checking Deleted Itinerary
-          const activityRef = window.db
+          const foodRef = window.db
             .collection("User").doc(userId)
-            .collection("Suggested Activities").doc(data.id);
+            .collection("Suggested Food").doc(data.id);
 
           let updatedAddedTo = [...data.AddedTo]; // local copy
         
           for (const tripId of data.AddedTo) {
-            const deletedSnap = await window.db
-              .collection("Trips").doc(tripId)
-              .collection("Deleted Itinerary").doc(data.id)
-              .get();
-        
-            if (deletedSnap.exists) {
-              // Remove tripId from AddedTo if activity is deleted in that trip
-              await activityRef.update({
-                AddedTo: window.firebase.firestore.FieldValue.arrayRemove(tripId)
-              });
-              // Also delete the Deleted Itinerary doc
-              await window.db
+            try{
+              const deletedSnap = await window.db
                 .collection("Trips").doc(tripId)
                 .collection("Deleted Itinerary").doc(data.id)
-                .delete();
-              // Update local copy
-              updatedAddedTo = updatedAddedTo.filter(id => id !== tripId);
+                .get();
+          
+              if (deletedSnap.exists) {
+                // Remove tripId from AddedTo if food is deleted in that trip
+                await foodRef.update({
+                  AddedTo: window.firebase.firestore.FieldValue.arrayRemove(tripId)
+                });
+                // Also delete the Deleted Itinerary doc
+                await window.db
+                  .collection("Trips").doc(tripId)
+                  .collection("Deleted Itinerary").doc(data.id)
+                  .delete();
+                // Update local copy
+                updatedAddedTo = updatedAddedTo.filter(id => id !== tripId);
+              }
+            } catch (err) {
+              if (err.code === "permission-denied") {
+                // Collaborator no longer has access to this trip
+                await foodRef.update({
+                  AddedTo: window.firebase.firestore.FieldValue.arrayRemove(tripId)
+                });
+                updatedAddedTo = updatedAddedTo.filter(id => id !== tripId);
+              } else {
+                console.error("Error checking Deleted Itinerary:", err);
+              }
             }
           }
 
@@ -501,6 +513,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
       });
     }
 }
+
 
 
 
