@@ -53,11 +53,11 @@ async function renderTab(tabName, tripId, tripTitle) {
         <div class="info-grid">
           <div class="info-item">
             <span class="info-label">Dep Date</span>
-            <span class="info-value">${data.DepDate ? formatSimpleDate(data.DepDate) : '-'}</span>
+            <span class="info-value dep-date">${data.DepDate ? formatSimpleDate(data.DepDate) : '-'}</span>
           </div>
           <div class="info-item">
             <span class="info-label">Return Date</span>
-            <span class="info-value">${data.ReturnDate ? formatSimpleDate(data.ReturnDate) : '-'}</span>
+            <span class="info-value ret-date">${data.ReturnDate ? formatSimpleDate(data.ReturnDate) : '-'}</span>
           </div>
         </div>
       `;
@@ -66,25 +66,25 @@ async function renderTab(tabName, tripId, tripTitle) {
         <div class="info-grid">
           <div class="info-item">
             <span class="info-label">From Terminal</span>
-            <span class="info-value">${data.FromTerminal || '-'}</span>
+            <span class="info-value from-terminal">${data.FromTerminal || '-'}</span>
           </div>
           <div class="info-item">
             <span class="info-label">To Terminal</span>
-            <span class="info-value">${data.ToTerminal || '-'}</span>
+            <span class="info-value to-terminal">${data.ToTerminal || '-'}</span>
           </div>
         </div>
         <div class="info-grid-3">
           <div class="info-item">
             <span class="info-label">Airline</span>
-            <span class="info-value">${data.Airline || '-'}</span>
+            <span class="info-value airline">${data.Airline || '-'}</span>
           </div>
           <div class="info-item">
             <span class="info-label">Flight No</span>
-            <span class="info-value">${data.FlightNo || '-'}</span>
+            <span class="info-value flight-no">${data.FlightNo || '-'}</span>
           </div>
           <div class="info-item">
             <span class="info-label">Booking Ref</span>
-            <span class="info-value">${data.BookingRef || '-'}</span>
+            <span class="info-value booking-ref">${data.BookingRef || '-'}</span>
           </div>
         </div>
       `;
@@ -94,11 +94,11 @@ async function renderTab(tabName, tripId, tripTitle) {
         <div class="info-grid">
           <div class="info-item">
             <span class="info-label">Service Operator</span>
-            <span class="info-value">${data.ServOp || '-'}</span>
+            <span class="info-value serv-op">${data.ServOp || '-'}</span>
           </div>
           <div class="info-item">
             <span class="info-label">Booking Ref</span>
-            <span class="info-value">${data.BookingRef || '-'}</span>
+            <span class="info-value booking-ref">${data.BookingRef || '-'}</span>
           </div>
         </div>
       `;
@@ -108,7 +108,7 @@ async function renderTab(tabName, tripId, tripTitle) {
         <div class="info-grid">
           <div class="info-item">
             <span class="info-label">Booking Ref</span>
-            <span class="info-value">${data.BookingRef || '-'}</span>
+            <span class="info-value booking-ref">${data.BookingRef || '-'}</span>
           </div>
         </div>
       `;
@@ -398,6 +398,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     detail: { tabName, tripId, tripTitle}
     }));
 }
+
 
 
 
