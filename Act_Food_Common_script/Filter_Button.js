@@ -234,30 +234,49 @@ function initialiseFilters() {
     .catch(err => console.error("Error loading year array:", err));
 
   // Populate Type (Activity or Food)
-  const typeCollection = window.location.pathname.endsWith("food.html") ? "FoodType" : "ActivityType";
-  window.db.collection(typeCollection).get()
-    .then(snapshot => {
-      snapshot.forEach(typeDoc => {
-        const typeName = typeDoc.id;
-        const btn = document.createElement("button");
-        btn.className = "filter-pill";
-        btn.textContent = typeName;
-        if (Array.isArray(window.selectedTypes) && window.selectedTypes.includes(typeName)) {
-          btn.classList.add("active");
-        }
-        // Attach listener for button being clicked
-        btn.addEventListener("click", () => {
-          if (btn.classList.contains("active")) {
-            btn.classList.remove("active");
-            return;
-          }
-          // typeOptions.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
-          btn.classList.add("active");
-        });
-        typeOptions.appendChild(btn);
-      });
-      setupShowMore(typeOptions.closest(".filter-section"));
+  const activityTypes = [
+    "Workshop", "Shopping", "Hiking", "Museum", "Exhibition",
+    "Concert", "Sports", "Beach", "Cultural", "Relaxation", "Others"
+  ];
+  const foodTypes = [
+    "Chinese", "Japanese", "Italian", "Indian", "Mexican",
+    "Korean", "Thai", "Vegetarian", "Seafood", "Desserts",
+    "NightMarket", "Others"
+  ];
+  
+  // Decide which list to use based on page
+  const typeList = window.location.pathname.endsWith("food.html")
+  ? foodTypes
+  : activityTypes;
+
+  // Clear existing
+  typeOptions.innerHTML = "";
+
+  // Build pills
+  typeList.forEach(typeName => {
+    const btn = document.createElement("button");
+    btn.className = "filter-pill";
+    btn.textContent = typeName;
+  
+    if (Array.isArray(window.selectedTypes) && window.selectedTypes.includes(typeName)) {
+      btn.classList.add("active");
+    }
+    
+    // Attach listener for button being clicked
+    btn.addEventListener("click", () => {
+      if (btn.classList.contains("active")) {
+        btn.classList.remove("active");
+        return;
+      }
+  
+      // typeOptions.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
     });
+    typeOptions.appendChild(btn);
+  });
+
+  // Enable show more
+  setupShowMore(typeOptions.closest(".filter-section"));
 
   // Populate Status filter (hardcoded)
   const statuses = window.location.pathname.endsWith("food.html")
@@ -386,6 +405,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
