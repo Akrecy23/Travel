@@ -1,4 +1,3 @@
-
 // =========== CREATE FILTER SECTION WHEN DROPDOWN IS READY =============
 document.addEventListener("dropdownReady", () => {
   const filterModal = document.getElementById("filterModal");
@@ -9,57 +8,57 @@ document.addEventListener("dropdownReady", () => {
       <div class="filter-body">
         <!-- Left column: category labels -->
         <div class="filter-left">
-          <div class="filter-category">City</div>
+          <div class="filter-category" data-target="city">City</div>
           <div class="manual-divider"></div>
-          <div class="filter-category">Year</div>
+          <div class="filter-category" data-target="year">Year</div>
           <!-- Add more categories here -->
           <!-- Conditionally add Activity Type -->
           ${window.location.pathname.endsWith("activities.html") ? `
             <div class="manual-divider"></div>
-            <div class="filter-category">Activity Type</div>
+            <div class="filter-category" data-target="type">Activity Type</div>
             <div class="manual-divider"></div>
-            <div class="filter-category">Status</div>
+            <div class="filter-category" data-target="status">Status</div>
           ` : `
             <div class="manual-divider"></div>
-            <div class="filter-category">Food Type</div>
+            <div class="filter-category" data-target="type">Food Type</div>
             <div class="manual-divider"></div>
-            <div class="filter-category">Status</div>
+            <div class="filter-category" data-target="status">Status</div>
           `}
         </div>
         <!-- Right column: options grouped by category -->
         <div class="filter-right">
-          <div class="filter-section">
+          <div class="filter-section" data-target="city">
             <div class="filter-header">City</div>
             <div class="filter-options"></div>
             <div class="show-more">Show more</div>
           </div>
           <div class="manual-divider"></div>
-            <div class="filter-section">
+            <div class="filter-section" data-target="year">
               <div class="filter-header">Year</div>
               <div class="filter-options"></div>
               <div class="show-more">Show more</div>
             </div>
           ${window.location.pathname.endsWith("activities.html") ? `
             <div class="manual-divider"></div>
-            <div class="filter-section">
+            <div class="filter-section" data-target="type">
               <div class="filter-header">Activity Type</div>
               <div class="filter-options"></div>
               <div class="show-more">Show more</div>
             </div>
             <div class="manual-divider"></div>
-            <div class="filter-section">
+            <div class="filter-section" data-target="status">
               <div class="filter-header">Status</div>
               <div class="filter-options"></div>
             </div>
           ` : `
             <div class="manual-divider"></div>
-            <div class="filter-section">
+            <div class="filter-section" data-target="type">
               <div class="filter-header">Food Type</div>
               <div class="filter-options"></div>
               <div class="show-more">Show more</div>
             </div>
             <div class="manual-divider"></div>
-            <div class="filter-section">
+            <div class="filter-section" data-target="status">
               <div class="filter-header">Status</div>
               <div class="filter-options"></div>
             </div>
@@ -83,12 +82,15 @@ document.addEventListener("dropdownReady", () => {
       }
     });
   }
+  
+  // Left category click → scroll + highlight
   document.querySelectorAll(".filter-category").forEach(cat => {
     cat.addEventListener("click", () => {
       const filterBody = document.querySelector(".filter-body");
-      const targetSection = [...document.querySelectorAll(".filter-section")]
-        .find(sec => sec.querySelector(".filter-header")?.textContent === cat.textContent);
-      
+      const targetSection = document.querySelector(
+        `.filter-section[data-target="${cat.dataset.target}"]`
+      );
+
       if (targetSection && filterBody) {
         const rect = targetSection.getBoundingClientRect();
         const containerRect = filterBody.getBoundingClientRect();
@@ -406,9 +408,3 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
-
-
-
-
-
-
