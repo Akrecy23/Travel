@@ -328,7 +328,6 @@ gap: 0.5rem;
   gap: 0.625rem;
   padding: 0.75rem;
   height: 100%;           /* fill parent vertically */
-  background: #fff;
 }
 .filter-category {
   font-weight: bold;
@@ -440,3 +439,4 @@ gap: 0.5rem;
   to { transform: translateY(0); }
 
 }
+
