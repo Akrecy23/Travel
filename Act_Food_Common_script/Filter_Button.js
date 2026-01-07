@@ -86,31 +86,14 @@ document.addEventListener("dropdownReady", () => {
   // Left category click → scroll + highlight
   document.querySelectorAll(".filter-category").forEach(cat => {
     cat.addEventListener("click", () => {
-      const filterBody = document.querySelector(".filter-body");
       const targetSection = document.querySelector(
         `.filter-section[data-target="${cat.dataset.target}"]`
       );
-
-      if (targetSection && filterBody) {
-        const rect = targetSection.getBoundingClientRect();
-        const containerRect = filterBody.getBoundingClientRect();
-      
-        const fullyVisible =
-          rect.top >= containerRect.top &&
-          rect.bottom <= containerRect.bottom;
-      
-        if (!fullyVisible) {
-          const maxScroll = filterBody.scrollHeight - filterBody.clientHeight;
-          const targetTop = targetSection.offsetTop;
-      
-          filterBody.scrollTo({
-            top: Math.min(targetTop, maxScroll),
-            behavior: "smooth"
-          });
-      
-          targetSection.classList.add("highlight");
-          setTimeout(() => targetSection.classList.remove("highlight"), 1500);
-        }
+  
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        targetSection.classList.add("highlight");
+        setTimeout(() => targetSection.classList.remove("highlight"), 1500);
       }
     });
   });
@@ -408,3 +391,4 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
