@@ -35,7 +35,7 @@ function formatTimeInput(raw) {
   return raw;
 }
 
-// Convert hh:mm AM/PM into HH:mm
+// ===== HELPER FUNCTION TO CONVERT HH:MM AM/PM INTO HH:MM =========
 function toTimeInputValue(timeStr) {
   if (!timeStr) return "";
 
@@ -50,4 +50,40 @@ function toTimeInputValue(timeStr) {
   }
 
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+}
+
+// ======= HELPER FUNCTION FOR BADGE STATUS ===========
+function updateStatusBadge(card, statusKey, isActive, label) {
+  const badgesContainer = card.querySelector(".status-badges");
+  if (!badgesContainer) return;
+  // Remove existing badge of this type
+  const existingBadge = badgesContainer.querySelector(`.badge-${statusKey}`);
+  if (existingBadge) existingBadge.remove();
+  // Add badge if active
+  if (isActive) {
+    const badge = document.createElement("span");
+    badge.className = `badge badge-${statusKey}`;
+    // Auto‑inject icon ✔ for revisit
+    if (statusKey === "revisit") {
+      badge.innerHTML = `
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="3">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        ${label}
+      `;
+    }
+    else{
+      badge.innerHTML = `${label}`;
+    }
+    badgesContainer.appendChild(badge);
+  }
+  // Update data-status attribute for filtering logic
+  let statuses = card.getAttribute("data-status").split(" ");
+  if (isActive && !statuses.includes(statusKey)) {
+    statuses.push(statusKey);
+  } else if (!isActive) {
+    statuses = statuses.filter(s => s !== statusKey);
+  }
+  card.setAttribute("data-status", statuses.join(" ") || "unspecified");
 }
