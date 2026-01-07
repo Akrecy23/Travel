@@ -428,14 +428,6 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         if (!yearDropdown.dataset.listenerAttached){
           yearDropdown.addEventListener("change", async () => {
             const selectedYear = parseInt(yearDropdown.value, 10);
-            
-            
-            console.log("Selected year:", selectedYear, typeof selectedYear);
-            allTrips.forEach(doc => {
-              const tripData = doc.data();
-              console.log("Trip:", tripData.title, "year:", tripData.year, typeof tripData.year, "cities:", tripData.cities);
-            });
-            
 
             // Clear trip dropdown first
             tripDropdown.innerHTML = "";
@@ -559,10 +551,3 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
-
-
-
-
-
-
-
