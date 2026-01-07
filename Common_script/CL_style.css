@@ -190,6 +190,7 @@ body {
   overflow-x: auto;           /* enable horizontal scroll */
   -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
   scrollbar-width: thin;      /* optional: thin scrollbar */
+  padding-right: 0.75rem;
 }
 .category-pills::-webkit-scrollbar {
   height: 0.25rem;
@@ -435,3 +436,4 @@ body {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
 }
+
