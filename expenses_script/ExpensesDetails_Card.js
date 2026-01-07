@@ -122,13 +122,6 @@ async function fetchTripsAndRenderTabs(yearId, countryFilters, groupFilters) {
         </div>
       </div>
 
-      <!-- Description -->
-      <div class="detail-item">
-        <div class="detail-text">
-          <div class="detail-main">${tripData.tripDescription || "No description available."}</div>
-        </div>
-      </div>
-
       <!-- Actions -->
       <div class="trip-actions">
         <button class="view-btn">
@@ -204,6 +197,7 @@ function parseDate(dateStr) {
   return new Date(cleaned);
 
 }
+
 
 
 
