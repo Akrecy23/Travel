@@ -383,12 +383,6 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         const tripDropdown = tripExpand.querySelector(".trip-dropdown");
         yearDropdown.innerHTML = "";
         tripDropdown.innerHTML = "";
-
-        // Always add a default option
-        const defaultOpt = document.createElement("option");
-        defaultOpt.value = "";
-        defaultOpt.textContent = "Select year";
-        yearDropdown.appendChild(defaultOpt);
         
         // Collect unique years from trip documents
         const yearSet = new Set();
@@ -418,7 +412,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
               return (
                 tripData.year === selectedYear &&
                 Array.isArray(tripData.cities) &&
-                tripData.cities.includes(card.dataset.city) // card.dataset.city is the city the card belongs to
+                tripData.cities.map(c => c.toLowerCase()).includes(card.dataset.city.toLowerCase()) // card.dataset.city is the city the card belongs to
               );
             });
             tripsForYear.forEach(tripDoc => {
@@ -532,6 +526,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
       });
     }
 }
+
 
 
 
