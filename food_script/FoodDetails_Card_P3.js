@@ -404,7 +404,8 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         // Add year listener once: When year selected, fetch trips
         if (!yearDropdown.dataset.listenerAttached){
           yearDropdown.addEventListener("yearChange", async () => {
-            const selectedYear = yearDropdown.value;
+            const selectedYear = parseInt(yearDropdown.value, 10);
+            
             // Clear trip dropdown first
             tripDropdown.innerHTML = "";
             const tripsForYear = allTrips.filter(doc => {
@@ -526,6 +527,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
       });
     }
 }
+
 
 
 
