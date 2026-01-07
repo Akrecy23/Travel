@@ -56,6 +56,7 @@ document.addEventListener("dropdownReady", () => {
             <div class="filter-section">
               <div class="filter-header">Food Type</div>
               <div class="filter-options"></div>
+              <div class="show-more">Show more</div>
             </div>
             <div class="manual-divider"></div>
             <div class="filter-section">
@@ -405,6 +406,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
