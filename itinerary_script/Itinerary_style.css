@@ -411,7 +411,7 @@
   stroke: #374151; /* dark gray, matches Default tag text */
 }
 .status-arrow: hover {
-  cursor: pointer
+  cursor: pointer;
 }
 
 /* ========= ADD ITINERARY FORM ========== */
@@ -566,7 +566,3 @@
 .move-itinerary-modal button[type="submit"]:hover {
   background: #1e40af;
 }
-
-
-
-
