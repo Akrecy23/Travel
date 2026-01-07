@@ -11,20 +11,20 @@ document.addEventListener("dropdownReady", () => {
       <div class="filter-body">
         <!-- Left column: category labels -->
         <div class="filter-left">
-          <div class="filter-category">Country</div>
+          <div class="filter-category" data-target="country">Country</div>
           <div class="manual-divider"></div>
-          <div class="filter-category">Group</div>
+          <div class="filter-category" data-target="group">Group</div>
           <!-- Add more categories here -->
         </div>
         <!-- Right column: options grouped by category -->
         <div class="filter-right">
-          <div class="filter-section">
+          <div class="filter-section" data-target="country">
             <div class="filter-header">Country</div>
             <div class="filter-options"></div>
             <div class="show-more">Show more</div>
           </div>
           <div class="manual-divider"></div>
-          <div class="filter-section">
+          <div class="filter-section" data-target="group">
             <div class="filter-header">Group</div>
             <div class="filter-options"></div>
             <div class="show-more">Show more</div>
@@ -48,12 +48,15 @@ document.addEventListener("dropdownReady", () => {
       }
     });
   }
+  
+  // Left category click → scroll + highlight
   document.querySelectorAll(".filter-category").forEach(cat => {
     cat.addEventListener("click", () => {
       const filterBody = document.querySelector(".filter-body");
-      const targetSection = [...document.querySelectorAll(".filter-section")]
-        .find(sec => sec.querySelector(".filter-header")?.textContent === cat.textContent);
-      
+      const targetSection = document.querySelector(
+        `.filter-section[data-target="${cat.dataset.target}"]`
+      );
+
       if (targetSection && filterBody) {
         const rect = targetSection.getBoundingClientRect();
         const containerRect = filterBody.getBoundingClientRect();
@@ -270,6 +273,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
