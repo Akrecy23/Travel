@@ -311,10 +311,6 @@ document.addEventListener("FoodFormReady", async () => {
         [cityArray]: firebase.firestore.FieldValue.arrayUnion(selectedCity)
       });
 
-      // ================ SAVE TO FOODTYPE (if new type)=============
-      const typeRef = window.db.collection("FoodType").doc(typeValue);
-      await typeRef.set({}, { merge: true });
-
       alert("Food saved successfully!");
       form.reset();
       modal.style.display = "none";
@@ -326,4 +322,5 @@ document.addEventListener("FoodFormReady", async () => {
   });
 
 });
+
 
