@@ -26,8 +26,8 @@ document.addEventListener("BookingsRendered", e => {
         const titleEl = card.querySelector(".card-title"); // shows FromCountry → ToCountry
         const statusEl = card.querySelector(".badge"); 
         const modeEl = card.querySelector(".flight-plane");
-        const depDateEl = card.querySelector(".info-item:nth-child(1) .info-value");
-        const retDateEl = card.querySelector(".info-item:nth-child(2) .info-value");
+        const depDateEl = card.querySelector(".info-value.dep-date");
+        const retDateEl = card.querySelector(".info-value.ret-date");
 
         const originalDepartTime = departTimeEl.textContent;
         const originalDepartAirport = departAirportEl.textContent;
@@ -79,11 +79,11 @@ document.addEventListener("BookingsRendered", e => {
         ];
         
         if (mode === "Airplane"){
-          const fromTermEl = card.querySelector(".info-item:nth-child(3) .info-value");
-          const toTermEl = card.querySelector(".info-item:nth-child(4) .info-value");
-          const airlineEl = card.querySelector(".info-item:nth-child(5) .info-value");
-          const flightNoEl = card.querySelector(".info-item:nth-child(6) .info-value");
-          const bookingRefEl = card.querySelector(".info-item:nth-child(7) .info-value");
+          const fromTermEl = card.querySelector(".info-value.from-terminal");
+          const toTermEl = card.querySelector(".info-value.to-terminal");
+          const airlineEl = card.querySelector(".info-value.airline");
+          const flightNoEl = card.querySelector(".info-value.flight-no");
+          const bookingRefEl = card.querySelector(".info-value.booking-ref");
 
           const originalFromTerm = fromTermEl.textContent;
           const originalToTerm = toTermEl.textContent;
@@ -100,8 +100,8 @@ document.addEventListener("BookingsRendered", e => {
           restoreEls.push(fromTermEl, toTermEl, airlineEl, flightNoEl, bookingRefEl);
           restoreVals.push(originalFromTerm, originalToTerm, originalAirline, originalFlightNo, originalBookingRef);
         } else if (mode === "Ferry"){
-          const servOpEl = card.querySelector(".info-item:nth-child(3) .info-value");
-          const bookingRefEl = card.querySelector(".info-item:nth-child(4) .info-value");
+          const servOpEl = card.querySelector(".info-value.serv-op");
+          const bookingRefEl = card.querySelector(".info-value.booking-ref");
 
           const originalServOp = servOpEl.textContent;
           const originalBookingRef = bookingRefEl.textContent;
@@ -112,7 +112,7 @@ document.addEventListener("BookingsRendered", e => {
           restoreEls.push(servOpEl, bookingRefEl);
           restoreVals.push(originalServOp, originalBookingRef);
         } else {
-          const bookingRefEl = card.querySelector(".info-item:nth-child(3) .info-value");
+          const bookingRefEl = card.querySelector(".info-value.booking-ref");
           const originalBookingRef = bookingRefEl.textContent;
           bookingRefEl.innerHTML = `<input type="text" class="edit-booking-ref" value="${originalBookingRef}">`;
           restoreEls.push(bookingRefEl);
@@ -345,6 +345,7 @@ function addEditActions(card, onSave, elements, originals, specialRestore, col) 
     }
   });
 }
+
 
 
 
