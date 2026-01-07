@@ -407,6 +407,12 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         yearDropdown.innerHTML = "";
         tripDropdown.innerHTML = "";
         
+        // Always add a default option
+        const defaultOpt = document.createElement("option");
+        defaultOpt.value = "";
+        defaultOpt.textContent = "Select year";
+        yearDropdown.appendChild(defaultOpt);
+        
         // Collect unique years from trip documents
         const yearSet = new Set();
         for (const tripDoc of allTrips) {
@@ -550,6 +556,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
 
 
