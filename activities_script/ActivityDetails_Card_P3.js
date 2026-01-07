@@ -97,7 +97,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
           nameEl.textContent = originalName;
           typeEl.textContent = originalType;
           timeEl.textContent = `${originalOpen} – ${originalClose}`;
-          durationEl.textContent = `Duration: ${originalDuration}`;
+          durationEl.textContent = `Est. Duration: ${originalDuration}`;
           costEl.textContent = `SGD ${originalCost}`;
           if (inOutEl) inOutEl.textContent = originalInOut;
           remarksText.textContent = originalText;
@@ -550,6 +550,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
 
 
