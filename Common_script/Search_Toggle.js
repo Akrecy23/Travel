@@ -11,8 +11,10 @@ document.addEventListener('HomeFrontLayoutReady', function() {
     searchToggle.addEventListener('click', function() {
       searchBar.classList.toggle('hidden');
       if (!searchBar.classList.contains('hidden')) {
+        searchToggle.classList.add("active");
         searchInput.focus();
       } else {
+        searchToggle.classList.remove("active");
         searchInput.value = ''; // Clear search when closed
         localStorage.setItem("currentSearchTerm", "");
         window.userSearchInput = "";
@@ -53,4 +55,5 @@ function filterTrips(searchTerm, cards, name) {
       card.style.display = "none";
     }
   });
+
 }
