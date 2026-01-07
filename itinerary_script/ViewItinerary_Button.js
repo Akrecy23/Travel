@@ -113,12 +113,14 @@ async function openItineraryModal(tripId) {
                   </button>
                 </div>
               </div>
-              <p>${a.remarks}</p>
-              ${a.address ? `
-                <div class="address-row">
-                  <span class="address-link" data-address="${a.address}">${a.address}</span>
-                </div>
-              ` : ""}
+              <p class="remarks-text">${a.remarks}</p>
+              <p class="addr-text">
+                ${a.address ? `
+                  <div class="address-row">
+                    <span class="address-link" data-address="${a.address}">${a.address}</span>
+                  </div>
+                ` : ""}
+              </p>
               <div class="status-row">
                 <div>${a.tags ? `<span class="tag Default ${a.tags}">${a.tags}</span>` : ""}</div>
                 <span class="status-arrow">
@@ -340,5 +342,6 @@ async function openItineraryModal(tripId) {
     }
   };
 }
+
 
 
