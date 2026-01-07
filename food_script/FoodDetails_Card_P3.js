@@ -93,11 +93,6 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         actionBar.querySelector(".top-tick-btn").addEventListener("click", async () => {
           let newOpen = formatTimeInput(card.querySelector(".edit-open").value);
           let newClose = formatTimeInput(card.querySelector(".edit-close").value);
-          // Clean inputs: remove unwanted characters, normalize spacing
-          const timeRegex = /^([0-9]{1,2}:[0-9]{2})\s?(AM|PM)$/i;
-          if (!timeRegex.test(newOpen)) newOpen = originalOpen;
-          if (!timeRegex.test(newClose)) newClose = originalClose;
-
           const newName = card.querySelector(".edit-name").value.trim();
           const newType = card.querySelector(".edit-type").value.trim();
           const newCost = parseFloat(card.querySelector(".edit-cost").value);
@@ -531,6 +526,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
       });
     }
 }
+
 
 
 
