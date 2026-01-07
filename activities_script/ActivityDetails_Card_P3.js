@@ -407,18 +407,12 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         yearDropdown.innerHTML = "";
         tripDropdown.innerHTML = "";
         
-        // Always add a default option
-        const defaultOpt = document.createElement("option");
-        defaultOpt.value = "";
-        defaultOpt.textContent = "Select year";
-        yearDropdown.appendChild(defaultOpt);
-        
         // Collect unique years from trip documents
         const yearSet = new Set();
         for (const tripDoc of allTrips) {
           const tripData = tripDoc.data();
           if (tripData.year) {
-            yearSet.add(tripData.year); // year is stored as number or string in trip doc
+            yearSet.add(tripData.year); // year is stored as number in trip doc
           }
         }
         
@@ -556,6 +550,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
 
 
