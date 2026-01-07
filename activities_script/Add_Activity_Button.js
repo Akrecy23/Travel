@@ -220,58 +220,35 @@ document.addEventListener("ActivityFormReady", async () => {
     }
   }
 
-
   // Populate activity type dropdown
   if (typeSelect) {
-    try {
-      const typesSnap = await window.db.collection("ActivityType").get();
-      typesSnap.forEach(typeDoc => {
-        const opt = document.createElement("option");
-        opt.value = typeDoc.id;
-        opt.textContent = typeDoc.id;
-        typeSelect.appendChild(opt);
-      });
-      const addNewOpt = document.createElement("option");
-      addNewOpt.value = "add_new";
-      addNewOpt.textContent = "➕ Add Activity Type";
-      typeSelect.appendChild(addNewOpt);
+    const activityTypes = [
+      "Workshop",
+      "Shopping",
+      "Hiking",
+      "Museum",
+      "Exhibition",
+      "Concert",
+      "Sports",
+      "Beach",
+      "Cultural",
+      "Relaxation",
+      "Others"
+    ];
+    
+    // Clear any existing options
+    typeSelect.innerHTML = "";
+    
+    // Add each hardcoded option
+    activityTypes.forEach(type => {
+      const opt = document.createElement("option");
+      opt.value = type;
+      opt.textContent = type;
+      typeSelect.appendChild(opt);
+    });
 
-      if (typeSelect.options.length > 0) {
-        typeSelect.value = typeSelect.options[0].value;
-      }
-      typeSelect.addEventListener("change", () => {
-        if (typeSelect.value === "add_new") {
-          const newType = prompt("Enter a new activity type (one word only):");
-          if (newType) {
-            // enforce one word & capitalize first letter
-            const formatted = newType.trim().split(/\s+/)[0];
-            const capitalized = formatted.charAt(0).toUpperCase() + formatted.slice(1).toLowerCase();
-
-            // remove any previously added custom option (not from Firestore)
-            [...typeSelect.options].forEach(opt => {
-              if (opt.value !== "add_new" && !typesSnap.docs.some(doc => doc.id === opt.value)) {
-                typeSelect.removeChild(opt);
-              }
-            });
-
-            // create new option dynamically
-            const opt = document.createElement("option");
-            opt.value = capitalized;
-            opt.textContent = capitalized;
-
-            // insert before "Add New"
-            typeSelect.insertBefore(opt, addNewOpt);
-            typeSelect.value = capitalized;
-          } else {
-            // reset if cancelled
-            typeSelect.value = typeSelect.options[0].value;
-          }
-        }
-      });
-
-    } catch (err) {
-      console.error("Error loading activity types:", err);
-    }
+    // Default selection
+    typeSelect.value = activityTypes[0];
   }
 
   // Show modal
@@ -371,4 +348,5 @@ document.addEventListener("ActivityFormReady", async () => {
     }
   });
 });
+
 
