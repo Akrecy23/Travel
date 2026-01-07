@@ -41,7 +41,8 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         // Clean up values first
         const cleanDuration = originalDuration === "-" ? "" : originalDuration;
         const cleanCost     = originalCost === "-" ? "" : originalCost;
-        let textValue = originalText === "No remarks yet" ? "" : originalText;
+        const originalText = remarksText.textContent.trim();
+        let textValue = originalText.toLowerCase() === "no remarks yet" ? "" : originalText;
         // Replace with inputs
         nameEl.innerHTML = `<input type="text" class="edit-name" value="${originalName}">`;
         // Change type to dropdown
@@ -550,4 +551,5 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
