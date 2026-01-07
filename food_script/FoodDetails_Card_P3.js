@@ -32,18 +32,36 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         const originalType = typeEl.textContent;
         const [originalOpen, originalClose] = timeEl.textContent.split("–").map(s => s.trim());
         const originalCost = costEl.textContent.replace("SGD ", "");
-        const originalText = remarksText.textContent;
+        const originalText = remarksText.textContent.trim();
+        // Clean up values first
+        const cleanCost = originalCost === "-" ? "" : originalCost;
+        let textValue = originalText.toLowerCase() === "no remarks yet" ? "" : originalText;
         // Replace with inputs
         nameEl.innerHTML = `<input type="text" class="edit-name" value="${originalName}">`;
-        typeEl.innerHTML = `<input type="text" class="edit-type" value="${originalType}">`;
+        typeEl.innerHTML = `
+        <select class="edit-type">
+          <option value="chinese" ${originalType.toLowerCase()==="chinese"?"selected":""}>Chinese</option>
+          <option value="japanese" ${originalType.toLowerCase()==="japanese"?"selected":""}>Japanese</option>
+          <option value="italian" ${originalType.toLowerCase()==="italian"?"selected":""}>Italian</option>
+          <option value="indian" ${originalType.toLowerCase()==="indian"?"selected":""}>Indian</option>
+          <option value="mexican" ${originalType.toLowerCase()==="mexican"?"selected":""}>Mexican</option>
+          <option value="korean" ${originalType.toLowerCase()==="korean"?"selected":""}>Korean</option>
+          <option value="thai" ${originalType.toLowerCase()==="thai"?"selected":""}>Thai</option>
+          <option value="vegetarian" ${originalType.toLowerCase()==="vegetarian"?"selected":""}>Vegetarian</option>
+          <option value="seafood" ${originalType.toLowerCase()==="seafood"?"selected":""}>Seafood</option>
+          <option value="desserts" ${originalType.toLowerCase()==="desserts"?"selected":""}>Desserts</option>
+          <option value="nightmarket" ${originalType.toLowerCase()==="nightmarket"?"selected":""}>Night Market</option>
+          <option value="others" ${originalType.toLowerCase()==="others"?"selected":""}>Others</option>
+        </select>
+      `;
         timeEl.innerHTML = `
-          <input type="text" class="edit-open" value="${originalOpen}">
+          <input type="text" class="edit-open" value="${toTimeInputValue(originalOpen)}">
           –
-          <input type="text" class="edit-close" value="${originalClose}">
+          <input type="text" class="edit-close" value="${toTimeInputValue(originalClose)}">
         `;
-        costEl.innerHTML = `<input type="number" class="edit-cost" value="${originalCost}">`;
+        costEl.innerHTML = `<input type="number" class="edit-cost" value="${cleanCost}">`;
         remarksText.innerHTML = `
-          <textarea class="remarks-input">${originalText}</textarea>
+          <textarea class="remarks-input">${textValue}</textarea>
         `;
 
         // Hide original footer buttons during editing
@@ -513,6 +531,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
       });
     }
 }
+
 
 
 
