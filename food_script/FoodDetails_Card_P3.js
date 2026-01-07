@@ -55,9 +55,9 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         </select>
       `;
         timeEl.innerHTML = `
-          <input type="text" class="edit-open" value="${toTimeInputValue(originalOpen)}">
+          <input type="time" class="edit-open" value="${toTimeInputValue(originalOpen)}">
           –
-          <input type="text" class="edit-close" value="${toTimeInputValue(originalClose)}">
+          <input type="time" class="edit-close" value="${toTimeInputValue(originalClose)}">
         `;
         costEl.innerHTML = `<input type="number" class="edit-cost" value="${cleanCost}">`;
         remarksText.innerHTML = `
@@ -532,6 +532,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
       });
     }
 }
+
 
 
 
