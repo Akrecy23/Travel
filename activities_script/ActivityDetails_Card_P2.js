@@ -94,7 +94,7 @@ function createActivityCard(data) {
               </svg>
               <div class="detail-text">
                 <div class="detail-main">${data.OpenTime || "-"} – ${data.CloseTime || "-"}</div>
-                <div class="detail-sub">(Est. Duration: ${data.ActivityDuration || "-"} )</div>
+                <div class="detail-sub">Est. Duration: ${data.ActivityDuration || "-"}</div>
               </div>
             </div>
 
@@ -210,3 +210,4 @@ function createActivityCard(data) {
   return card;
 
 }
+
