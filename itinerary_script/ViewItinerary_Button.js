@@ -82,7 +82,7 @@ async function openItineraryModal(tripId) {
       <p>${day.date}</p>
       <div class="timeline">
         ${day.activities.map(a => `
-          <div class="timeline-entry" draggable="true" data-activity-id="${a.id}" data-day-id="${day.day}">
+          <div class="timeline-entry" draggable="true" data-activity-id="${a.id}" data-day-id="${day.day}" data-about="${a.about}">
             <div class="drag-handle">
               <!-- 3 stacked lines icon -->
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -340,4 +340,5 @@ async function openItineraryModal(tripId) {
     }
   };
 }
+
 
