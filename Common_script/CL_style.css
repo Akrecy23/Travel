@@ -250,6 +250,10 @@ body {
 .search-btn svg, .filter-btn svg {
   color: #4b5563;
 }
+.search-btn.active,
+.filter-btn.active {
+  background-color: #f3f4f6; /* grey background */
+}
 
 /* ======== SEARCH BAR ======== */
 .search-bar {
@@ -436,4 +440,5 @@ body {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
 }
+
 
