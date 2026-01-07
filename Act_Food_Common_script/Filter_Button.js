@@ -86,22 +86,28 @@ document.addEventListener("dropdownReady", () => {
   // Left category click → scroll + highlight
   document.querySelectorAll(".filter-category").forEach(cat => {
     cat.addEventListener("click", () => {
+      const scrollContainer = document.querySelector(".filter-body");
       const targetSection = document.querySelector(
         `.filter-section[data-target="${cat.dataset.target}"]`
       );
   
-      if (targetSection) {
-        targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (targetSection && scrollContainer) {
+        const targetTop = targetSection.offsetTop;
+        const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+  
+        // Try to put the section at the very top,
+        // but clamp to maxScroll so you never scroll past the end
+        const scrollTop = Math.min(targetTop, maxScroll);
+  
+        scrollContainer.scrollTo({
+          top: scrollTop,
+          behavior: "smooth"
+        });
+  
         targetSection.classList.add("highlight");
         setTimeout(() => targetSection.classList.remove("highlight"), 1500);
       }
     });
-  });
-  // Close modal when clicking outside panel
-  filterModal.addEventListener("click", (e) => {
-    if (e.target === filterModal) {
-      filterModal.classList.remove("visible");
-    }
   });
 });
 
@@ -391,4 +397,5 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
