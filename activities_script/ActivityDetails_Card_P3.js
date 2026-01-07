@@ -38,16 +38,35 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         const originalCost = costEl.textContent.replace("SGD ", "");
         const originalInOut = inOutEl?.textContent || "";
         const originalText = remarksText.textContent;
+        // Clean up values first
+        const cleanDuration = originalDuration === "-" ? "" : originalDuration;
+        const cleanCost     = originalCost === "-" ? "" : originalCost;
+        let textValue = originalText === "No remarks yet" ? "" : originalText;
         // Replace with inputs
         nameEl.innerHTML = `<input type="text" class="edit-name" value="${originalName}">`;
-        typeEl.innerHTML = `<input type="text" class="edit-type" value="${originalType}">`;
-        timeEl.innerHTML = `
-          <input type="text" class="edit-open" value="${originalOpen}">
-          –
-          <input type="text" class="edit-close" value="${originalClose}">
+        // Change type to dropdown
+        typeEl.innerHTML = `
+          <select class="edit-type">
+            <option value="workshop" ${originalType.toLowerCase() === "workshop" ? "selected" : ""}>Workshop</option>
+            <option value="shopping" ${originalType.toLowerCase() === "shopping" ? "selected" : ""}>Shopping</option>
+            <option value="hiking" ${originalType.toLowerCase() === "hiking" ? "selected" : ""}>Hiking</option>
+            <option value="museum" ${originalType.toLowerCase() === "museum" ? "selected" : ""}>Museum</option>
+            <option value="exhibition" ${originalType.toLowerCase() === "exhibition" ? "selected" : ""}>Exhibition</option>
+            <option value="concert" ${originalType.toLowerCase() === "concert" ? "selected" : ""}>Concert</option>
+            <option value="sports" ${originalType.toLowerCase() === "sports" ? "selected" : ""}>Sports</option>
+            <option value="beach" ${originalType.toLowerCase() === "beach" ? "selected" : ""}>Beach</option>
+            <option value="cultural" ${originalType.toLowerCase() === "cultural" ? "selected" : ""}>Cultural</option>
+            <option value="relaxation" ${originalType.toLowerCase() === "relaxation" ? "selected" : ""}>Relaxation</option>
+            <option value="others" ${originalType.toLowerCase() === "others" ? "selected" : ""}>Others</option>
+          </select>
         `;
-        durationEl.innerHTML = `<input type="text" class="edit-duration" value="${originalDuration}">`;
-        costEl.innerHTML = `<input type="number" class="edit-cost" value="${originalCost}">`;
+        timeEl.innerHTML = `
+          <input type="time" class="edit-open" value="${toTimeInputValue(originalOpen)}">
+          –
+          <input type="time" class="edit-close" value="${toTimeInputValue(originalClose)}">
+        `;
+        durationEl.innerHTML = `<input type="text" class="edit-duration" value="${cleanDuration}">`;
+        costEl.innerHTML = `<input type="number" class="edit-cost" value="${cleanCost}">`;
         if (inOutEl) {
           inOutEl.innerHTML = `
             <select class="edit-inout">
@@ -57,7 +76,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
           `;
         }
         remarksText.innerHTML = `
-          <textarea class="remarks-input">${originalText}</textarea>
+          <textarea class="remarks-input">${textValue}</textarea>
         `;
 
         // Hide original footer buttons during editing
@@ -91,13 +110,8 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         actionBar.querySelector(".top-tick-btn").addEventListener("click", async () => {
           let newOpen = formatTimeInput(card.querySelector(".edit-open").value);
           let newClose = formatTimeInput(card.querySelector(".edit-close").value);
-          // Clean inputs: remove unwanted characters, normalize spacing
-          const timeRegex = /^([0-9]{1,2}:[0-9]{2})\s?(AM|PM)$/i;
-          if (!timeRegex.test(newOpen)) newOpen = originalOpen;
-          if (!timeRegex.test(newClose)) newClose = originalClose;
-
           const newName = card.querySelector(".edit-name").value.trim();
-          const newType = card.querySelector(".edit-type").value.trim();
+          const newType = card.querySelector(".edit-type").value;
           const newDuration = card.querySelector(".edit-duration").value.trim();
           const newCost = parseFloat(card.querySelector(".edit-cost").value);
           const newInOut = card.querySelector(".edit-inout")?.value || "";
@@ -536,6 +550,3 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
-
-
-
