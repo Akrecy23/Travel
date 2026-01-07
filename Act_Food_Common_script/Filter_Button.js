@@ -348,7 +348,8 @@ function setupShowMore(sectionElement) {
     .sort((a, b) => b.classList.contains("active") - a.classList.contains("active"))
     .forEach(pill => container.appendChild(pill)); // re-append in new order
 
-  if (!showMoreBtn || pills.length <= BATCH_SIZE) {
+  if (!showMoreBtn) return;
+  if (pills.length <= BATCH_SIZE) {
     showMoreBtn.style.display = "none";
     return;
   }
@@ -385,6 +386,7 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
 
