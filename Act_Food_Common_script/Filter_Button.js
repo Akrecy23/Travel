@@ -78,7 +78,11 @@ document.addEventListener("dropdownReady", () => {
       filterBtn.addEventListener("click", () => {
       filterModal.classList.toggle("visible");
       if (filterModal.classList.contains("visible")) {
+        filterBtn.classList.add("active");
         initialiseFilters();   // ✅ refresh pills on open
+      } else {
+        filterBtn.classList.remove("active");
+        filterBtn.classList.remove("active");
       }
     });
   }
@@ -397,5 +401,6 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
 
