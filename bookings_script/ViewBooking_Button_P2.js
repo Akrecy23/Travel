@@ -171,6 +171,10 @@ async function renderTab(tabName, tripId, tripTitle) {
       const data = doc.data();
       const stayType = data.Type || 'Hotel';
       const nights = calculateNights(data.inDate, data.outDate);
+      const days = nights ? nights + 1 : null;
+      const stayLabel = (days && nights !== null)
+        ? `${days}D${nights}N`
+        : '-';
 
       return `
       <div class="card-wrapper">
@@ -209,7 +213,7 @@ async function renderTab(tabName, tripId, tripTitle) {
                 <div class="stay-time">${data.inTime || '3:00 PM'}</div>
               </div>
               <div class="stay-nights">
-                <span class="nights-badge">${nights || '-'} nights</span>
+                <span class="nights-badge">${stayLabel}</span>
               </div>
               <div class="stay-checkout">
                 <div class="stay-label">Check-out</div>
@@ -398,6 +402,7 @@ async function renderTab(tabName, tripId, tripTitle) {
     detail: { tabName, tripId, tripTitle}
     }));
 }
+
 
 
 
