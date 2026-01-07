@@ -166,30 +166,6 @@ function createHomeFrontLayout() {
     }
   });
 
-  const filterBtn = document.getElementById("filterToggle");
-  const filterModal = document.getElementById("filterModal");
-  
-  if (filterBtn && filterModal) {
-    filterBtn.addEventListener("click", () => {
-      const isVisible = filterModal.classList.toggle("visible");
-  
-      if (isVisible) {
-        filterBtn.classList.add("active");   // turn grey
-        initialiseFilters();
-      } else {
-        filterBtn.classList.remove("active"); // reset to normal
-      }
-    });
-  }
-  
-  // Also remove active if modal is closed by clicking outside
-  filterModal.addEventListener("click", (e) => {
-    if (e.target === filterModal) {
-      filterModal.classList.remove("visible");
-      filterBtn.classList.remove("active");
-    }
-  });
-
   // ===== AUTH LOGIC =====
   const auth = window.auth;
 
@@ -216,6 +192,7 @@ function createHomeFrontLayout() {
     }
   });
 }
+
 
 
 
