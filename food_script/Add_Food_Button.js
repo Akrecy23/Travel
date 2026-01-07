@@ -287,12 +287,12 @@ document.addEventListener("FoodFormReady", async () => {
         AddTo: [],
         Address: addressValue,
         City: selectedCity,
-        CloseTime: closingTime,
+        CloseTime: formatTimeInput(closingTime),
         Country: selectedCountry,
         EstCost: priceValue,
         In_Itinerary: false,
         Name: nameValue,
-        OpenTime: openingTime,
+        OpenTime: formatTimeInput(openingTime),
         Remarks: remarksValue,
         Revisit: false,
         Saved: false,
@@ -326,3 +326,4 @@ document.addEventListener("FoodFormReady", async () => {
   });
 
 });
+
