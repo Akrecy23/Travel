@@ -118,6 +118,19 @@ async function sendCollaboratorInvite(email, tripId) {
       const docSnap = snapshot.docs[0];
       const toUid = docSnap.id;
 
+      // First check if user is already a collaborator
+      const tripDoc = await window.db.collection("Trips").doc(tripId).get();
+      if (tripDoc.exists) {
+        const tripData = tripDoc.data();
+        const collaboratorIds = tripData.collaboratorIds || [];
+        const collaboratorsMap = tripData.collaborators || {};
+
+        if (collaboratorIds.includes(toUid) || collaboratorsMap[toUid]) {
+          alert(`User ${email} is already a collaborator on this trip.`);
+          return;
+        }
+      }
+
       const fromUid = window.CURRENT_UID;
       const fromProfile = await window.db.collection("Profiles").doc(fromUid).get();
       let fromNickname = null;
