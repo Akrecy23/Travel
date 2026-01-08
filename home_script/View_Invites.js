@@ -87,6 +87,50 @@ async function openInvitationsModal() {
               collaboratorIds: window.firebase.firestore.FieldValue.arrayUnion(window.CURRENT_UID)
             });
 
+            // --- NEW LOGIC: read trip fields and update Suggested Activities / Food ---
+            const tripDoc = await window.db.collection("Trips").doc(tripId).get();
+            if (tripDoc.exists) {
+              const tripData = tripDoc.data();
+              const { cities = [], country, year } = tripData;
+          
+              const userSuggestedActivitiesRef = window.db
+                .collection("Users")
+                .doc(window.CURRENT_UID)
+                .collection("Suggested Activities");
+          
+              const userSuggestedFoodRef = window.db
+                .collection("Users")
+                .doc(window.CURRENT_UID)
+                .collection("Suggested Food");
+          
+              // 1. Array_City: add cities under `${country}Cities`
+              await userSuggestedActivitiesRef.doc("Array_City").set({
+                [`${country}Cities`]: window.firebase.firestore.FieldValue.arrayUnion(...cities)
+              }, { merge: true });
+          
+              await userSuggestedFoodRef.doc("Array_City").set({
+                [`${country}Cities`]: window.firebase.firestore.FieldValue.arrayUnion(...cities)
+              }, { merge: true });
+          
+              // 2. Array_Country: add country to CountryList
+              await userSuggestedActivitiesRef.doc("Array_Country").set({
+                CountryList: window.firebase.firestore.FieldValue.arrayUnion(country)
+              }, { merge: true });
+          
+              await userSuggestedFoodRef.doc("Array_Country").set({
+                CountryList: window.firebase.firestore.FieldValue.arrayUnion(country)
+              }, { merge: true });
+          
+              // 3. Array_Year: add year (NUMBER type) to YearList
+              await userSuggestedActivitiesRef.doc("Array_Year").set({
+                YearList: window.firebase.firestore.FieldValue.arrayUnion(Number(year))
+              }, { merge: true });
+          
+              await userSuggestedFoodRef.doc("Array_Year").set({
+                YearList: window.firebase.firestore.FieldValue.arrayUnion(Number(year))
+              }, { merge: true });
+            }
+
             // Delete invitation doc
             await window.db.collection("Invitations").doc(invitationId).delete();
 
@@ -134,5 +178,6 @@ async function openInvitationsModal() {
     content.innerHTML = "<p>Something went wrong while loading invitations.</p>";
   }
 }
+
 
 
