@@ -63,6 +63,10 @@ async function deleteTrip(tripId, card) {
       const updateData = {};
       updateData[`collaborators.${currentUserId}`] = window.firebase.firestore.FieldValue.delete();
       await tripRef.update(updateData);
+      // Remove from collaboratorIds
+      await tripRef.update({
+        collaboratorIds: window.firebase.firestore.FieldValue.arrayRemove(currentUserId)
+      });
     }
     console.log(`Access removed for user ${currentUserId} from trip ${tripId}`);
 
@@ -86,3 +90,4 @@ async function deleteTrip(tripId, card) {
     alert("Failed to remove trip access. Please try again.");
   }
 }
+
