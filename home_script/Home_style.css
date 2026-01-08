@@ -628,7 +628,7 @@ font-size: 1.5rem;
 .invitation-card-2 {
   display: flex;
   justify-content: space-between; /* left details, right button */
-  align-items: flex-start;        /* keep text aligned at top */
+  align-items: stretch;        /* keep text aligned at top */
   border: 1px solid #ccc;
   padding: 8px;
   margin-bottom: 8px;
@@ -662,8 +662,7 @@ font-size: 1.5rem;
   color: #fff;
 }
 
-.invitation-actions .accept-btn:hover,
-.invitation-card-2 .cancel-btn:hover {
+.invitation-actions .accept-btn:hover {
   background: #27ae60;
 }
 
@@ -673,7 +672,8 @@ font-size: 1.5rem;
   color: #fff;
 }
 
-.invitation-actions .decline-btn:hover {
+.invitation-actions .decline-btn:hover,
+.invitation-card-2 .cancel-btn:hover {
   background: #c0392b;
 }
 
@@ -696,5 +696,3 @@ font-size: 1.5rem;
   background-color: #aaa;      /* greyed out when disabled */
   cursor: not-allowed;         /* show disabled cursor */
 }
-
-
