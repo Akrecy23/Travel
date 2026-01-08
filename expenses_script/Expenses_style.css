@@ -31,7 +31,7 @@
   margin: 0;
 }
 .trip-status {
-  background: #fef3c7;
+  background: #3b82f6;
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 999px;
@@ -463,5 +463,6 @@
   background: #1e40af;
 
 }
+
 
 
