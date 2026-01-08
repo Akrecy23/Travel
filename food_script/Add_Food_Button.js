@@ -92,6 +92,9 @@ document.addEventListener("FoodCardsLoaded", () => {
   if (nextBtn) {
     nextBtn.addEventListener("click", () => {
       if (!citySelect.value || citySelect.value === "add_new" || !typeSelect.value) {
+        const citySelect = modal.querySelector("#citySelect");
+        const typeSelect = modal.querySelector("#foodTypeSelect");
+        // Validate city & food type first
         alert("Please select a City and Food Type before continuing.");
         return; // stop here if not selected
       }
@@ -326,6 +329,7 @@ document.addEventListener("FoodFormReady", async () => {
   });
 
 });
+
 
 
 
