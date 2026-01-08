@@ -33,36 +33,6 @@ document.addEventListener("FormReady", async e => {
       data[key] = value;
     });
 
-    let requiredFields = [];
-    if (tabName === "Transport") {
-      requiredFields = [
-        "travelType", "depDate", "departCountry", "returnDate", "arriveCountry"
-      ];
-      if (data.travelType === "Airplane") {
-        requiredFields.push("departAirport", "departTerminal", "departTime",
-                            "arriveAirport", "arriveTerminal", "arriveTime", "airline");
-      } else if (data.travelType === "Ferry") {
-        requiredFields.push("departHarbour", "departTime",
-                            "arriveHarbour", "arriveTime");
-      } else if (data.travelType === "Others") {
-        requiredFields.push("departPickup", "arriveDropoff");
-      }
-    } else if (tabName === "Stay") {
-      requiredFields = [
-        "stayType", "stayName", "stayAddress",
-        "checkInDate", "checkInTime", "checkOutDate", "checkOutTime"
-      ];
-    } else if (tabName === "Others") {
-      requiredFields = ["otherType", "otherName", "otherDate"];
-    }
-  
-    // Check missing fields
-    const missing = requiredFields.filter(f => !data[f]);
-    if (missing.length > 0) {
-      alert("Please fill in all required fields: " + missing.join(", "));
-      return;
-    }
-
     // Map tabName to Firestore collection
     const collectionMap = {
       Transport: "Transport",
@@ -359,4 +329,5 @@ function toggleStepInputs() {
       step.querySelectorAll("input, textarea, select").forEach(el => { el.disabled = isHidden; }); 
     }); 
 }
+
 
