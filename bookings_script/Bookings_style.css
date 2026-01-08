@@ -38,6 +38,9 @@
   font-size: 0.75rem;
   font-weight: 600;
 }
+.trip-status.upcoming {
+  background: #10b981; /* green for upcoming */
+}
 
 /* === Detail Items === */
 .detail-item {
@@ -813,6 +816,7 @@
   to { opacity: 1; transform: translateY(0); }
 
 }
+
 
 
 
