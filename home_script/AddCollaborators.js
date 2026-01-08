@@ -141,12 +141,11 @@ async function sendCollaboratorInvite(email, tripId) {
       // Then check if an invitation is already pending
       const fromUid = window.CURRENT_UID;
       // Query only invitations sent by the current user
-      const snapshot = await window.db.collection("Invitations")
+      const inviteSnap = await window.db.collection("Invitations")
         .where("fromUid", "==", fromUid)
-        .where("tripId", "==", tripId) // optional filter by trip
         .get();
       // Look for one addressed to the target user
-      const match = snapshot.docs.find(doc => doc.data().toUid === toUid);
+      const match = inviteSnap .docs.find(doc => doc.data().toUid === toUid);
       if (match) {
         const invite = match.data();
         if (invite.status === "pending") {
@@ -154,14 +153,7 @@ async function sendCollaboratorInvite(email, tripId) {
           return
         }
       }
-
       console.log("check done");
-      
-      if (existingInvite.exists && existingInvite.data().status === "pending") {
-        console.log("user invited alr");
-        alert(`An invitation is already pending for ${email}.`);
-        return;
-      }
 
       const fromProfile = await window.db.collection("Profiles").doc(fromUid).get();
       let fromNickname = null;
