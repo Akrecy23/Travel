@@ -146,7 +146,7 @@ async function sendCollaboratorInvite(email, tripId) {
         .where("tripId", "==", tripId) // optional filter by trip
         .get();
       // Look for one addressed to the target user
-      const match = snapshot.docs.find(doc => doc.data().toUid === targetUid);
+      const match = snapshot.docs.find(doc => doc.data().toUid === toUid);
       if (match) {
         const invite = match.data();
         if (invite.status === "pending") {
