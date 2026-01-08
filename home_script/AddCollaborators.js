@@ -92,7 +92,7 @@ async function openCollaboratorsModal(tripId) {
     }
   } catch (err) {
     console.error("Error loading collaborators:", err);
-    content.textContent  = "<p>Something went wrong.</p>";
+    content.textContent  = "Something went wrong.";
   }
 
   // Close modal
