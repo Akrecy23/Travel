@@ -318,11 +318,11 @@ font-size: 1.5rem;
   border-radius: 8px;
   font-size: 0.75rem;
 }
-.trip-badge.planning {
-  background: #f59e0b; /* amber for planning */
-}
 .trip-badge.upcoming {
   background: #10b981; /* green for upcoming */
+}
+.trip-badge.past {
+  background: #ef4444; /* red for completed */
 }
 .trip-header {
   display: flex;
@@ -691,3 +691,4 @@ font-size: 1.5rem;
   background-color: #aaa;      /* greyed out when disabled */
   cursor: not-allowed;         /* show disabled cursor */
 }
+
