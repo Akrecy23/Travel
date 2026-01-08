@@ -19,12 +19,12 @@ document.addEventListener("ActivityCardsLoaded", () => {
             </div>
             <!-- City -->
             <div class="form-group">
-                <label>City</label>
+                <label>City*</label>
                 <select name="city" id="citySelect" required></select>
             </div>
             <!-- Activity Type -->
             <div class="form-group">
-                <label>Activity Type</label>
+                <label>Activity Type*</label>
                 <select name="activityType" id="activityTypeSelect" required></select>
             </div>
             <!-- Next Button -->
@@ -36,7 +36,7 @@ document.addEventListener("ActivityCardsLoaded", () => {
           <div id="step2" class="hidden">
             <!-- Activity Name -->
             <div class="form-group">
-                <label>Activity Name</label>
+                <label>Activity Name*</label>
                 <input type="text" name="activityName" placeholder="Enter activity name" required />
             </div>
             <!-- Price -->
@@ -47,12 +47,12 @@ document.addEventListener("ActivityCardsLoaded", () => {
             <!-- Opening Time -->
             <div class="form-group">
                 <label>Opening Time</label>
-                <input type="time" name="openingTime" required />
+                <input type="time" name="openingTime" />
             </div>
             <!-- Closing Time -->
             <div class="form-group">
                 <label>Closing Time</label>
-                <input type="time" name="closingTime" required />
+                <input type="time" name="closingTime" />
             </div>
             <!-- Duration -->
             <div class="form-group">
@@ -61,7 +61,7 @@ document.addEventListener("ActivityCardsLoaded", () => {
             </div>
             <!-- Address -->
             <div class="form-group">
-                <label>Address</label>
+                <label>Address*</label>
                 <input type="text" name="address" placeholder="Enter address" required />
             </div>
             <!-- Image URL -->
@@ -287,7 +287,7 @@ document.addEventListener("ActivityFormReady", async () => {
     const inOutDoor = form.inOutDoor ? form.inOutDoor.value.trim() : "";
     const imageURL = form.imageURL ? form.imageURL.value.trim() : "";
 
-    if (!nameValue || !openingTime || !closingTime || !addressValue) {
+    if (!nameValue || !openingTime) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -344,6 +344,3 @@ document.addEventListener("ActivityFormReady", async () => {
     }
   });
 });
-
-
-
