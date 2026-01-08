@@ -143,6 +143,7 @@ async function sendCollaboratorInvite(email, tripId) {
       // Query only invitations sent by the current user
       const inviteSnap = await window.db.collection("Invitations")
         .where("fromUid", "==", fromUid)
+        .where("tripId", "==", tripId)
         .get();
       // Look for one addressed to the target user
       const match = inviteSnap .docs.find(doc => doc.data().toUid === toUid);
