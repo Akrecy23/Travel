@@ -633,7 +633,7 @@ font-size: 1.5rem;
   padding: 8px;
   margin-bottom: 8px;
 }
-.invitation-card p {
+.invitation-card p, .invitation-card-2 p {
   margin: 4px 0;
   font-size: 0.9rem;
   color: #333;
@@ -648,7 +648,7 @@ font-size: 1.5rem;
 
 .invitation-actions .accept-btn,
 .invitation-actions .decline-btn,
-.invitation-card .cancel-btn {
+.invitation-card-2 .cancel-btn {
   flex: 1;
   padding: 6px 10px;
   border: none;
@@ -663,7 +663,7 @@ font-size: 1.5rem;
 }
 
 .invitation-actions .accept-btn:hover,
-.invitation-card .cancel-btn:hover {
+.invitation-card-2 .cancel-btn:hover {
   background: #27ae60;
 }
 
@@ -695,3 +695,4 @@ font-size: 1.5rem;
   background-color: #aaa;      /* greyed out when disabled */
   cursor: not-allowed;         /* show disabled cursor */
 }
+
