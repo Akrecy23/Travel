@@ -71,7 +71,7 @@ document.addEventListener("ActivityCardsLoaded", () => {
             </div>
             <!-- Indoor or Outdoor -->
             <div class="form-group">
-              <label>Indoor/Outdoor</label>
+              <label>Indoor/Outdoor*</label>
               <div>
                 <label>
                   <input type="radio" name="inOutDoor" value="Indoor" required />
@@ -110,6 +110,14 @@ document.addEventListener("ActivityCardsLoaded", () => {
 
   if (nextBtn) {
     nextBtn.addEventListener("click", () => {
+      const citySelect = modal.querySelector("#citySelect");
+      const typeSelect = modal.querySelector("#activityTypeSelect");
+      // Validate city & activity type first
+      if (!citySelect.value || citySelect.value === "add_new" || !typeSelect.value) {
+        alert("Please select a City and Activity Type before continuing.");
+        return; // stop here if not selected
+      }
+  
       step1.classList.add("hidden");
       step2.classList.remove("hidden");
     });
@@ -344,3 +352,4 @@ document.addEventListener("ActivityFormReady", async () => {
     }
   });
 });
+
