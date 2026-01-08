@@ -186,6 +186,9 @@ async function sendCollaboratorInvite(email, tripId) {
       });
 
       alert(`Invitation has been sent to ${email} for trip ${tripTitle}`);
+      // Close Modal after successful invitation
+      const modal = document.getElementById("collaboratorsModal");
+      modal.style.display = "none";
     } else {
       alert(`The invited user (${email}) does not exist.`);
     }
