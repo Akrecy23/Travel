@@ -12,11 +12,20 @@ document.addEventListener("CreateHomeBackLayout", () => {
   const renderCards = (trips, badgeLabel) => {
     if (!trips || trips.length === 0) return "";
 
-    // For Past trips, show simplified markup
+    // For Past trips, show simplified markup & special edits
     if (badgeLabel.toLowerCase() === "past") {
       return trips.map(card => `
         <div class="trip-card" data-trip-id="${card.tripId}">
           <div class="trip-actions">
+            <button class="edit-btn-special" title="Edit">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" 
+                  stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14
+                        a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1
+                        1-4 9.5-9.5z"></path>
+              </svg>
+            </button>
             <button class="delete-btn" title="Delete">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" 
                   stroke="currentColor" stroke-width="2">
@@ -28,6 +37,7 @@ document.addEventListener("CreateHomeBackLayout", () => {
           </div>
           <div class="trip-info">
             <h4 class="trip-name">${card.title}</h4>
+            <div class="trip-detail">${card.dateRange}</div>
           </div>
         </div>
       `).join("");
@@ -169,6 +179,16 @@ document.addEventListener("CreateHomeBackLayout", () => {
       enableCardEditing(tripId, card);
     });
   });
+  // For clicking on SPECIAL Edit Button
+  heroCardContainer.querySelectorAll(".edit-btn-special").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      const card = btn.closest(".trip-card");
+      const tripId = card.dataset.tripId;
+      // Call your edit function (read‑only version)
+      enableSpecialCardEditing(tripId, card);
+    });
+  });
   // For clicking on Delete Button
   heroCardContainer.querySelectorAll(".delete-btn").forEach(btn => {
     btn.addEventListener("click", e => {
@@ -200,4 +220,5 @@ document.addEventListener("CreateHomeBackLayout", () => {
   // Dispatch event listener to signal layout ready
   document.dispatchEvent(new Event("HomeBackLayoutReady"));
 });
+
 
