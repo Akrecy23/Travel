@@ -30,7 +30,7 @@ async function openCollaboratorsModal(tripId) {
     content.innerHTML = ""; // clear loading text
 
     if (collaboratorEntries.length === 0) {
-      content.textContent = "<p>No collaborators yet.</p>";
+      content.textContent = "No collaborators yet.";
     } else {
       collaboratorEntries.forEach(([uid, c]) => {
         const card = document.createElement("div");
@@ -80,7 +80,7 @@ async function openCollaboratorsModal(tripId) {
 
             card.remove();
             if (!content.querySelector(".collaborator-card")) {
-              content.textContent = "No collaborators left.";
+              content.textContent = "No collaborators yet.";
             }
           } catch (err) {
             console.error("Error removing collaborator:", err);
