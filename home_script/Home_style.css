@@ -619,8 +619,11 @@ font-size: 1.5rem;
 }
 /* ===== Invitation Cards ===== */
 .invitation-card {
+  display: flex;
+  justify-content: space-between; /* left details, right actions */
+  align-items: flex-start;
   background: #f9f9f9;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   border-radius: 6px;
   padding: 10px;
   margin-bottom: 10px;
@@ -669,17 +672,11 @@ font-size: 1.5rem;
 .invitation-actions .decline-btn:hover {
   background: #c0392b;
 }
-.invitation-card {
-  display: flex;
-  justify-content: space-between; /* left details, right button */
-  align-items: flex-start;        /* keep text aligned at top */
-  border: 1px solid #ccc;
-  padding: 8px;
-  margin-bottom: 8px;
-}
 
 .card-left p {
   margin: 4px 0;
+  font-size: 0.9rem;
+  color: #333;
 }
 
 .card-right {
@@ -691,4 +688,3 @@ font-size: 1.5rem;
   background-color: #aaa;      /* greyed out when disabled */
   cursor: not-allowed;         /* show disabled cursor */
 }
-
