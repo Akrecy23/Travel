@@ -117,6 +117,7 @@ async function addCollaborators(email, emailInput, card) {
 }
 
 async function sendCollaboratorInvite(email, tripId) {
+  console.log("Running sendCollaboratorInvite");
   try {
     const profilesRef = window.db.collection("Profiles");
     const snapshot = await profilesRef.where("email", "==", email).get();
@@ -128,22 +129,29 @@ async function sendCollaboratorInvite(email, tripId) {
       // First check if user is already a collaborator
       const tripDoc = await window.db.collection("Trips").doc(tripId).get();
       if (tripDoc.exists) {
+        console.log("tripDoc exists");
         const tripData = tripDoc.data();
         const collaboratorIds = tripData.collaboratorIds || [];
         const collaboratorsMap = tripData.collaborators || {};
 
         if (collaboratorIds.includes(toUid) || collaboratorsMap[toUid]) {
+          console.log("user in collaborator");
           alert(`User ${email} is already a collaborator on this trip.`);
           return;
         }
       }
 
+      console.log("checking pending invite");
+
       // Then check if an invitation is already pending
       const existingInvite = await window.db.collection("Invitations")
         .doc(`${tripId}_${toUid}`)
         .get();
+
+      console.log("check done");
       
       if (existingInvite.exists && existingInvite.data().status === "pending") {
+        console.log("user invited alr");
         alert(`An invitation is already pending for ${email}.`);
         return;
       }
@@ -161,6 +169,8 @@ async function sendCollaboratorInvite(email, tripId) {
       const tripTitle = tripDoc.exists && tripDoc.data().title
         ? tripDoc.data().title
         : tripId;
+
+      console.log("all details retrieved");
 
       const invitationId = `${tripId}_${toUid}`;
 
