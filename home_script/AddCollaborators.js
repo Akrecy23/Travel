@@ -117,7 +117,6 @@ async function addCollaborators(email, emailInput, card) {
 }
 
 async function sendCollaboratorInvite(email, tripId) {
-  console.log("Running sendCollaboratorInvite");
   try {
     const profilesRef = window.db.collection("Profiles");
     const snapshot = await profilesRef.where("email", "==", email).get();
@@ -129,24 +128,32 @@ async function sendCollaboratorInvite(email, tripId) {
       // First check if user is already a collaborator
       const tripDoc = await window.db.collection("Trips").doc(tripId).get();
       if (tripDoc.exists) {
-        console.log("tripDoc exists");
         const tripData = tripDoc.data();
         const collaboratorIds = tripData.collaboratorIds || [];
         const collaboratorsMap = tripData.collaborators || {};
 
         if (collaboratorIds.includes(toUid) || collaboratorsMap[toUid]) {
-          console.log("user in collaborator");
           alert(`User ${email} is already a collaborator on this trip.`);
           return;
         }
       }
 
-      console.log("checking pending invite");
-
       // Then check if an invitation is already pending
-      const existingInvite = await window.db.collection("Invitations")
-        .doc(`${tripId}_${toUid}`)
+      const fromUid = window.CURRENT_UID;
+      // Query only invitations sent by the current user
+      const snapshot = await window.db.collection("Invitations")
+        .where("fromUid", "==", fromUid)
+        .where("tripId", "==", tripId) // optional filter by trip
         .get();
+      // Look for one addressed to the target user
+      const match = snapshot.docs.find(doc => doc.data().toUid === targetUid);
+      if (match) {
+        const invite = match.data();
+        if (invite.status === "pending") {
+          alert(`An invitation is already pending for ${invite.toUid}.`);
+          return
+        }
+      }
 
       console.log("check done");
       
@@ -156,7 +163,6 @@ async function sendCollaboratorInvite(email, tripId) {
         return;
       }
 
-      const fromUid = window.CURRENT_UID;
       const fromProfile = await window.db.collection("Profiles").doc(fromUid).get();
       let fromNickname = null;
       let fromEmail = null;
