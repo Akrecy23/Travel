@@ -666,4 +666,24 @@ font-size: 1.5rem;
 .invitation-actions .decline-btn:hover {
   background: #c0392b;
 }
+.cancel-btn {
+  background-color: #e74c3c;   /* red tone for cancel */
+  color: #fff;                 /* white text */
+  border: none;                /* remove default border */
+  border-radius: 4px;          /* rounded corners */
+  padding: 8px 14px;           /* spacing inside button */
+  font-size: 14px;             /* readable text size */
+  font-weight: bold;           /* emphasize text */
+  cursor: pointer;             /* pointer on hover */
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
 
+.cancel-btn:hover {
+  background-color: #c0392b;   /* darker red on hover */
+  transform: scale(1.05);      /* slight grow effect */
+}
+
+.cancel-btn:disabled {
+  background-color: #aaa;      /* greyed out when disabled */
+  cursor: not-allowed;         /* show disabled cursor */
+}
