@@ -138,6 +138,16 @@ async function sendCollaboratorInvite(email, tripId) {
         }
       }
 
+      // Then check if an invitation is already pending
+      const existingInvite = await window.db.collection("Invitations")
+        .doc(`${tripId}_${toUid}`)
+        .get();
+      
+      if (existingInvite.exists && existingInvite.data().status === "pending") {
+        alert(`An invitation is already pending for ${email}.`);
+        return;
+      }
+
       const fromUid = window.CURRENT_UID;
       const fromProfile = await window.db.collection("Profiles").doc(fromUid).get();
       let fromNickname = null;
@@ -147,10 +157,16 @@ async function sendCollaboratorInvite(email, tripId) {
         fromEmail = fromProfile.data().email;
       }
 
+      // Get trip title, fallback to tripId if missing
+      const tripTitle = tripDoc.exists && tripDoc.data().title
+        ? tripDoc.data().title
+        : tripId;
+
       const invitationId = `${tripId}_${toUid}`;
 
       await window.db.collection("Invitations").doc(invitationId).set({
         tripId,
+        tripTitle,
         fromUid,
         fromNickname,
         fromEmail,
