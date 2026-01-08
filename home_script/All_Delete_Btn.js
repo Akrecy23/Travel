@@ -41,11 +41,13 @@ async function deleteTrip(tripId, card) {
           await tripRef.collection(sub).doc(doc.id).delete();
         }
       }
+      console.log("ran here");
       // Remove any pending invitations
       const pendingSnap = await window.db.collection("Invitations")
         .where("tripId", "==", tripId)
         .get()
       if (!pendingSnap.empty) {
+        console.log("there's invitation");
         const batch = window.db.batch(); // optional: batch for efficiency
         pendingSnap.forEach(doc => {
           batch.delete(doc.ref);
@@ -90,4 +92,5 @@ async function deleteTrip(tripId, card) {
     alert("Failed to remove trip access. Please try again.");
   }
 }
+
 
