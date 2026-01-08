@@ -185,7 +185,7 @@ async function sendCollaboratorInvite(email, tripId) {
         status: "pending",
       });
 
-      alert(`Invitation has been sent to ${email} (UID: ${toUid}) for trip ${tripId}`);
+      alert(`Invitation has been sent to ${email} for trip ${tripTitle}`);
     } else {
       alert(`The invited user (${email}) does not exist.`);
     }
