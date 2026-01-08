@@ -31,34 +31,68 @@ async function openInvitationsModal() {
   const content = document.getElementById("invitationsContent");
 
   try {
-    // Query invitations for the current user
-    const snapshot = await window.db.collection("Invitations")
+    // --- 1. Invitations sent TO user ---
+    const incomingSnap = await window.db.collection("Invitations")
       .where("toUid", "==", window.CURRENT_UID) // replace with your auth context
       .get();
 
-    if (snapshot.empty) {
-      content.innerHTML = "<p>No invitations found.</p>";
-      return;
+    let incomingHTML = "";
+
+    if (incomingSnap.empty) {
+      incomingHTML = "<p>No incoming invitations.</p>";
+    } else {
+      // Render each invitation
+      incomingHTML = incomingSnap.docs.map(doc => {
+        const data = doc.data();
+        const showActions = data.status === "pending";
+        return `
+          <div class="invitation-card" data-invitation-id="${doc.id}" data-trip-id="${data.tripId}">
+            <p><strong>From:</strong> ${data.fromNickname || data.fromEmail || data.fromUid}</p>
+            <p><strong>Trip ID:</strong> ${data.tripId}</p>
+            <p><strong>Status:</strong> ${data.status}</p>
+           ${showActions ? `
+              <div class="invitation-actions">
+                <button class="accept-btn">Accept</button>
+                <button class="decline-btn">Decline</button>
+              </div>
+            ` : ""}
+          </div>
+        `;
+      }).join("");
     }
 
-    // Render each invitation
-    content.innerHTML = snapshot.docs.map(doc => {
-      const data = doc.data();
-      const showActions = data.status === "pending";
-      return `
-        <div class="invitation-card" data-invitation-id="${doc.id}" data-trip-id="${data.tripId}">
-          <p><strong>From:</strong> ${data.fromNickname || data.fromEmail || data.fromUid}</p>
-          <p><strong>Trip ID:</strong> ${data.tripId}</p>
-          <p><strong>Status:</strong> ${data.status}</p>
-         ${showActions ? `
-            <div class="invitation-actions">
-              <button class="accept-btn">Accept</button>
-              <button class="decline-btn">Decline</button>
-            </div>
-          ` : ""}
-        </div>
-      `;
-    }).join("");
+    // --- Divider line ---
+    const dividerHTML = `<hr style="border-top: 2px dashed #999; margin: 1em 0;"> 
+                         <p style="text-align:center; font-weight:bold;">====== PENDING INVITES ======</p>`;
+
+    // --- 2. Invitations I have SENT ---
+    const outgoingSnap = await window.db.collection("Invitations")
+      .where("fromUid", "==", window.CURRENT_UID)
+      .get();
+
+    let outgoingHTML = "";
+    if (!outgoingSnap.empty) {
+      outgoingHTML = outgoingSnap.docs.map(doc => {
+        const data = doc.data();
+        return `
+          <div class="invitation-card" data-invitation-id="${doc.id}" data-trip-id="${data.tripId}">
+            <p><strong>To:</strong> ${data.toUid}</p>
+            <p><strong>Trip ID:</strong> ${data.tripId}</p>
+            <p><strong>Status:</strong> ${data.status}</p>
+            ${data.status === "pending" ? `<button class="cancel-btn">Cancel</button>` : ""}
+          </div>
+        `;
+      }).join("");
+    } else {
+      outgoingHTML = "<p>No outgoing invitations.</p>";
+    }
+
+    // --- Put it all together ---
+    content.innerHTML = `
+      <div id="incomingInvites">${incomingHTML}</div>
+      ${dividerHTML}
+      <div id="outgoingInvites">${outgoingHTML}</div>
+    `;
 
     // Attach listeners for accept
     content.querySelectorAll(".accept-btn").forEach(btn => {
@@ -136,8 +170,8 @@ async function openInvitationsModal() {
 
             // Remove card from modal
             card.remove();
-            if (!content.querySelector(".invitation-card")) {
-                content.innerHTML = "<p>No invitations found.</p>";
+            if (!document.querySelector("#incomingInvites .invitation-card")) {
+              document.getElementById("incomingInvites").innerHTML = "<p>No incoming invitations.</p>";
             }
             } catch (err) {
               console.error("Error accepting invitation:", err);
@@ -145,39 +179,62 @@ async function openInvitationsModal() {
               btn.disabled = false;
             }
         });
-        });
+      });
 
-        // Attach listeners for decline
-        content.querySelectorAll(".decline-btn").forEach(btn => {
+      // Attach listeners for decline
+      content.querySelectorAll(".decline-btn").forEach(btn => {
         btn.addEventListener("click", async e => {
             const card = btn.closest(".invitation-card");
             const invitationId = card.dataset.invitationId;
             btn.disabled = true;
 
             try {
-            // Update invitation status
-            await window.db.collection("Invitations").doc(invitationId).update({ status: "declined" });
-
-            // Delete invitation doc
-            await window.db.collection("Invitations").doc(invitationId).delete();
-
-            // Remove card from modal
-            card.remove();
-            if (!content.querySelector(".invitation-card")) {
-                content.innerHTML = "<p>No invitations found.</p>";
-            }
+              // Update invitation status
+              await window.db.collection("Invitations").doc(invitationId).update({ status: "declined" });
+  
+              // Delete invitation doc
+              await window.db.collection("Invitations").doc(invitationId).delete();
+    
+              // Remove card from modal
+              card.remove();
+              if (!document.querySelector("#incomingInvites .invitation-card")) {
+                document.getElementById("incomingInvites").innerHTML = "<p>No incoming invitations.</p>";
+              }
             } catch (err) {
               console.error("Error declining invitation:", err);
               alert("Failed to decline invitation. Please try again.");
               btn.disabled = false;
             }
         });
-    });
+      });
+
+      // Attach listeners for cancel
+      content.querySelectorAll(".cancel-btn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const card = btn.closest(".invitation-card");
+          const invitationId = card.dataset.invitationId;
+          btn.disabled = true;
+      
+          try {
+            // Delete the invitation document
+            await window.db.collection("Invitations").doc(invitationId).delete();
+      
+            // Remove card from modal
+            card.remove();
+      
+            // If no outgoing cards left, show message
+            if (!content.querySelector(".cancel-btn")) {
+              document.getElementById("outgoingInvites").innerHTML = "<p>No outgoing invitations.</p>";
+            }
+          } catch (err) {
+            console.error("Error canceling invitation:", err);
+            alert("Failed to cancel invitation.");
+            btn.disabled = false;
+          }
+        });
+      });
   } catch (err) {
     console.error("Error loading invitations:", err);
     content.innerHTML = "<p>Something went wrong while loading invitations.</p>";
   }
 }
-
-
-
