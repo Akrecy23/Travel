@@ -125,12 +125,12 @@ async function openInvitationsModal() {
               const { cities = [], country, year } = tripData;
           
               const userSuggestedActivitiesRef = window.db
-                .collection("Users")
+                .collection("User")
                 .doc(window.CURRENT_UID)
                 .collection("Suggested Activities");
           
               const userSuggestedFoodRef = window.db
-                .collection("Users")
+                .collection("User")
                 .doc(window.CURRENT_UID)
                 .collection("Suggested Food");
           
@@ -235,6 +235,7 @@ async function openInvitationsModal() {
     content.innerHTML = "<p>Something went wrong while loading invitations.</p>";
   }
 }
+
 
 
 
