@@ -68,13 +68,13 @@ async function enableCardEditing(tripId, card) {
     // ✅ Handle cities input
     let newCities = [];
     if (newCitiesRaw && newCitiesRaw.toLowerCase() !== "no cities") {
-      const citiesPattern = /^\([^()]+\)(,\([^()]+\))*$/;
+      const citiesPattern = /^([^,]+)(,[^,]+)*$/;
       if (!citiesPattern.test(newCitiesRaw)) {
-        alert("Cities must be in the format (City) or (City),(City), or 'No cities'");
+        alert("Cities must be in the format (City) or (City),(City) or 'No cities'");
         return; // stop here if invalid
       }
       // Convert "(Taipei),(Taichung)" → ["Taipei","Taichung"]
-      newCities = newCitiesRaw.match(/\(([^()]+)\)/g).map(s => s.replace(/[()]/g, ""));
+      newCities = newCitiesRaw.split(",").map(s => s.trim());
     }
 
     const currentUserId = window.CURRENT_UID;
@@ -313,3 +313,4 @@ async function enableSpecialCardEditing(tripId, card) {
     }
   });
 }
+
