@@ -86,7 +86,7 @@ async function fetchTripsAndRenderTabs(yearId, countryFilters, groupFilters) {
     card.innerHTML = `
       <div class="trip-header">
         <h3 class="trip-id">${tripData.title}</h3>
-        <span class="trip-status">${status}</span>
+        <span class="trip-status ${status.toLowerCase()">${status}</span>
       </div>
 
       <!-- Dates & Duration -->
@@ -200,6 +200,7 @@ function parseDate(dateStr) {
   return new Date(cleaned);
 
 }
+
 
 
 
