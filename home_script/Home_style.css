@@ -640,7 +640,8 @@ font-size: 1.5rem;
 }
 
 .invitation-actions .accept-btn,
-.invitation-actions .decline-btn {
+.invitation-actions .decline-btn,
+.invitation-card .cancel-btn {
   flex: 1;
   padding: 6px 10px;
   border: none;
@@ -654,11 +655,13 @@ font-size: 1.5rem;
   color: #fff;
 }
 
-.invitation-actions .accept-btn:hover {
+.invitation-actions .accept-btn:hover,
+.invitation-card .cancel-btn:hover {
   background: #27ae60;
 }
 
-.invitation-actions .decline-btn {
+.invitation-actions .decline-btn,
+.invitation-card .cancel-btn {
   background: #e74c3c; /* red */
   color: #fff;
 }
@@ -666,21 +669,22 @@ font-size: 1.5rem;
 .invitation-actions .decline-btn:hover {
   background: #c0392b;
 }
-.cancel-btn {
-  background-color: #e74c3c;   /* red tone for cancel */
-  color: #fff;                 /* white text */
-  border: none;                /* remove default border */
-  border-radius: 4px;          /* rounded corners */
-  padding: 8px 14px;           /* spacing inside button */
-  font-size: 14px;             /* readable text size */
-  font-weight: bold;           /* emphasize text */
-  cursor: pointer;             /* pointer on hover */
-  transition: background-color 0.2s ease, transform 0.1s ease;
+.invitation-card {
+  display: flex;
+  justify-content: space-between; /* left details, right button */
+  align-items: flex-start;        /* keep text aligned at top */
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin-bottom: 8px;
 }
 
-.cancel-btn:hover {
-  background-color: #c0392b;   /* darker red on hover */
-  transform: scale(1.05);      /* slight grow effect */
+.card-left p {
+  margin: 4px 0;
+}
+
+.card-right {
+  display: flex;
+  align-items: flex-end; /* button sits at bottom edge */
 }
 
 .cancel-btn:disabled {
