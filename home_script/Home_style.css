@@ -668,7 +668,7 @@ font-size: 1.5rem;
 }
 
 .invitation-actions .decline-btn,
-.invitation-card .cancel-btn {
+.invitation-card-2 .cancel-btn {
   background: #e74c3c; /* red */
   color: #fff;
 }
@@ -689,10 +689,12 @@ font-size: 1.5rem;
 .card-right {
   display: flex;
   align-items: flex-end; /* button sits at bottom edge */
+  justify-content: flex-end;
 }
 
 .cancel-btn:disabled {
   background-color: #aaa;      /* greyed out when disabled */
   cursor: not-allowed;         /* show disabled cursor */
 }
+
 
