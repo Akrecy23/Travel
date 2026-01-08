@@ -158,9 +158,11 @@ async function sendCollaboratorInvite(email, tripId) {
       const fromProfile = await window.db.collection("Profiles").doc(fromUid).get();
       let fromNickname = null;
       let fromEmail = null;
+      let toEmail = null;
       if (fromProfile.exists) {
         fromNickname = fromProfile.data().nickname || fromProfile.data().displayName || "Unknown";
         fromEmail = fromProfile.data().email;
+        toEmail = email;
       }
 
       // Get trip title, fallback to tripId if missing
@@ -179,6 +181,7 @@ async function sendCollaboratorInvite(email, tripId) {
         fromNickname,
         fromEmail,
         toUid,
+        toEmail,
         status: "pending",
       });
 
