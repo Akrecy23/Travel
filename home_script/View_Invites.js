@@ -72,7 +72,7 @@ async function openInvitationsModal() {
         return `
           <div class="invitation-card" data-invitation-id="${doc.id}" data-trip-id="${data.tripId}">
             <p><strong>To:</strong> ${data.toUid}</p>
-            <p><strong>Trip ID:</strong> ${data.tripTitle || data.tripId}</p>
+            <p><strong>Trip:</strong> ${data.tripTitle || data.tripId}</p>
             <p><strong>Status:</strong> ${data.status}</p>
             ${data.status === "pending" ? `<button class="cancel-btn">Cancel</button>` : ""}
           </div>
@@ -235,6 +235,7 @@ async function openInvitationsModal() {
     content.innerHTML = "<p>Something went wrong while loading invitations.</p>";
   }
 }
+
 
 
 
