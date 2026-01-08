@@ -41,6 +41,9 @@
 .trip-status.upcoming {
   background: #10b981; /* green for upcoming */
 }
+.trip-status.completed {
+  background: #ef4444; /* red for completed */
+}
 
 /* === Detail Items === */
 .detail-item {
@@ -569,4 +572,5 @@
 .move-itinerary-modal button[type="submit"]:hover {
   background: #1e40af;
 }
+
 
