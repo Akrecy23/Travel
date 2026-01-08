@@ -673,6 +673,11 @@ font-size: 1.5rem;
   background: #c0392b;
 }
 
+.card-left {
+  display: flex;
+  flex-direction: column; /* stack text vertically */
+}
+
 .card-left p {
   margin: 4px 0;
   font-size: 0.9rem;
