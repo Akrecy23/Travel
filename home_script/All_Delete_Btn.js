@@ -20,12 +20,19 @@ async function deleteTrip(tripId, card) {
     const tripData = tripSnap.data();
 
     if (tripData.ownerUid === currentUserId) {
-      // ✅ Owner → delete entire trip doc + subcollections
-      const subcollections = ["City", "Flight", "Itinerary", "Other Bookings", "Stay"];
+      // Owner → delete entire trip doc + subcollections
+      const subcollections = ["City", "Transport", "Itinerary", "Other Bookings", "Stay", "Expenses", "Deleted Itinerary"];
       for (const sub of subcollections) {
         const subSnap = await tripRef.collection(sub).get();
         for (const doc of subSnap.docs) {
+          // Remove sub-collections inside Itinerary & Expenses
           if (sub === "Itinerary") {
+            const activitiesSnap = await doc.ref.collection("Activities").get();
+            for (const act of activitiesSnap.docs) {
+              await doc.ref.collection("Activities").doc(act.id).delete();
+            }
+          }
+          if (sub === "Expenses") {
             const activitiesSnap = await doc.ref.collection("Activities").get();
             for (const act of activitiesSnap.docs) {
               await doc.ref.collection("Activities").doc(act.id).delete();
@@ -34,10 +41,25 @@ async function deleteTrip(tripId, card) {
           await tripRef.collection(sub).doc(doc.id).delete();
         }
       }
+      // Remove any pending invitations
+      const pendingSnap = await window.db.collection("Invitations")
+        .where("tripId", "==", tripId)
+        .get()
+      if (!pendingSnap.empty) {
+        const batch = window.db.batch(); // optional: batch for efficiency
+        pendingSnap.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+        await batch.commit();
+        console.log("Pending invitations deleted.");
+      } else {
+        console.log("No pending invitations found.");
+      }
+      
       await tripRef.delete();
       console.log(`Trip ${tripId} deleted by owner`);
     } else {
-      // ✅ Collaborator → remove their UID entry from collaborators map
+      // Collaborator → remove their UID entry from collaborators map
       const updateData = {};
       updateData[`collaborators.${currentUserId}`] = window.firebase.firestore.FieldValue.delete();
       await tripRef.update(updateData);
@@ -63,6 +85,4 @@ async function deleteTrip(tripId, card) {
     console.error("Error deleting/removing trip:", err);
     alert("Failed to remove trip access. Please try again.");
   }
-
 }
-
