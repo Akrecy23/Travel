@@ -160,9 +160,13 @@ function createHomeFrontLayout() {
 
   // Restore scroll position after page load
   window.addEventListener("DOMContentLoaded", () => {
-    const savedScroll = sessionStorage.getItem("tabsScrollLeft");
-    if (savedScroll !== null) {
-      tabsContainer.scrollLeft = parseInt(savedScroll, 10);
+    if (currentPage === "home.html") {
+      tabsContainer.scrollLeft = 0; // ✅ hard reset
+    } else {
+      const savedScroll = sessionStorage.getItem("tabsScrollLeft");
+      if (savedScroll !== null) {
+        tabsContainer.scrollLeft = parseInt(savedScroll, 10);
+      }
     }
   });
 
@@ -192,6 +196,7 @@ function createHomeFrontLayout() {
     }
   });
 }
+
 
 
 
