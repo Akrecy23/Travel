@@ -11,13 +11,13 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
       <form id="activityForm">
         <label>Time</label>
         <input type="text" name="time" placeholder="e.g. 09:30 AM">
-        <label>Description</label>
-        <input type="text" name="description" placeholder="Activity description" required>
+        <label>Description*</label>
+        <input type="text" name="description" placeholder="Activity Description/Name" required>
         <label>Address</label>
-        <input type="text" name="address" placeholder="Location address">
+        <input type="text" name="address" placeholder="Location Address">
         <label>Remarks</label>
-        <textarea name="remarks" placeholder="Additional notes"></textarea>
-        <label>About</label>
+        <textarea name="remarks" placeholder="Additional Notes"></textarea>
+        <label>About*</label>
         <select name="about" id="aboutSelect" required>
           <option value="Transport">Transport</option>
           <option value="Accommodation">Accommodation</option>
@@ -26,8 +26,8 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
           <option value="Others">Others</option>
         </select>
         <div id="tagWrapper" style="display:none;">
-          <label>Tag</label>
-          <select name="tag" id="tagSelect"></select>
+          <label>Tag*</label>
+          <select name="tag" id="tagSelect" required></select>
         </div>
         <div class="form-actions">
           <button type="submit">Save</button>
@@ -163,6 +163,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
   });
 
 }
+
 
 
 
