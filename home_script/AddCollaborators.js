@@ -46,6 +46,7 @@ async function openCollaboratorsModal(tripId) {
           btn.addEventListener("click", async () => {
             const card = btn.closest(".collaborator-card");
             const uid = card.dataset.uid;
+            btn.disabled = true;
 
             try {
               // Remove collaborator from map
@@ -61,6 +62,7 @@ async function openCollaboratorsModal(tripId) {
             } catch (err) {
               console.error("Error removing collaborator:", err);
               alert("Failed to remove collaborator.");
+              btn.disabled = false;
             }
           });
         });
