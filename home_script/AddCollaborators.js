@@ -27,55 +27,36 @@ async function openCollaboratorsModal(tripId) {
     const collaboratorEntries = Object.entries(collaboratorsMap);
     const isOwner = tripData.ownerUid === window.CURRENT_UID;
 
+    content.innerHTML = ""; // clear loading text
+
     if (collaboratorEntries.length === 0) {
-      content.innerHTML = "<p>No collaborators yet.</p>";
+      content.textContent = "<p>No collaborators yet.</p>";
     } else {
-      content.innerHTML = collaboratorEntries.map(([uid, c]) => `
-        <div class="collaborator-card" data-uid="${uid}">
+      collaboratorEntries.forEach(([uid, c]) => {
+        const card = document.createElement("div");
+        card.className = "collaborator-card";
+        card.dataset.uid = uid;
+
+        card.innerHTML = `
           <p>
             <strong>${c.nickname || c.displayName || c.email}</strong><br>
             <small>${c.email || ""}</small>
           </p>
           ${isOwner ? `<button class="remove-collaborator-btn">Remove</button>` : ""}
-        </div>
-      `).join("");
+        `;
 
-      // Attach remove listeners if owner
-      if (isOwner) {
-        content.querySelectorAll(".remove-collaborator-btn").forEach(btn => {
-          btn.addEventListener("click", async () => {
-            const card = btn.closest(".collaborator-card");
-            const uid = card.dataset.uid;
-            btn.disabled = true;
-
-            try {
-              // Remove collaborator from map
-              await window.db.collection("Trips").doc(tripId).update({
-                [`collaborators.${uid}`]: window.firebase.firestore.FieldValue.delete(),
-                collaboratorIds: window.firebase.firestore.FieldValue.arrayRemove(uid)
-              });
-
-              card.remove();
-              if (!content.querySelector(".collaborator-card")) {
-                content.innerHTML = "<p>No collaborators left.</p>";
-              }
-            } catch (err) {
-              console.error("Error removing collaborator:", err);
-              alert("Failed to remove collaborator.");
-              btn.disabled = false;
-            }
-          });
-        });
-      }
+        content.appendChild(card);
+      });
     }
 
     // Add invitation form
-    content.innerHTML += `
-      <div class="collaborator-form">
-        <input type="email" id="inviteEmail" placeholder="Enter collaborator's email">
-        <button id="sendInviteBtn">Send Invitation</button>
-      </div>
+    const form = document.createElement("div");
+    form.className = "collaborator-form";
+    form.innerHTML = `
+      <input type="email" id="inviteEmail" placeholder="Enter collaborator's email">
+      <button id="sendInviteBtn">Send Invitation</button>
     `;
+    content.appendChild(form);
 
     document.getElementById("sendInviteBtn").onclick = async () => {
       const email = document.getElementById("inviteEmail").value.trim();
@@ -83,9 +64,35 @@ async function openCollaboratorsModal(tripId) {
       await sendCollaboratorInvite(email, tripId);
     };
 
+    // Event delegation for remove buttons
+    if (isOwner) {
+      content.addEventListener("click", async (e) => {
+        if (e.target.classList.contains("remove-collaborator-btn")) {
+          const card = e.target.closest(".collaborator-card");
+          const uid = card.dataset.uid;
+          e.target.disabled = true;
+
+          try {
+            await window.db.collection("Trips").doc(tripId).update({
+              [`collaborators.${uid}`]: window.firebase.firestore.FieldValue.delete(),
+              collaboratorIds: window.firebase.firestore.FieldValue.arrayRemove(uid)
+            });
+
+            card.remove();
+            if (!content.querySelector(".collaborator-card")) {
+              content.textContent = "No collaborators left.";
+            }
+          } catch (err) {
+            console.error("Error removing collaborator:", err);
+            alert("Failed to remove collaborator.");
+            e.target.disabled = false;
+          }
+        }
+      });
+    }
   } catch (err) {
     console.error("Error loading collaborators:", err);
-    content.innerHTML = "<p>Something went wrong.</p>";
+    content.textContent  = "<p>Something went wrong.</p>";
   }
 
   // Close modal
