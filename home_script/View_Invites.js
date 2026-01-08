@@ -38,7 +38,7 @@ async function openInvitationsModal() {
     let incomingHTML = "";
 
     if (incomingSnap.empty) {
-      incomingHTML = "<p style="text-align:center;">No incoming invitations.</p>";
+      incomingHTML = '<p style="text-align:center;">No incoming invitations.</p>';
     } else {
       // Render each invitation
       incomingHTML = incomingSnap.docs.map(doc => {
@@ -79,7 +79,7 @@ async function openInvitationsModal() {
         `;
       }).join("");
     } else {
-      outgoingHTML = "<p style="text-align:center;">No outgoing invitations.</p>";
+      outgoingHTML = '<p style="text-align:center;">No outgoing invitations.</p>';
     }
 
     // --- Put it all together ---
@@ -168,7 +168,7 @@ async function openInvitationsModal() {
             // Remove card from modal
             card.remove();
             if (!document.querySelector("#incomingInvites .invitation-card")) {
-              document.getElementById("incomingInvites").innerHTML = "<p style="text-align:center;">No incoming invitations.</p>";
+              document.getElementById("incomingInvites").innerHTML = '<p style="text-align:center;">No incoming invitations.</p>';
             }
             } catch (err) {
               console.error("Error accepting invitation:", err);
@@ -195,7 +195,7 @@ async function openInvitationsModal() {
               // Remove card from modal
               card.remove();
               if (!document.querySelector("#incomingInvites .invitation-card")) {
-                document.getElementById("incomingInvites").innerHTML = "<p style="text-align:center;">No incoming invitations.</p>";
+                document.getElementById("incomingInvites").innerHTML = '<p style="text-align:center;">No incoming invitations.</p>';
               }
             } catch (err) {
               console.error("Error declining invitation:", err);
@@ -221,7 +221,7 @@ async function openInvitationsModal() {
       
             // If no outgoing cards left, show message
             if (!content.querySelector(".cancel-btn")) {
-              document.getElementById("outgoingInvites").innerHTML = "<p style="text-align:center;">No outgoing invitations.</p>";
+              document.getElementById("outgoingInvites").innerHTML = '<p style="text-align:center;">No outgoing invitations.</p>';
             }
           } catch (err) {
             console.error("Error canceling invitation:", err);
@@ -235,5 +235,6 @@ async function openInvitationsModal() {
     content.innerHTML = "<p>Something went wrong while loading invitations.</p>";
   }
 }
+
 
 
