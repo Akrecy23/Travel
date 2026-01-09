@@ -464,8 +464,20 @@ body {
   cursor: pointer;
   margin: 10px 0;
 }
+.settings-btn {
+  background: none;     /* removes background */
+  border: none;         /* removes border */
+  padding: 0;           /* removes extra spacing */
+  cursor: pointer;      /* keeps it clickable */
+  display: flex;        /* centers the SVG nicely */
+  align-items: center;
+}
+.settings-btn svg {
+  stroke: currentColor; /* inherits text color */
+}
 
 @keyframes slideUp {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
 }
+
