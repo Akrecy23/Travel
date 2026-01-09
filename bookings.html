@@ -40,6 +40,16 @@
             <!-- SHOW BOOKINGS DETAILS -->
         </div>
     </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="settings-modal hidden">
+      <div class="settings-content">
+        <p>Welcome, <span id="userName"></span></p>
+        <hr>
+        <p class="settings-option" id="changeUsername"><u>Change username</u></p>
+        <p class="settings-option" id="signOut"><u>Sign out</u></p>
+      </div>
+    </div>
     
     <!-- CALL SCRIPT -->
     <!-- Initialise Firestore database -->
@@ -65,3 +75,4 @@
     <script src="bookings_script/Add_Booking.js"></script>
 
 </body>
+
