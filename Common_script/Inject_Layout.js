@@ -230,6 +230,13 @@ function createHomeFrontLayout() {
       }
     };
   }
+
+  const closeSettings = document.getElementById("closeSettings");
+  if (closeSettings && settingsModal) {
+    closeSettings.onclick = () => {
+      settingsModal.classList.remove("show");
+    };
+  }
   
   auth.onAuthStateChanged(user => {
     if (user) {
@@ -272,3 +279,4 @@ function createHomeFrontLayout() {
     }
   });
 }
+
