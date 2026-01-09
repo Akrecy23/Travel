@@ -448,11 +448,12 @@ body {
   right: 0;
   width: 250px;
   height: 100%;
-  background: #fff;
+  background: #f9f9f9;
   box-shadow: -2px 0 5px rgba(0,0,0,0.3);
   transform: translateX(100%);
   transition: transform 0.3s ease;
   z-index: 1000;
+  font-family: Arial, sans-serif;
 }
 .settings-modal.show {
   transform: translateX(0);
@@ -462,8 +463,16 @@ body {
   padding: 20px;
 }
 .settings-option {
+  margin: 12px 0;
+  font-size: 16px;
   cursor: pointer;
-  margin: 10px 0;
+  color: #007bff;   /* accent color */
+  text-decoration: none; /* no underline by default */
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+.settings-option:hover {
+  text-decoration: underline; /* underline appears on hover */
+  color: #0056b3;             /* optional darker hover color */
 }
 .settings-btn {
   background: none;     /* removes background */
@@ -474,7 +483,7 @@ body {
   align-items: center;
 }
 .settings-btn svg {
-  stroke: currentColor; /* inherits text color */
+  stroke: #333; /* inherits text color */
 }
 /* Close button specifically for settings modal */
 #settingsModal .close-btn {
@@ -486,21 +495,29 @@ body {
   cursor: pointer;
   line-height: 1;
   transition: all 0.2s ease;
-
   /* positioning inside the side modal */
   position: absolute;
   top: 10px;
   right: 15px;
 }
-
 #settingsModal .close-btn:hover {
   color: #000;             /* darker on hover */
   transform: scale(1.1);   /* subtle zoom effect */
+}
+/* Header text */
+#settingsModal .settings-content p:first-of-type {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+/* Divider */
+#settingsModal .settings-content hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 10px 0 20px;
 }
 
 @keyframes slideUp {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
 }
-
-
