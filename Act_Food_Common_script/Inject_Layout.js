@@ -27,7 +27,36 @@ function createHomeFrontLayout() {
           <button class="dropdown-btn" id="country-button">📌 Country ▼</button>
           <ul class="dropdown-menu" id="country-menu"></ul>
         </div>
-        <button id="signOutBtn" class="signout-btn">Sign out</button>
+        <button id="settingsBtn" class="settings-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" 
+               stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 
+                     2 0 1 1-2.83 2.83l-.06-.06a1.65 
+                     1.65 0 0 0-1.82-.33 1.65 1.65 
+                     0 0 0-1 1.51V21a2 2 0 1 
+                     1-4 0v-.09a1.65 1.65 0 0 
+                     0-1-1.51 1.65 1.65 0 0 
+                     0-1.82.33l-.06.06a2 2 0 1 
+                     1-2.83-2.83l.06-.06a1.65 
+                     1.65 0 0 0 .33-1.82 1.65 
+                     1.65 0 0 0-1.51-1H3a2 2 
+                     0 1 1 0-4h.09a1.65 1.65 
+                     0 0 0 1.51-1 1.65 1.65 
+                     0 0 0-.33-1.82l-.06-.06a2 
+                     2 0 1 1 2.83-2.83l.06.06a1.65 
+                     1.65 0 0 0 1.82.33h.09a1.65 
+                     1.65 0 0 0 1-1.51V3a2 2 
+                     0 1 1 4 0v.09a1.65 1.65 
+                     0 0 0 1 1.51 1.65 1.65 
+                     0 0 0 1.82-.33l.06-.06a2 
+                     2 0 1 1 2.83 2.83l-.06.06a1.65 
+                     1.65 0 0 0-.33 1.82v.09a1.65 
+                     1.65 0 0 0 1.51 1H21a2 2 
+                     0 1 1 0 4h-.09a1.65 1.65 
+                     0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
       </div>
       </div>
     </header>
@@ -138,14 +167,61 @@ function createHomeFrontLayout() {
   // ===== AUTH LOGIC =====
   const auth = window.auth;
 
-  // ===== SIGN OUT BUTTON LOGIC =====
-  const signOutBtn = document.getElementById("signOutBtn");
-  if (signOutBtn) {
-    signOutBtn.onclick = () => {
-      auth.signOut();
-      window.location.href = "signin.html";
+  // ===== SETTINGS LOGIC =====
+  const settingsBtn = document.getElementById("settingsBtn");
+  const settingsModal = document.getElementById("settingsModal");
+  const userNameSpan = document.getElementById("userName");
+  const changeUsername = document.getElementById("changeUsername");
+  const signOutOption = document.getElementById("signOut");
+  
+  if (settingsBtn && settingsModal) {
+    settingsBtn.onclick = () => {
+      settingsModal.classList.toggle("show");
+      // When opening modal, fetch nickname from Firestore
+      if (window.CURRENT_UID) {
+        window.db.collection("User").doc(window.CURRENT_UID).get()
+          .then(doc => {
+            if (doc.exists) {
+              const nickname = doc.data().nickname;
+              userNameSpan.textContent = nickname || "Traveler";
+            } else {
+              userNameSpan.textContent = "Traveler";
+            }
+          })
+          .catch(err => {
+            console.error("Error fetching nickname:", err);
+            userNameSpan.textContent = "Traveler";
+          });
+      }
     };
   }
+  
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      userNameSpan.textContent = user.displayName || user.email;
+    }
+  });
+  
+  // Sign out option
+  signOutOption.onclick = () => {
+    auth.signOut();
+    window.location.href = "signin.html";
+  };
+  
+  // Change username option (example placeholder)
+  changeUsername.onclick = () => {
+    const newName = prompt("Enter new username:");
+    if (newName && window.CURRENT_UID) {
+      window.db.collection("User").doc(window.CURRENT_UID).update({
+        nickname: newName
+      }).then(() => {
+        userNameSpan.textContent = newName;
+        alert("Username updated!");
+      }).catch(err => {
+        console.error("Error updating username:", err);
+      });
+    }
+  };
 
   auth.onAuthStateChanged(user => {
     if (user) {
@@ -164,3 +240,4 @@ function createHomeFrontLayout() {
   // document.dispatchEvent(new Event("HomeFrontLayoutReady"));
 
 }
+
