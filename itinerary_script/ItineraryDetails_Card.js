@@ -134,6 +134,7 @@ async function fetchTripsAndRenderTabs(yearId, countryFilters, groupFilters) {
           </svg>
           View Itinerary
         </button>
+        <button class="view-pdf-btn" onclick="viewItineraryPDF(tripId)">View PDF</button>
       </div>
     `;
     itineraryGrid.appendChild(card);
@@ -200,6 +201,7 @@ function parseDate(dateStr) {
   return new Date(cleaned);
 
 }
+
 
 
 
