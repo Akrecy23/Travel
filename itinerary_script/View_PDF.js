@@ -1,11 +1,3 @@
-<!-- Include jsPDF and AutoTable -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-
-<!-- Example button -->
-<button onclick="viewItineraryPDF('YOUR_TRIP_ID')">View PDF</button>
-
-<script>
 async function viewItineraryPDF(tripId) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
@@ -70,4 +62,3 @@ async function viewItineraryPDF(tripId) {
   const pdfUrl = URL.createObjectURL(pdfBlob);
   window.open(pdfUrl); // Browser PDF viewer shows download icon
 }
-</script>
