@@ -435,11 +435,31 @@ body {
   background-color: #fff8e1;   /* pale yellow */
   transition: background-color 1s ease;
 }
+/* ======= SETTINGS ======== */
+.settings-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+.settings-modal.show {
+  transform: translateX(0);
+}
+.settings-content {
+  padding: 20px;
+}
+.settings-option {
+  cursor: pointer;
+  margin: 10px 0;
+}
 
 @keyframes slideUp {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
-
 }
-
-
