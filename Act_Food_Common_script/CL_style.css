@@ -453,6 +453,7 @@ body {
 }
 .settings-content {
   padding: 20px;
+  position: relative;
 }
 .settings-option {
   cursor: pointer;
@@ -469,8 +470,30 @@ body {
 .settings-btn svg {
   stroke: currentColor; /* inherits text color */
 }
+/* Close button specifically for settings modal */
+#settingsModal .close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.125rem;     /* same size as trip-close-btn */
+  font-weight: bold;       /* same weight */
+  color: #666;             /* same base color */
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.2s ease;
+
+  /* positioning inside the side modal */
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+#settingsModal .close-btn:hover {
+  color: #000;             /* darker on hover */
+  transform: scale(1.1);   /* subtle zoom effect */
+}
 
 @keyframes slideUp {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
 }
+
