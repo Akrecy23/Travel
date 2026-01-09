@@ -27,7 +27,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
         </select>
         <div id="tagWrapper" style="display:none;">
           <label>Tag*</label>
-          <select name="tag" id="tagSelect" required></select>
+          <select name="tag" id="tagSelect"></select>
         </div>
         <div class="form-actions">
           <button type="submit">Save</button>
@@ -60,6 +60,7 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
         tagSelect.appendChild(o);
       });
       tagWrapper.style.display = "block";
+      tagSelect.required = true;
     } else if (aboutVal === "Activity") {
       [
         "Workshop","Shopping","Hiking","Museum","Exhibition","Concert",
@@ -71,9 +72,11 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
         tagSelect.appendChild(o);
       });
       tagWrapper.style.display = "block";
+      tagSelect.required = true;
     } else {
       tagWrapper.style.display = "none";
       tagSelect.innerHTML = "";
+      tagSelect.required = false;
     }
   }
 
@@ -161,16 +164,4 @@ function addItinerary(tripId, dayId, activityCount, dayIndex, days, renderDay) {
     formModal.remove();
     renderDay(dayIndex);
   });
-
 }
-
-
-
-
-
-
-
-
-
-
-
