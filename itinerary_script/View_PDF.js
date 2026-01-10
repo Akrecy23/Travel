@@ -1,10 +1,3 @@
-// ====== IMPORT FONTS ======
-import { NotoSansSC } from "../fonts/NotoSerifSC-Regular-normal.js";
-import { NotoSansTC } from "../fonts/NotoSerifTC-Regular-normaljs";
-import { NotoSansHK } from "../fonts/NotoSerifHK-Regular-normal.js";
-import { NotoSansKR } from "../fonts/NotoSerifKR-Regular-normal.js";
-import { NotoSansJP } from "../fonts/NotoSerifJP-Regular-normal.js";
-
 async function viewItineraryPDF(tripId) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
