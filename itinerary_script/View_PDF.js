@@ -62,7 +62,8 @@ async function viewItineraryPDF(tripId) {
         }
       },
       headStyles: { 
-        fillColor: [255, 255, 255],
+        fillColor: [200, 200, 200],
+        textColor: [0,0,0],
         font: "helvetica",
         fontStyle: "bold"
       }
