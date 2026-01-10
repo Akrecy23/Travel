@@ -1,6 +1,29 @@
+// ====== IMPORT FONTS ======
+import { NotoSansSC } from "../fonts/NotoSerifSC-Regular-normal.js";
+import { NotoSansTC } from "../fonts/NotoSerifTC-Regular-normaljs";
+import { NotoSansHK } from "../fonts/NotoSerifHK-Regular-normal.js";
+import { NotoSansKR } from "../fonts/NotoSerifKR-Regular-normal.js";
+import { NotoSansJP } from "../fonts/NotoSerifJP-Regular-normal.js";
+
 async function viewItineraryPDF(tripId) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
+
+  // ======= REGISTER FONTS ========
+  doc.addFileToVFS("NotoSerifSC-Regular.otf", NotoSansSC);
+  doc.addFont("NotoSerifSC-Regular.otf", "NotoSerifSC", "normal");
+  
+  doc.addFileToVFS("NotoSerifTC-Regular.otf", NotoSansTC);
+  doc.addFont("NotoSerifTC-Regular.otf", "NotoSerifTC", "normal");
+  
+  doc.addFileToVFS("NotoSerifHK-Regular.otf", NotoSansHK);
+  doc.addFont("NotoSerifHK-Regular.otf", "NotoSerifHK", "normal");
+  
+  doc.addFileToVFS("NotoSerifKR-Regular.otf", NotoSansKR);
+  doc.addFont("NotoSerifKR-Regular.otf", "NotoSerifKR", "normal");
+  
+  doc.addFileToVFS("NotoSerifJP-Regular.otf", NotoSansJP);
+  doc.addFont("NotoSerifJP-Regular.otf", "NotoSerifJP", "normal");
 
   // ===== Fetch Trip Title =====
   const tripSnap = await window.db.collection("Trips").doc(tripId).get();
@@ -9,7 +32,7 @@ async function viewItineraryPDF(tripId) {
 
   // ===== Title =====
   doc.setFontSize(22);
-  doc.setFont("helvetica", "bold");
+  doc.setFont("NotoSerifTC", "bold");
   doc.text(`${tripTitle} – Itinerary`, 105, 20, { align: "center" });
   doc.line(20, 25, 190, 25);
 
@@ -24,7 +47,7 @@ async function viewItineraryPDF(tripId) {
     const activities = activitiesSnap.docs.map(d => d.data());
 
     doc.setFontSize(16);
-    doc.setFont("helvetica", "bold");
+    doc.setFont("NotoSerifTC", "bold");
     doc.text(dayDoc.id, 105, y, { align: "center" });
     y += 8;
 
