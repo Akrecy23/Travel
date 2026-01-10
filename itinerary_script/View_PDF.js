@@ -13,7 +13,7 @@ async function viewItineraryPDF(tripId) {
 
   // ===== Title =====
   doc.setFontSize(22);
-  doc.setFont("NotoSerifTC", "bold");
+  doc.setFont("NotoSerifTC", "normal");
   doc.text(`${tripTitle} – Itinerary`, 105, 20, { align: "center" });
   doc.line(20, 25, 190, 25);
 
@@ -28,7 +28,7 @@ async function viewItineraryPDF(tripId) {
     const activities = activitiesSnap.docs.map(d => d.data());
 
     doc.setFontSize(16);
-    doc.setFont("NotoSerifTC", "bold");
+    doc.setFont("NotoSerifTC", "normal");
     doc.text(dayDoc.id, 105, y, { align: "center" });
     y += 8;
 
