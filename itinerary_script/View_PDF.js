@@ -11,7 +11,7 @@ async function viewItineraryPDF(tripId) {
   doc.setFontSize(22);
   doc.setFont("helvetica", "bold");
   doc.text(`${tripTitle} – Itinerary`, 105, 20, { align: "center" });
-  doc.line(20, 25, 190, 25); // hr line
+  doc.line(20, 25, 190, 25);
 
   // ===== Fetch Days =====
   const daysSnap = await window.db.collection("Trips").doc(tripId).collection("Itinerary").get();
@@ -23,42 +23,56 @@ async function viewItineraryPDF(tripId) {
     const activitiesSnap = await dayDoc.ref.collection("Activities").orderBy("Order").get();
     const activities = activitiesSnap.docs.map(d => d.data());
 
-    // Day header
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
     doc.text(dayDoc.id, 105, y, { align: "center" });
     y += 8;
 
-    // Date
     doc.setFontSize(12);
     doc.text(dayData.Date || "", 105, y, { align: "center" });
     y += 10;
 
-    // Table rows
     const rows = activities.map(a => [
       a.Time || "",
       a.Description || "",
       a.Remarks || "",
       a.Address || "",
-      (a.About === "food" || a.About === "activity") ? a.Tag || "" : a.About || ""
+      (a.About === "Food" || a.About === "Activity") ? a.Tag || "" : a.About || ""
     ]);
 
-    // AutoTable
     doc.autoTable({
       startY: y,
       head: [["Time", "Description", "Remarks", "Address", "About"]],
       body: rows,
-      styles: { fontSize: 10 },
+      styles: {
+        fontSize: 10,
+        overflow: 'linebreak', // enable wrapping
+        cellPadding: 2
+      },
+      columnStyles: {
+        3: { // Address column
+          cellWidth: 60,          // give it more room
+          overflow: 'linebreak'   // force wrap
+        }
+      },
       headStyles: { fillColor: [200, 200, 200] }
     });
 
     y = doc.lastAutoTable.finalY + 10;
-    doc.line(20, y, 190, y); // hr line
+    doc.line(20, y, 190, y);
     y += 15;
   }
 
-  // ===== Open in new tab for preview =====
-  const pdfBlob = doc.output("blob");
-  const pdfUrl = URL.createObjectURL(pdfBlob);
-  window.open(pdfUrl); // Browser PDF viewer shows download icon
+  // ===== Platform-specific handling =====
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+  if (isIOS) {
+    // iPhone/iPad → force download
+    doc.save(`${tripTitle}-Itinerary.pdf`);
+  } else {
+    // Desktop/Android → open preview in new tab
+    const pdfBlob = doc.output("blob");
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    window.open(pdfUrl);
+  }
 }
