@@ -134,10 +134,10 @@ async function fetchTripsAndRenderTabs(yearId, countryFilters, groupFilters) {
           </svg>
           View Itinerary
         </button>
-        
+        <button class="view-pdf-btn" onclick="viewItineraryPDF('${tripId}')">View PDF</button>
       </div>
     `;
-    // <button class="view-pdf-btn" onclick="viewItineraryPDF('${tripId}')">View PDF</button>
+
     itineraryGrid.appendChild(card);
     // ====== ADD EVENT LISTNER =========
     // Listen for "View Itinerary" button being clicked
@@ -200,16 +200,4 @@ function parseDate(dateStr) {
   // Remove weekday if present: "Thursday, Mar 12, 2026" → "Mar 12, 2026"
   const cleaned = dateStr.replace(/^[A-Za-z]+,\s*/, "");
   return new Date(cleaned);
-
 }
-
-
-
-
-
-
-
-
-
-
-
