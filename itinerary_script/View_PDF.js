@@ -2,22 +2,10 @@ async function viewItineraryPDF(tripId) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // ======= REGISTER FONTS ========
-  doc.addFileToVFS("NotoSerifSC-Regular.otf", NotoSansSC);
-  doc.addFont("NotoSerifSC-Regular.otf", "NotoSerifSC", "normal");
-  
+  // ======= REGISTER FONTS ========  
   doc.addFileToVFS("NotoSerifTC-Regular.otf", NotoSansTC);
   doc.addFont("NotoSerifTC-Regular.otf", "NotoSerifTC", "normal");
   
-  doc.addFileToVFS("NotoSerifHK-Regular.otf", NotoSansHK);
-  doc.addFont("NotoSerifHK-Regular.otf", "NotoSerifHK", "normal");
-  
-  doc.addFileToVFS("NotoSerifKR-Regular.otf", NotoSansKR);
-  doc.addFont("NotoSerifKR-Regular.otf", "NotoSerifKR", "normal");
-  
-  doc.addFileToVFS("NotoSerifJP-Regular.otf", NotoSansJP);
-  doc.addFont("NotoSerifJP-Regular.otf", "NotoSerifJP", "normal");
-
   // ===== Fetch Trip Title =====
   const tripSnap = await window.db.collection("Trips").doc(tripId).get();
   const tripData = tripSnap.exists ? tripSnap.data() : {};
