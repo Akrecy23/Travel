@@ -62,32 +62,10 @@ async function viewItineraryPDF(tripId) {
         }
       },
       headStyles: { 
-        fillColor: [200, 200, 200],
+        fillColor: [255, 255, 255],
         font: "NotoSansTC",
-        fontStyle: "bold"
+        fontStyle: "normal"
       }
-      //,
-      // ← CRITICAL: Add this hook to handle Chinese text wrapping
-      //didParseCell: function(data) {
-        //// For the Address column (index 3)
-        //if (data.column.index === 3 && data.cell.raw) {
-          //const text = data.cell.raw.toString();
-          //// Check if text contains Chinese characters
-          //if (/[\u4e00-\u9fff]/.test(text)) {
-            //// Force wrapping by adding zero-width spaces every few characters
-            //const maxCharsPerLine = 30; // Adjust this based on your column width
-            //let wrappedText = '';
-            //for (let i = 0; i < text.length; i++) {
-              //wrappedText += text[i];
-              //// Add a potential break point after certain characters or every N characters
-              //if ((i + 1) % maxCharsPerLine === 0) {
-                //wrappedText += '\n';
-              //}
-            //}
-            //data.cell.text = [wrappedText];
-          //}
-        //}
-      //}
     });
 
     y = doc.lastAutoTable.finalY + 10;
