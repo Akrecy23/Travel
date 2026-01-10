@@ -83,7 +83,11 @@ async function viewItineraryPDF(tripId) {
 
     y = doc.lastAutoTable.finalY + 10;
     doc.line(20, y, 190, y);
-    y += 15;
+    // Only add a new page if this is not the last day
+    if (dayDoc !== sortedDays[sortedDays.length - 1]) {
+      doc.addPage();
+      y = 40; // reset Y position for the new page
+    }
   }
 
   // ===== Platform-specific handling =====
