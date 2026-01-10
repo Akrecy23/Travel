@@ -64,7 +64,7 @@ async function viewItineraryPDF(tripId) {
       headStyles: { 
         fillColor: [200, 200, 200],
         font: "NotoSansTC",
-        fontStyle: "normal"
+        fontStyle: "bold"
       },
       // ← CRITICAL: Add this hook to handle Chinese text wrapping
       didParseCell: function(data) {
@@ -74,12 +74,12 @@ async function viewItineraryPDF(tripId) {
           // Check if text contains Chinese characters
           if (/[\u4e00-\u9fff]/.test(text)) {
             // Force wrapping by adding zero-width spaces every few characters
-            const maxCharsPerLine = 20; // Adjust this based on your column width
+            const maxCharsPerLine = 30; // Adjust this based on your column width
             let wrappedText = '';
             for (let i = 0; i < text.length; i++) {
               wrappedText += text[i];
               // Add a potential break point after certain characters or every N characters
-              if ((i + 1) % maxCharsPerLine === 0 || text[i].match(/[,，、。]/)) {
+              if ((i + 1) % maxCharsPerLine === 0) {
                 wrappedText += '\n';
               }
             }
