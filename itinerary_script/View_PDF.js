@@ -3,8 +3,8 @@ async function viewItineraryPDF(tripId) {
   const doc = new jsPDF();
 
   // ======= REGISTER FONTS ========  
-  doc.addFileToVFS("NotoSerifTC-Regular.otf", NotoSansTC);
-  doc.addFont("NotoSerifTC-Regular.otf", "NotoSerifTC", "bold");
+  doc.addFileToVFS("NotoSansTC-Bold.ttf", NotoSansTC);
+  doc.addFont("NotoSansTC-Bold.ttf", "NotoSansTC", "normal");
   
   // ===== Fetch Trip Title =====
   const tripSnap = await window.db.collection("Trips").doc(tripId).get();
@@ -13,7 +13,7 @@ async function viewItineraryPDF(tripId) {
 
   // ===== Title =====
   doc.setFontSize(22);
-  doc.setFont("NotoSerifTC", "bold");
+  doc.setFont("NotoSansTC", "normal");
   doc.text(`${tripTitle} – Itinerary`, 105, 20, { align: "center" });
   doc.line(20, 25, 190, 25);
 
@@ -28,7 +28,7 @@ async function viewItineraryPDF(tripId) {
     const activities = activitiesSnap.docs.map(d => d.data());
 
     doc.setFontSize(16);
-    doc.setFont("NotoSerifTC", "bold");
+    doc.setFont("NotoSansTC", "normal");
     doc.text(dayDoc.id, 105, y, { align: "center" });
     y += 8;
 
@@ -49,6 +49,8 @@ async function viewItineraryPDF(tripId) {
       head: [["Time", "Description", "Remarks", "Address", "About"]],
       body: rows,
       styles: {
+        font: "NotoSansTC",
+        fontStyle: "normal",
         fontSize: 10,
         overflow: 'linebreak', // enable wrapping
         cellPadding: 2
@@ -59,7 +61,32 @@ async function viewItineraryPDF(tripId) {
           overflow: 'linebreak'   // force wrap
         }
       },
-      headStyles: { fillColor: [200, 200, 200] }
+      headStyles: { 
+        fillColor: [200, 200, 200],
+        font: "NotoSansTC",
+        fontStyle: "normal"
+      },
+      // ← CRITICAL: Add this hook to handle Chinese text wrapping
+      didParseCell: function(data) {
+        // For the Address column (index 3)
+        if (data.column.index === 3 && data.cell.raw) {
+          const text = data.cell.raw.toString();
+          // Check if text contains Chinese characters
+          if (/[\u4e00-\u9fff]/.test(text)) {
+            // Force wrapping by adding zero-width spaces every few characters
+            const maxCharsPerLine = 20; // Adjust this based on your column width
+            let wrappedText = '';
+            for (let i = 0; i < text.length; i++) {
+              wrappedText += text[i];
+              // Add a potential break point after certain characters or every N characters
+              if ((i + 1) % maxCharsPerLine === 0 || text[i].match(/[,，、。]/)) {
+                wrappedText += '\n';
+              }
+            }
+            data.cell.text = [wrappedText];
+          }
+        }
+      }
     });
 
     y = doc.lastAutoTable.finalY + 10;
