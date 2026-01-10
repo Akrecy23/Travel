@@ -4,7 +4,7 @@ async function viewItineraryPDF(tripId) {
 
   // ======= REGISTER FONTS ========  
   doc.addFileToVFS("NotoSerifTC-Regular.otf", NotoSansTC);
-  doc.addFont("NotoSerifTC-Regular.otf", "NotoSerifTC", "normal");
+  doc.addFont("NotoSerifTC-Regular.otf", "NotoSerifTC", "bold");
   
   // ===== Fetch Trip Title =====
   const tripSnap = await window.db.collection("Trips").doc(tripId).get();
@@ -13,7 +13,7 @@ async function viewItineraryPDF(tripId) {
 
   // ===== Title =====
   doc.setFontSize(22);
-  doc.setFont("NotoSerifTC", "normal");
+  doc.setFont("NotoSerifTC", "bold");
   doc.text(`${tripTitle} – Itinerary`, 105, 20, { align: "center" });
   doc.line(20, 25, 190, 25);
 
@@ -28,7 +28,7 @@ async function viewItineraryPDF(tripId) {
     const activities = activitiesSnap.docs.map(d => d.data());
 
     doc.setFontSize(16);
-    doc.setFont("NotoSerifTC", "normal");
+    doc.setFont("NotoSerifTC", "bold");
     doc.text(dayDoc.id, 105, y, { align: "center" });
     y += 8;
 
