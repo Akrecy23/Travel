@@ -134,7 +134,15 @@ async function fetchTripsAndRenderTabs(yearId, countryFilters, groupFilters) {
           </svg>
           View Itinerary
         </button>
-        <button class="view-pdf-btn" onclick="viewItineraryPDF('${tripId}')">View PDF</button>
+        <button class="view-pdf-btn" onclick="viewItineraryPDF('${tripId}')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="24" height="24">
+            <path d="M20 10 L60 10 L80 30 L80 90 L20 90 Z" fill="#E74C3C" stroke="#C0392B" stroke-width="2"/>
+            <path d="M60 10 L60 30 L80 30 Z" fill="#C0392B"/>
+            <text x="50" y="60" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">PDF</text>
+            <line x1="30" y1="70" x2="70" y2="70" stroke="white" stroke-width="2" opacity="0.7"/>
+            <line x1="30" y1="77" x2="60" y2="77" stroke="white" stroke-width="2" opacity="0.7"/>
+          </svg>
+        </button>
       </div>
     `;
 
@@ -201,3 +209,4 @@ function parseDate(dateStr) {
   const cleaned = dateStr.replace(/^[A-Za-z]+,\s*/, "");
   return new Date(cleaned);
 }
+
