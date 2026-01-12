@@ -160,10 +160,10 @@ document.addEventListener("BookingsRendered", e => {
           const inTimeEl = card.querySelector(".stay-checkin .stay-time");
           const outDateEl = card.querySelector(".stay-checkout .stay-date");
           const outTimeEl = card.querySelector(".stay-checkout .stay-time");
-          const addressEl = card.querySelector(".info-item.full-width .info-value");
-          const roomEl = card.querySelector(".info-item:nth-child(2) .info-value");
-          const bedEl = card.querySelector(".info-item:nth-child(3) .info-value");
-          const refEl = card.querySelector(".info-item.full-width:last-child .info-value");
+          const addressEl = card.querySelector(".info-value.address");
+          const roomEl = card.querySelector(".info-value.roomNo");
+          const bedEl = card.querySelector(".info-value.bedNo");
+          const refEl = card.querySelector(".info-value.bookRef");
 
           // Store originals
           const originalType = typeEl.textContent.replace("🏨", "").trim();
@@ -345,6 +345,7 @@ function addEditActions(card, onSave, elements, originals, specialRestore, col) 
     }
   });
 }
+
 
 
 
