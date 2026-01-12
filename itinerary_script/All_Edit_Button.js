@@ -1,5 +1,8 @@
 // FUNCTION FOR EDITING OF BACK SIDE OF CARDS (ACTIVITY DETAILS)
 async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
+  //Add a flag to mark "edit" mode
+  entry.classList.add("editing");
+  
   const timeEl = entry.querySelector(".time");
   const descEl = entry.querySelector(".box-title h4");
   const remarksEl = entry.querySelector(".remarks-text");
@@ -114,6 +117,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
     aboutSelect.remove();
     editActions.remove();
     actions.style.display = "flex";
+    entry.classList.remove("editing");
   });
 
   // Save → update Firestore
@@ -174,6 +178,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
     } finally {
       editActions.remove();
       actions.style.display = "flex";
+      entry.classList.remove("editing");
     }
   });
 }
