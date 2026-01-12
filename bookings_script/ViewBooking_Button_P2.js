@@ -117,7 +117,7 @@ async function renderTab(tabName, tripId, tripTitle) {
       return `
         <div class="card-wrapper">
           <span class="drag-handle" draggable="true" title="Drag">&#9776;</span>
-          <div class="booking-card flight-card" data-doc-id="${doc.id}" data-collection="${collectionName}" data-mode="${data.Mode || 'Airplane'}" draggable="true">
+          <div class="booking-card flight-card" data-doc-id="${doc.id}" data-collection="${collectionName}" data-mode="${data.Mode || 'Airplane'}">
             <div class="card-header">
               <div>
                 <span class="badge ${badgeClass}">${direction}</span>
@@ -179,7 +179,7 @@ async function renderTab(tabName, tripId, tripTitle) {
       return `
       <div class="card-wrapper">
           <span class="drag-handle" draggable="true" title="Drag">&#9776;</span>
-          <div class="booking-card stay-card" data-doc-id="${doc.id}" data-collection="${collectionName}" draggable="true">
+          <div class="booking-card stay-card" data-doc-id="${doc.id}" data-collection="${collectionName}">
             <div class="card-header">
               <div>
                 <span class="badge ${getBadgeClass('Stay', stayType)}">🏨 ${stayType}</span>
@@ -254,7 +254,7 @@ async function renderTab(tabName, tripId, tripTitle) {
         return `
           <div class="card-wrapper">
             <span class="drag-handle" draggable="true" title="Drag">&#9776;</span>
-            <div class="booking-card other-card" data-doc-id="${doc.id}" data-collection="${collectionName}" draggable="true">
+            <div class="booking-card other-card" data-doc-id="${doc.id}" data-collection="${collectionName}">
               <div class="card-header">
                 <div>
                   <span class="badge ${getBadgeClass('Others', bookingType)}">${typeEmoji} ${bookingType}</span>
@@ -315,6 +315,11 @@ async function renderTab(tabName, tripId, tripTitle) {
     
       // Start dragging only from the handle
       handle.addEventListener("dragstart", e => {
+        // Block "Drag & Drop" in "edit" mode
+        if (card.classList.contains("editing")) {
+          e.preventDefault(); // stop drag if editing
+          return;
+        }
         draggedWrapper = wrapper;
         e.dataTransfer.effectAllowed = "move";
       });
@@ -402,10 +407,3 @@ async function renderTab(tabName, tripId, tripTitle) {
     detail: { tabName, tripId, tripTitle}
     }));
 }
-
-
-
-
-
-
-
