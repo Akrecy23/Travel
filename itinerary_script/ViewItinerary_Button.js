@@ -218,18 +218,19 @@ async function openItineraryModal(tripId) {
     });
 
     // For Drag & Drop button
-    const handle = entry.querySelector(".drag-handle");
     let draggedEntry = null;
-    handle.addEventListener("dragstart", e => {
-      // Block "Drag & Drop" while editing
-      if (entry.classList.contains("editing")) {
-        e.preventDefault();
-        return;
-      }
-       draggedEntry = entry;
-      e.dataTransfer.effectAllowed = "move";
-    });
     entries.forEach(entry => {
+      const handle = entry.querySelector(".drag-handle");
+      handle.addEventListener("dragstart", e => {
+        // Block "Drag & Drop" while editing
+        if (entry.classList.contains("editing")) {
+          e.preventDefault();
+          return;
+        }
+         draggedEntry = entry;
+        e.dataTransfer.effectAllowed = "move";
+      });
+      
       entry.addEventListener("dragover", e => {
         e.preventDefault();
         const bounding = entry.getBoundingClientRect();
@@ -342,6 +343,7 @@ async function openItineraryModal(tripId) {
     }
   };
 }
+
 
 
 
