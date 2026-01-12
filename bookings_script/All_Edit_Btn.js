@@ -154,7 +154,7 @@ document.addEventListener("BookingsRendered", e => {
           titleEl.innerHTML = `${originalFromCountry} → ${originalToCountry}`;
         }, col);
       } else if (col === "Stay") {
-          const typeEl = card.querySelector(".badge-stay");
+          const typeEl = card.querySelector(".badge");
           const nameEl = card.querySelector(".card-title");
           const inDateEl = card.querySelector(".stay-checkin .stay-date");
           const inTimeEl = card.querySelector(".stay-checkin .stay-time");
@@ -345,6 +345,7 @@ function addEditActions(card, onSave, elements, originals, specialRestore, col) 
     }
   });
 }
+
 
 
 
