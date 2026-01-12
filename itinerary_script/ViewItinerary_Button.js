@@ -218,6 +218,7 @@ async function openItineraryModal(tripId) {
     });
 
     // For Drag & Drop button
+    const timeline = modalContent.querySelector(".timeline");
     let draggedEntry = null;
     entries.forEach(entry => {
       const handle = entry.querySelector(".drag-handle");
@@ -343,6 +344,7 @@ async function openItineraryModal(tripId) {
     }
   };
 }
+
 
 
 
