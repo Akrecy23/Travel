@@ -225,19 +225,19 @@ async function renderTab(tabName, tripId, tripTitle) {
             <div class="info-grid-3">
               <div class="info-item full-width">
                 <span class="info-label">📍 Address</span>
-                <span class="info-value">${data.Address || '-'}</span>
+                <span class="info-value address">${data.Address || '-'}</span>
               </div>
               <div class="info-item">
                 <span class="info-label">🛏️ Room No</span>
-                <span class="info-value">${data.RoomNo || '-'}</span>
+                <span class="info-value roomNo">${data.RoomNo || '-'}</span>
               </div>
               <div class="info-item">
                 <span class="info-label">🛏️ Beds</span>
-                <span class="info-value">${data.BedNo || '-'}</span>
+                <span class="info-value bedNo">${data.BedNo || '-'}</span>
               </div>
               <div class="info-item">
                 <span class="info-label">📋 Booking Ref</span>
-                <span class="info-value">${data.BookingRef || '-'}</span>
+                <span class="info-value bookRef">${data.BookingRef || '-'}</span>
               </div>
             </div>
           </div>
@@ -407,3 +407,4 @@ async function renderTab(tabName, tripId, tripTitle) {
     detail: { tabName, tripId, tripTitle}
     }));
 }
+
