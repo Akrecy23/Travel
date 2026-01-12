@@ -82,8 +82,8 @@ async function openItineraryModal(tripId) {
       <p>${day.date}</p>
       <div class="timeline">
         ${day.activities.map(a => `
-          <div class="timeline-entry" draggable="true" data-activity-id="${a.id}" data-day-id="${day.day}" data-about="${a.about}">
-            <div class="drag-handle">
+          <div class="timeline-entry" data-activity-id="${a.id}" data-day-id="${day.day}" data-about="${a.about}">
+            <div class="drag-handle" draggable="true">
               <!-- 3 stacked lines icon -->
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="4" y1="7" x2="20" y2="7"></line>
@@ -218,14 +218,18 @@ async function openItineraryModal(tripId) {
     });
 
     // For Drag & Drop button
-    const timeline = modalContent.querySelector(".timeline");
+    const handle = entry.querySelector(".drag-handle");
     let draggedEntry = null;
+    handle.addEventListener("dragstart", e => {
+      // Block "Drag & Drop" while editing
+      if (entry.classList.contains("editing")) {
+        e.preventDefault();
+        return;
+      }
+       draggedEntry = entry;
+      e.dataTransfer.effectAllowed = "move";
+    });
     entries.forEach(entry => {
-      entry.addEventListener("dragstart", e => {
-        draggedEntry = entry;
-        e.dataTransfer.effectAllowed = "move";
-      });
-
       entry.addEventListener("dragover", e => {
         e.preventDefault();
         const bounding = entry.getBoundingClientRect();
