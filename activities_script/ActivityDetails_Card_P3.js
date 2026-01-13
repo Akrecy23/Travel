@@ -10,6 +10,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
 
     // ========== FRONT EDIT BUTTON ==========
     const topEditBtn = card.querySelector(".top-edit-btn");
+    const imageEl = card.querySelector(".activity-image");
     const nameEl = card.querySelector(".activity-name");
     const typeEl = card.querySelector(".activity-type");
     // Get all .detail-main and .detail-sub elements
@@ -31,6 +32,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         if (card.classList.contains("editing-top")) return;
         card.classList.add("editing-top");
         // Store originals
+        const originalImageURL = imageEl ? imageEl.getAttribute("src") : "";
         const originalName = nameEl.textContent;
         const originalType = typeEl.textContent;
         const [originalOpen, originalClose] = timeEl.textContent.split("–").map(s => s.trim());
@@ -38,11 +40,16 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         const originalCost = costEl.textContent.replace("SGD ", "");
         const originalInOut = inOutEl?.textContent || "";
         const originalText = remarksText.textContent.trim();
+        
         // Clean up values first
         const cleanDuration = originalDuration === "-" ? "" : originalDuration;
-        const cleanCost     = originalCost === "-" ? "" : originalCost;
+        const cleanCost = (originalCost === "-" ? "" : originalCost);
         let textValue = originalText.toLowerCase() === "no remarks yet" ? "" : originalText;
+        
         // Replace with inputs
+        if (imageEl) {
+          imageEl.outerHTML = `<input type="text" class="edit-activity-image" value="${originalImageURL}" placeholder="Enter image URL">`;
+        }
         nameEl.innerHTML = `<input type="text" class="edit-name" value="${originalName}">`;
         // Change type to dropdown
         typeEl.innerHTML = `
@@ -66,7 +73,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
           <input type="time" class="edit-close" value="${toTimeInputValue(originalClose)}">
         `;
         durationEl.innerHTML = `<input type="text" class="edit-duration" value="${cleanDuration}">`;
-        costEl.innerHTML = `<input type="number" class="edit-cost" value="${cleanCost}">`;
+        costEl.innerHTML = `<input type="text" class="edit-cost" value="${cleanCost}">`;
         if (inOutEl) {
           inOutEl.innerHTML = `
             <select class="edit-inout">
@@ -94,6 +101,10 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
 
         // Cancel → restore original values
         actionBar.querySelector(".top-cancel-btn").addEventListener("click", () => {
+          const imageInputEl = card.querySelector(".edit-activity-image");
+          if (imageInputEl) {
+            imageInputEl.outerHTML = `<img src="${originalImageURL}" alt="${originalName}" class="activity-image">`;
+          }
           nameEl.textContent = originalName;
           typeEl.textContent = originalType;
           timeEl.textContent = `${originalOpen} – ${originalClose}`;
@@ -110,10 +121,14 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         actionBar.querySelector(".top-tick-btn").addEventListener("click", async () => {
           let newOpen = formatTimeInput(card.querySelector(".edit-open").value);
           let newClose = formatTimeInput(card.querySelector(".edit-close").value);
+          const newImageURL = card.querySelector(".edit-activity-image")?.value.trim();
+          const finalImageURL = newImageURL
+            ? newImageURL
+            : "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop"
           const newName = card.querySelector(".edit-name").value.trim();
           const newType = card.querySelector(".edit-type").value;
           const newDuration = card.querySelector(".edit-duration").value.trim();
-          const newCost = parseFloat(card.querySelector(".edit-cost").value);
+          const newCost = card.querySelector(".edit-cost").value.trim();
           const newInOut = card.querySelector(".edit-inout")?.value || "";
           const newText = remarksText.querySelector(".remarks-input").value.trim();
 
@@ -126,7 +141,8 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
               ActivityDuration: newDuration,
               EstCost: newCost,
               InOut_Door: newInOut,
-              Remarks: newText
+              Remarks: newText,
+              imageURL: finalImageURL
             });
 
             // Refresh UI
@@ -551,3 +567,4 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
