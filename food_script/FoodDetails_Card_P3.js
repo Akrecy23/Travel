@@ -10,7 +10,6 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
 
     // ========== FRONT EDIT BUTTON ==========
     const topEditBtn = card.querySelector(".top-edit-btn");
-    const imageEl = card.querySelector(".food-image");
     const nameEl = card.querySelector(".food-name");
     const typeEl = card.querySelector(".food-type");
     // Get all .detail-main and .detail-sub elements
@@ -29,7 +28,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         if (card.classList.contains("editing-top")) return;
         card.classList.add("editing-top");
         // Store originals
-        const originalImageURL = imageEl ? imageEl.getAttribute("src") : "";
+        const originalImageURL = card.querySelector(".food-image")?.getAttribute("src") || "";
         const originalName = nameEl.textContent;
         const originalType = typeEl.textContent;
         const [originalOpen, originalClose] = timeEl.textContent.split("–").map(s => s.trim());
@@ -41,8 +40,14 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         let textValue = originalText.toLowerCase() === "no remarks yet" ? "" : originalText;
         
         // Replace with inputs
-        if (imageEl) {
-          imageEl.outerHTML = `<input type="text" class="edit-food-image" value="${originalImageURL}" placeholder="Enter image URL">`;
+        const currentImageEl = card.querySelector(".food-image");
+        if (currentImageEl) {
+          const input = document.createElement("input");
+          input.type = "text";
+          input.className = "edit-food-image";
+          input.value = originalImageURL;
+          input.placeholder = "Enter image URL";
+          currentImageEl.replaceWith(input);
         }
         nameEl.innerHTML = `<input type="text" class="edit-name" value="${originalName}">`;
         typeEl.innerHTML = `
@@ -86,9 +91,13 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
 
         // Cancel → restore original values
         actionBar.querySelector(".top-cancel-btn").addEventListener("click", () => {
-          const imageInputEl = card.querySelector(".edit-food-image");
-          if (imageInputEl) {
-            imageInputEl.outerHTML = `<img src="${originalImageURL}" alt="${originalName}" class="food-image">`;
+          const currentInputEl = card.querySelector(".edit-food-image");
+          if (currentInputEl) {
+            const img = document.createElement("img");
+            img.src = originalImageURL;
+            img.alt = originalName;
+            img.className = "food-image";
+            currentInputEl.replaceWith(img);
           }
           nameEl.textContent = originalName;
           typeEl.textContent = originalType;
@@ -105,9 +114,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
           let newOpen = formatTimeInput(card.querySelector(".edit-open").value);
           let newClose = formatTimeInput(card.querySelector(".edit-close").value);
           const newImageURL = card.querySelector(".edit-food-image")?.value.trim();
-          const finalImageURL = newImageURL
-            ? newImageURL
-            : "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop"
+          const finalImageURL = newImageURL || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop";
           const newName = card.querySelector(".edit-name").value.trim();
           const newType = card.querySelector(".edit-type").value.trim();
           const newCost = parseFloat(card.querySelector(".edit-cost").value);
@@ -454,7 +461,21 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
                   .collection("Itinerary")
                   .get();
 
+                // Collect docs into an array
+                const dayDocs = [];
                 itinerarySnap.forEach(dayDoc => {
+                  dayDocs.push(dayDoc);
+                });
+                
+                // Sort by numeric part of the ID
+                dayDocs.sort((a, b) => {
+                  const numA = parseInt(a.id.replace(/\D/g, ""), 10);
+                  const numB = parseInt(b.id.replace(/\D/g, ""), 10);
+                  return numA - numB;
+                });
+
+                // Render in sorted order
+                dayDocs.forEach(dayDoc => {
                   const label = document.createElement("label");
                   const radio = document.createElement("input");
                   radio.type = "radio";
@@ -543,16 +564,3 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
       });
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
