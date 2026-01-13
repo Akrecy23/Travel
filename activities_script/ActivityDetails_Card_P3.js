@@ -478,7 +478,21 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
                   .collection("Itinerary")
                   .get();
 
+                // Collect docs into an array
+                const dayDocs = [];
                 itinerarySnap.forEach(dayDoc => {
+                  dayDocs.push(dayDoc);
+                });
+                
+                // Sort by numeric part of the ID
+                dayDocs.sort((a, b) => {
+                  const numA = parseInt(a.id.replace(/\D/g, ""), 10);
+                  const numB = parseInt(b.id.replace(/\D/g, ""), 10);
+                  return numA - numB;
+                });
+
+                // Render in sorted order
+                dayDocs.forEach(dayDoc => {
                   const label = document.createElement("label");
                   const radio = document.createElement("input");
                   radio.type = "radio";
@@ -567,4 +581,5 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
