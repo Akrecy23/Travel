@@ -33,7 +33,7 @@ function createActivityCard(data) {
       <div class="card-face card-front">
         <!-- Image Section -->
         <div class="card-image">
-          <img src="${data.imageURL || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop'}" alt="${data.Title || 'Activity'}">
+          <img src="${data.imageURL || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop'}" alt="${data.Title || 'Activity'}" class="activity-image">
 
           <!-- Status Badges -->
           <div class="status-badges">
@@ -211,5 +211,6 @@ function createActivityCard(data) {
   return card;
 
 }
+
 
 
