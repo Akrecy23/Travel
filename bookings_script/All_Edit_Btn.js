@@ -225,7 +225,7 @@ document.addEventListener("BookingsRendered", e => {
             col
           );
         } else {
-          const typeEl = card.querySelector(".badge-other");
+          const typeEl = card.querySelector(".badge");
           const nameEl = card.querySelector(".card-title");
           const dateEl = card.querySelector(".info-item:nth-child(1) .info-value");
           const timeEl = card.querySelector(".info-item:nth-child(2) .info-value");
@@ -345,6 +345,7 @@ function addEditActions(card, onSave, elements, originals, specialRestore, col) 
     }
   });
 }
+
 
 
 
