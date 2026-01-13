@@ -33,7 +33,7 @@ function createFoodCard(data) {
       <div class="card-face card-front">
         <!-- Image Section -->
         <div class="card-image">
-          <img src="${data.imageURL || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop'}" alt="${data.Title || 'Food'}">
+          <img src="${data.imageURL || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop'}" alt="${data.Title || 'Food'}" class="food-image">
 
           <!-- Status Badges -->
           <div class="status-badges">
@@ -183,3 +183,4 @@ function createFoodCard(data) {
   return card;
 
 }
+
