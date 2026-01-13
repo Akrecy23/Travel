@@ -426,6 +426,9 @@
 .tag.Beach       { background: #fef9c3; color: #92400e; }   /* sandy yellow */
 .tag.Cultural    { background: #fde68a; color: #78350f; }   /* earthy orange */
 .tag.Relaxation  { background: #d1fae5; color: #065f46; }   /* calming green */
+.tag.EscapeRoom { background: #f5e9ff; color: #9d174d; }    /* light lavender */
+.tag.IndoorGames { background: #e0f2fe; color: #0c4a6e; }   /* light blue + deep blue */
+.tag.ThemePark   { background: #ffedd5; color: #9a3412; }   /* peach + orange-brown */
 
 /* Arrow container */
 .status-row .status-arrow {
@@ -593,6 +596,7 @@
 .move-itinerary-modal button[type="submit"]:hover {
   background: #1e40af;
 }
+
 
 
 
