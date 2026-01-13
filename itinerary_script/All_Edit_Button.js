@@ -64,7 +64,7 @@ async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
     } else if (aboutVal === "Activity") {
       [
         "Workshop","Shopping","Hiking","Museum","Exhibition","Concert",
-        "Sports","Beach","Cultural","Relaxation","Others"
+        "Sports","Beach","Cultural","Relaxation","EscapeRoom","IndoorGames","ThemePark","Others"
       ].forEach(opt => {
         const o = document.createElement("option");
         o.value = opt;
@@ -182,3 +182,4 @@ async function enableActivityEditing(entry, tripId, dayId, activityId, days) {
     }
   });
 }
+
