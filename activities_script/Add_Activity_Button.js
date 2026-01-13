@@ -241,6 +241,9 @@ document.addEventListener("ActivityFormReady", async () => {
       "Beach",
       "Cultural",
       "Relaxation",
+      "EscapeRoom",
+      "IndoorGames",
+      "ThemePark",
       "Others"
     ];
     
@@ -352,4 +355,5 @@ document.addEventListener("ActivityFormReady", async () => {
     }
   });
 });
+
 
