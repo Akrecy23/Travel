@@ -115,6 +115,20 @@
   height: 100%;
   object-fit: cover;
 }
+/* Style for image input replacement */
+.edit-food-image {
+  width: 100%;                 /* same width as the image */
+  height: 12rem;               /* same height as .trip-image */
+  border-top-left-radius: 8px; /* match card corners */
+  border-top-right-radius: 8px;
+  box-sizing: border-box;
+  font-size: 1rem;             /* readable text size */
+  text-align: center;          /* center text inside */
+  padding: 0.5rem;             /* breathing room */
+  border: 1px solid #ccc;      /* subtle border */
+  background-color: #f9fafb;   /* light background */
+  resize: none;
+}
 /* Status Badges */
 .status-badges {
   position: absolute;
@@ -592,4 +606,5 @@
 .submit-btn:hover { 
   background: #218838; 
   transform: translateY(-2px); 
+
 }
