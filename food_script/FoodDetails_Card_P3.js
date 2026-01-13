@@ -10,6 +10,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
 
     // ========== FRONT EDIT BUTTON ==========
     const topEditBtn = card.querySelector(".top-edit-btn");
+    const imageEl = card.querySelector(".food-image");
     const nameEl = card.querySelector(".food-name");
     const typeEl = card.querySelector(".food-type");
     // Get all .detail-main and .detail-sub elements
@@ -28,15 +29,21 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         if (card.classList.contains("editing-top")) return;
         card.classList.add("editing-top");
         // Store originals
+        const originalImageURL = imageEl ? imageEl.getAttribute("src") : "";
         const originalName = nameEl.textContent;
         const originalType = typeEl.textContent;
         const [originalOpen, originalClose] = timeEl.textContent.split("–").map(s => s.trim());
         const originalCost = costEl.textContent.replace("SGD ", "");
         const originalText = remarksText.textContent.trim();
+        
         // Clean up values first
         const cleanCost = originalCost === "-" ? "" : originalCost;
         let textValue = originalText.toLowerCase() === "no remarks yet" ? "" : originalText;
+        
         // Replace with inputs
+        if (imageEl) {
+          imageEl.outerHTML = `<input type="text" class="edit-food-image" value="${originalImageURL}" placeholder="Enter image URL">`;
+        }
         nameEl.innerHTML = `<input type="text" class="edit-name" value="${originalName}">`;
         typeEl.innerHTML = `
         <select class="edit-type">
@@ -79,6 +86,10 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
 
         // Cancel → restore original values
         actionBar.querySelector(".top-cancel-btn").addEventListener("click", () => {
+          const imageInputEl = card.querySelector(".edit-food-image");
+          if (imageInputEl) {
+            imageInputEl.outerHTML = `<img src="${originalImageURL}" alt="${originalName}" class="food-image">`;
+          }
           nameEl.textContent = originalName;
           typeEl.textContent = originalType;
           timeEl.textContent = `${originalOpen} – ${originalClose}`;
@@ -93,6 +104,10 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
         actionBar.querySelector(".top-tick-btn").addEventListener("click", async () => {
           let newOpen = formatTimeInput(card.querySelector(".edit-open").value);
           let newClose = formatTimeInput(card.querySelector(".edit-close").value);
+          const newImageURL = card.querySelector(".edit-food-image")?.value.trim();
+          const finalImageURL = newImageURL
+            ? newImageURL
+            : "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop"
           const newName = card.querySelector(".edit-name").value.trim();
           const newType = card.querySelector(".edit-type").value.trim();
           const newCost = parseFloat(card.querySelector(".edit-cost").value);
@@ -105,7 +120,8 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
               OpenTime: newOpen,
               CloseTime: newClose,
               EstCost: newCost,
-              Remarks: newText
+              Remarks: newText,
+              imageURL: finalImageURL
             });
 
             // Refresh UI
@@ -527,6 +543,7 @@ async function attachFoodListeners(card, data, userId, country, city, year, actT
       });
     }
 }
+
 
 
 
