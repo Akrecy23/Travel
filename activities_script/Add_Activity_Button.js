@@ -317,7 +317,7 @@ document.addEventListener("ActivityFormReady", async () => {
 
       await activityRef.set({
         ActivityDuration: durationValue,
-        AddTo: [],
+        AddedTo: [],
         Address: addressValue,
         City: selectedCity,
         CloseTime: formatTimeInput(closingTime),
@@ -355,5 +355,6 @@ document.addEventListener("ActivityFormReady", async () => {
     }
   });
 });
+
 
 
