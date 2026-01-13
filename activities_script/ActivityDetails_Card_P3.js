@@ -10,7 +10,6 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
 
     // ========== FRONT EDIT BUTTON ==========
     const topEditBtn = card.querySelector(".top-edit-btn");
-    const imageEl = card.querySelector(".activity-image");
     const nameEl = card.querySelector(".activity-name");
     const typeEl = card.querySelector(".activity-type");
     // Get all .detail-main and .detail-sub elements
@@ -32,7 +31,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         if (card.classList.contains("editing-top")) return;
         card.classList.add("editing-top");
         // Store originals
-        const originalImageURL = imageEl ? imageEl.getAttribute("src") : "";
+        const originalImageURL = card.querySelector(".activity-image")?.getAttribute("src") || "";
         const originalName = nameEl.textContent;
         const originalType = typeEl.textContent;
         const [originalOpen, originalClose] = timeEl.textContent.split("–").map(s => s.trim());
@@ -47,8 +46,14 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
         let textValue = originalText.toLowerCase() === "no remarks yet" ? "" : originalText;
         
         // Replace with inputs
-        if (imageEl) {
-          imageEl.outerHTML = `<input type="text" class="edit-activity-image" value="${originalImageURL}" placeholder="Enter image URL">`;
+        const currentImageEl = card.querySelector(".activity-image");
+        if (currentImageEl) {
+          const input = document.createElement("input");
+          input.type = "text";
+          input.className = "edit-activity-image";
+          input.value = originalImageURL;
+          input.placeholder = "Enter image URL";
+          currentImageEl.replaceWith(input);
         }
         nameEl.innerHTML = `<input type="text" class="edit-name" value="${originalName}">`;
         // Change type to dropdown
@@ -101,9 +106,13 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
 
         // Cancel → restore original values
         actionBar.querySelector(".top-cancel-btn").addEventListener("click", () => {
-          const imageInputEl = card.querySelector(".edit-activity-image");
-          if (imageInputEl) {
-            imageInputEl.outerHTML = `<img src="${originalImageURL}" alt="${originalName}" class="activity-image">`;
+          const currentInputEl = card.querySelector(".edit-activity-image");
+          if (currentInputEl) {
+            const img = document.createElement("img");
+            img.src = originalImageURL;
+            img.alt = originalName;
+            img.className = "activity-image";
+            currentInputEl.replaceWith(img);
           }
           nameEl.textContent = originalName;
           typeEl.textContent = originalType;
@@ -122,9 +131,7 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
           let newOpen = formatTimeInput(card.querySelector(".edit-open").value);
           let newClose = formatTimeInput(card.querySelector(".edit-close").value);
           const newImageURL = card.querySelector(".edit-activity-image")?.value.trim();
-          const finalImageURL = newImageURL
-            ? newImageURL
-            : "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop"
+          const finalImageURL = newImageURL || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop";
           const newName = card.querySelector(".edit-name").value.trim();
           const newType = card.querySelector(".edit-type").value;
           const newDuration = card.querySelector(".edit-duration").value.trim();
@@ -581,5 +588,6 @@ async function attachActivityListeners(card, data, userId, country, city, year, 
       });
     }
 }
+
 
 
