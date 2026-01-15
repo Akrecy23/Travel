@@ -224,6 +224,7 @@ function initialiseFilters() {
     // Fire event when filters has been applied
     document.dispatchEvent(new CustomEvent("filtersApplied", {}));
     filterModal.classList.remove("visible");
+    filterBtn.classList.remove("active");
   };
 }
 
@@ -277,19 +278,3 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
