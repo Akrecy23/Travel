@@ -142,6 +142,7 @@ function initialiseFilters() {
 
   const filterModal = document.getElementById("filterModal");
   if (!filterModal) return;
+  const filterBtn = document.getElementById("filterToggle");
 
   const filterOptionsBlocks = filterModal.querySelectorAll(".filter-options");
   const cityOptions = filterOptionsBlocks[0];
@@ -401,3 +402,4 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
