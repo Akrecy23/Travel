@@ -82,6 +82,7 @@ document.addEventListener("dropdownReady", () => {
         initialiseFilters();   // ✅ refresh pills on open
       } else {
         filterBtn.classList.remove("active");
+        filterBtn.classList.remove("active");
       }
     });
   }
@@ -345,7 +346,6 @@ function initialiseFilters() {
     document.dispatchEvent(new CustomEvent("filtersApplied", {}));
     // Close modal
     filterModal.classList.remove("visible");
-    filterBtn.classList.remove("active");
   };
 
   // document.dispatchEvent(new CustomEvent("filtersReady", {}));
@@ -402,4 +402,5 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
 
