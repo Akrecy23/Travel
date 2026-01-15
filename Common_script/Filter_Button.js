@@ -114,6 +114,7 @@ function initialiseFilters() {
   }
   // Check for dom elements
   const filterModal = document.getElementById("filterModal");
+  const filterBtn = document.getElementById("filterToggle");
   if (!filterModal) return;
   // Check for firestore connection
   if (!window.db) {
@@ -278,3 +279,4 @@ function setupShowMore(sectionElement) {
     updateView();
   };
 }
+
