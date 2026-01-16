@@ -592,10 +592,10 @@
   border-color: #999;
 }
 
-.radio-group input[type="radio"]:checked + label {
-  background: #28a745;
-  color: #fff;
-  border-color: #28a745;
+.radio-group label:has(input[type="radio"]:checked) {
+  background: #cce5ff;   /* very light sky blue */
+  color: #004085;        /* deep navy text */
+  border-color: #004085; /* navy border */
 }
 
 .next-btn,
@@ -618,6 +618,7 @@
   transform: translateY(-2px); 
 
 }
+
 
 
 
