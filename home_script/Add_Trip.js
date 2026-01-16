@@ -157,70 +157,72 @@ document.addEventListener("NewTripFormReady", () => {
     const hardcodedGroups = ["Polytechnic", "Secondary", "Family"];
     const groupsSet = new Set(); // will hold Firestore + hardcoded
 
-    try {
-      const tripsSnap = await window.db.collection("Trips")
-        .where("ownerUid", "==", currentUserId)
-        .get();
-
-      tripsSnap.forEach(doc => {
-        const data = doc.data();
-        if (data.group) groupsSet.add(data.group);
-      });
-    } catch (err) {
-      console.error("Error loading groups:", err);
-    }
-
-    hardcodedGroups.forEach(name => groupsSet.add(name));
-
-    const placeholder = document.createElement("option");
-    placeholder.value = "";
-    placeholder.textContent = "Select a group";
-    placeholder.disabled = true;
-    placeholder.selected = true;
-    groupSelect.appendChild(placeholder);
-
-    groupsSet.forEach(name => {
-      const opt = document.createElement("option");
-      opt.value = name;
-      opt.textContent = name;
-      groupSelect.appendChild(opt);
-    });
-
-    const newGroupOpt = document.createElement("option");
-    newGroupOpt.value = "__new__";
-    newGroupOpt.textContent = "+ New group";
-    groupSelect.appendChild(newGroupOpt);
-
-    const newGroupHandler = () => {
-      if (groupSelect.value === "__new__") {
-        const input = prompt("Enter new group name:");
-        if (input) {
-          const normalizedInput = input.trim().toLowerCase();
-          let matchedOption = null;
-          for (let i = 0; i < groupSelect.options.length; i++) {
-            const opt = groupSelect.options[i];
-            if (opt.value !== "__new__" && opt.value.toLowerCase().includes(normalizedInput)) {
-              matchedOption = opt;
-              break;
-            }
-          }
-          if (matchedOption) {
-            groupSelect.value = matchedOption.value;
-          } else {
-            const opt = document.createElement("option");
-            opt.value = input;
-            opt.textContent = input;
-            groupSelect.insertBefore(opt, newGroupOpt);
-            groupSelect.value = input;
-          }
-        } else {
-          groupSelect.value = "";
-        }
+    (async () => {
+      try {
+        const tripsSnap = await window.db.collection("Trips")
+          .where("ownerUid", "==", currentUserId)
+          .get();
+  
+        tripsSnap.forEach(doc => {
+          const data = doc.data();
+          if (data.group) groupsSet.add(data.group);
+        });
+      } catch (err) {
+        console.error("Error loading groups:", err);
       }
-    };
+  
+      hardcodedGroups.forEach(name => groupsSet.add(name));
+  
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "Select a group";
+      placeholder.disabled = true;
+      placeholder.selected = true;
+      groupSelect.appendChild(placeholder);
 
-    groupSelect.removeEventListener("change", newGroupHandler);
-    groupSelect.addEventListener("change", newGroupHandler);
+      groupsSet.forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        groupSelect.appendChild(opt);
+      });
+  
+      const newGroupOpt = document.createElement("option");
+      newGroupOpt.value = "__new__";
+      newGroupOpt.textContent = "+ New group";
+      groupSelect.appendChild(newGroupOpt);
+  
+      const newGroupHandler = () => {
+        if (groupSelect.value === "__new__") {
+          const input = prompt("Enter new group name:");
+          if (input) {
+            const normalizedInput = input.trim().toLowerCase();
+            let matchedOption = null;
+            for (let i = 0; i < groupSelect.options.length; i++) {
+              const opt = groupSelect.options[i];
+              if (opt.value !== "__new__" && opt.value.toLowerCase().includes(normalizedInput)) {
+                matchedOption = opt;
+                break;
+              }
+            }
+            if (matchedOption) {
+              groupSelect.value = matchedOption.value;
+            } else {
+              const opt = document.createElement("option");
+              opt.value = input;
+              opt.textContent = input;
+              groupSelect.insertBefore(opt, newGroupOpt);
+              groupSelect.value = input;
+            }
+          } else {
+            groupSelect.value = "";
+          }
+        }
+      };
+
+      groupSelect.removeEventListener("change", newGroupHandler);
+      groupSelect.addEventListener("change", newGroupHandler);
+    })();
   }
 
   // ===== Handle form submission =====
@@ -414,6 +416,7 @@ async function createCityCountryYear(currentUserId, pathName, country, cities, y
     YearList: firebase.firestore.FieldValue.arrayUnion(year)
   }, { merge: true });
 }
+
 
 
 
