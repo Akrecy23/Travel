@@ -232,9 +232,19 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
   formContainer.innerHTML = html;
   formContainer.style.display = "block";
   toggleStepInputs();
+  // Close button
   formContainer.querySelector(".close-form-btn").addEventListener("click", () => {
     closeFormOverlay(tripId);
   });
+  // Listen for tab dropdown changes
+  const tabSelect = formContainer.querySelector('select[name="tabName"]');
+  if (tabSelect) {
+    tabSelect.addEventListener("change", (e) => {
+      const newTab = e.target.value;
+      // Re-open the form with the new tab
+      openNewBookingForm(newTab, tripId, tripTitle, true);
+    });
+  }
   document.dispatchEvent(new CustomEvent("FormReady", {
     detail: { tabName, tripId }
   }));
@@ -329,6 +339,7 @@ function toggleStepInputs() {
       step.querySelectorAll("input, textarea, select").forEach(el => { el.disabled = isHidden; }); 
     }); 
 }
+
 
 
 
