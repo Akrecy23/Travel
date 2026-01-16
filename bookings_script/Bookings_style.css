@@ -790,6 +790,11 @@
   font-size: 0.95rem;
 }
 
+#newBookingForm .form-fields .inputTime,
+#newBookingForm .form-fields .inputDate{
+  width: 90% !important;
+}
+
 #newBookingForm .form-fields input[type="radio"] {
   width: auto;
   margin-right: 0.25rem;
@@ -827,5 +832,6 @@
   to { opacity: 1; transform: translateY(0); }
 
 }
+
 
 
