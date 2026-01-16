@@ -190,10 +190,10 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
       </select>
       <label>Name:<span class="asterisk">*</span></label><input type="text" name="stayName" required>
       <label>Address:<span class="asterisk">*</span></label><input type="text" name="stayAddress" required>
-      <label>Check In Date:<span class="asterisk">*</span></label><input type="date" name="checkInDate" required>
-      <label>Check In Time:<span class="asterisk">*</span></label><input type="time" name="checkInTime" required>
-      <label>Check Out Date:<span class="asterisk">*</span></label><input type="date" name="checkOutDate" required>
-      <label>Check Out Time:<span class="asterisk">*</span></label><input type="time" name="checkOutTime" required>
+      <label>Check In Date:<span class="asterisk">*</span></label><input class="inputDate" type="date" name="checkInDate" required>
+      <label>Check In Time:<span class="asterisk">*</span></label><input class="inputTime" type="time" name="checkInTime" required>
+      <label>Check Out Date:<span class="asterisk">*</span></label><input class="inputDate" type="date" name="checkOutDate" required>
+      <label>Check Out Time:<span class="asterisk">*</span></label><input class="inputTime" type="time" name="checkOutTime" required>
       <label>Room No:</label><input type="text" name="roomNo" placeholder="(Optional) Enter number of rooms">
       <label>Bed No:</label><input type="number" name="bedNo" placeholder="(Optional) Enter number of beds in total">
       <label>Booking Ref:</label><input type="text" name="stayBookingRef">
@@ -213,9 +213,9 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
         <option value="Others">Others</option>
       </select>
       <label>Name:<span class="asterisk">*</span></label><input type="text" name="otherName" required>
-      <label>Date:<span class="asterisk">*</span></label><input type="date" name="otherDate" required>
-      <label>Start Time:</label><input type="time" name="otherStartTime">
-      <label>End Time:</label><input type="time" name="otherEndTime">
+      <label>Date:<span class="asterisk">*</span></label><input class="inputDate" type="date" name="otherDate" required>
+      <label>Start Time:</label><input class="inputTime" type="time" name="otherStartTime">
+      <label>End Time:</label><input class="inputTime" type="time" name="otherEndTime">
       <label>Remarks:</label><textarea name="otherRemarks"></textarea>
       <label>Booking Ref:</label><input type="text" name="otherBookingRef">
     `;
@@ -274,18 +274,18 @@ function buildTransportForm(mode) {
   if (mode === "Airplane") {
     html = `
       <h4>Departure</h4>
-      <label>Date:<span class="asterisk">*</span></label><input type="date" name="depDate" required>
+      <label>Date:<span class="asterisk">*</span></label><input class="inputDate" type="date" name="depDate" required>
       <label>Country:<span class="asterisk">*</span></label><input type="text" name="departCountry" required>
       <label>Airport:<span class="asterisk">*</span></label><input type="text" name="departAirport" required>
       <label>Terminal:<span class="asterisk">*</span></label><input type="text" name="departTerminal" required>
-      <label>Time:<span class="asterisk">*</span></label><input type="time" name="departTime" required>
+      <label>Time:<span class="asterisk">*</span></label><input class="inputTime" type="time" name="departTime" required>
 
       <h4>Arrival</h4>
-      <label>Date:<span class="asterisk">*</span></label><input type="date" name="returnDate" required>
+      <label>Date:<span class="asterisk">*</span></label><input class="inputDate" type="date" name="returnDate" required>
       <label>Country:<span class="asterisk">*</span></label><input type="text" name="arriveCountry" required>
       <label>Airport:<span class="asterisk">*</span></label><input type="text" name="arriveAirport" required>
       <label>Terminal:<span class="asterisk">*</span></label><input type="text" name="arriveTerminal" required>
-      <label>Time:<span class="asterisk">*</span></label><input type="time" name="arriveTime" required>
+      <label>Time:<span class="asterisk">*</span></label><input class="inputTime" type="time" name="arriveTime" required>
 
       <h4>Additional Info</h4>
       <label>Airline:<span class="asterisk">*</span></label><input type="text" name="airline" required>
@@ -295,16 +295,16 @@ function buildTransportForm(mode) {
   } else if (mode === "Ferry") {
     html = `
       <h4>Departure</h4>
-      <label>Date:<span class="asterisk">*</span></label><input type="date" name="depDate" required>
+      <label>Date:<span class="asterisk">*</span></label><input class="inputDate" type="date" name="depDate" required>
       <label>Country:<span class="asterisk">*</span></label><input type="text" name="departCountry" required>
       <label>Harbour:<span class="asterisk">*</span></label><input type="text" name="departHarbour" required>
-      <label>Time:<span class="asterisk">*</span></label><input type="time" name="departTime" required>
+      <label>Time:<span class="asterisk">*</span></label><input class="inputTime" type="time" name="departTime" required>
 
       <h4>Arrival</h4>
-      <label>Date:<span class="asterisk">*</span></label><input type="date" name="returnDate" required>
+      <label>Date:<span class="asterisk">*</span></label><input class="inputDate" type="date" name="returnDate" required>
       <label>Country:<span class="asterisk">*</span></label><input type="text" name="arriveCountry" required>
       <label>Harbour:<span class="asterisk">*</span></label><input type="text" name="arriveHarbour" required>
-      <label>Time:<span class="asterisk">*</span></label><input type="time" name="arriveTime" required>
+      <label>Time:<span class="asterisk">*</span></label><input class="inputTime" type="time" name="arriveTime" required>
 
       <h4>Additional Info</h4>
       <label>Service Operator:</label><input type="text" name="servOp">
@@ -313,16 +313,16 @@ function buildTransportForm(mode) {
   } else if (mode === "Others") {
     html = `
       <h4>Departure</h4>
-      <label>Date:<span class="asterisk">*</span></label><input type="date" name="depDate" required>
+      <label>Date:<span class="asterisk">*</span></label><input class="inputDate" type="date" name="depDate" required>
       <label>Country:<span class="asterisk">*</span></label><input type="text" name="departCountry" required>
       <label>Pick-up Location:<span class="asterisk">*</span></label><input type="text" name="departPickup" required>
-      <label>Time:</label><input type="time" name="departTime">
+      <label>Time:</label><input class="inputTime" type="time" name="departTime">
 
       <h4>Arrival</h4>
-      <label>Date:<span class="asterisk">*</span></label><input type="date" name="returnDate" required>
+      <label>Date:<span class="asterisk">*</span></label><input class="inputDate" type="date" name="returnDate" required>
       <label>Country:<span class="asterisk">*</span></label><input type="text" name="arriveCountry" required>
       <label>Drop-off Location:<span class="asterisk">*</span></label><input type="text" name="arriveDropoff" required>
-      <label>Time:</label><input type="time" name="arriveTime">
+      <label>Time:</label><input class="inputTime" type="time" name="arriveTime">
 
       <h4>Additional Info</h4>
       <label>Booking Ref:</label><input type="text" name="bookingRef">
@@ -339,6 +339,7 @@ function toggleStepInputs() {
       step.querySelectorAll("input, textarea, select").forEach(el => { el.disabled = isHidden; }); 
     }); 
 }
+
 
 
 
