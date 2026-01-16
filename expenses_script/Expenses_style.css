@@ -438,6 +438,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  flex-shrink: 1;
 }
 #newExpenseForm .form-fields label {
   display: block;
@@ -481,5 +482,6 @@
 #newExpenseForm .form-actions button[type="submit"]:hover {
   background: #1e40af;
 }
+
 
 
