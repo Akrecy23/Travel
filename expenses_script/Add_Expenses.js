@@ -1,5 +1,6 @@
-
 let currentTab = null;
+let currentTripId = null;
+let currentTripTitle = null;
 
 // Listen for when the form is created and ready
 document.addEventListener("FormReady", e => {
@@ -9,10 +10,13 @@ document.addEventListener("FormReady", e => {
     return;
   }
   const { tabName, tripId } = e.detail;
-
+  
   const form = document.getElementById("newExpenseForm");
   if (!form) return;
 
+  form.replaceWith(form.cloneNode(true));
+  form = document.getElementById("newExpenseForm"); // re‑grab the fresh clone
+  
   form.addEventListener("submit", async ev => {
     ev.preventDefault();
 
@@ -64,6 +68,8 @@ document.addEventListener("FormReady", e => {
 
 function openNewExpenseForm(tabName, tripId, tripTitle) {
   currentTab = tabName;
+  currentTripId = tripId;
+  currentTripTitle = tripTitle;   // save it globally
   const formContainer = document.getElementById("newExpenseFormContainer");
   if (!formContainer) return;
 
@@ -77,7 +83,7 @@ function openNewExpenseForm(tabName, tripId, tripTitle) {
       <div class="form-header">
         <div class="field-pair">
           <label>Trip:</label>
-          <input type="text" value="${tripTitle}" readonly>
+          <input type="text" value="${tripTitle || currentTripTitle}" readonly>
         </div>
         <div class="field-pair">
           <label>Expenses for:</label>
@@ -135,6 +141,7 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
 
