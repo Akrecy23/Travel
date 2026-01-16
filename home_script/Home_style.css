@@ -475,6 +475,9 @@ font-size: 1.5rem;
   border-radius: 6px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+#add-trip-modal .form-group input .inputDate{
+    width: 90% !important;
+}
 .asterisk { 
     color: red; font-weight: bold;   /* optional, makes it stand out */ 
 }
@@ -701,6 +704,7 @@ font-size: 1.5rem;
   background-color: #aaa;      /* greyed out when disabled */
   cursor: not-allowed;         /* show disabled cursor */
 }
+
 
 
 
