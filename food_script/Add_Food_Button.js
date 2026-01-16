@@ -19,12 +19,12 @@ document.addEventListener("FoodCardsLoaded", () => {
             </div>
             <!-- City -->
             <div class="form-group">
-                <label>City*</label>
+                <label>City<span class="asterisk">*</span></label>
                 <select name="city" id="citySelect" required></select>
             </div>
             <!-- Food Type -->
             <div class="form-group">
-                <label>Food Type*</label>
+                <label>Food Type<span class="asterisk">*</span></label>
                 <select name="foodType" id="foodTypeSelect" required></select>
             </div>
             <!-- Next Button -->
@@ -36,7 +36,7 @@ document.addEventListener("FoodCardsLoaded", () => {
           <div id="step2" class="hidden">
             <!-- Food Name -->
             <div class="form-group">
-                <label>Food Name*</label>
+                <label>Food Name<span class="asterisk">*</span></label>
                 <input type="text" name="foodName" placeholder="Enter food name" required />
             </div>
             <!-- Price -->
@@ -56,7 +56,7 @@ document.addEventListener("FoodCardsLoaded", () => {
             </div>
             <!-- Address -->
             <div class="form-group">
-                <label>Address*</label>
+                <label>Address<span class="asterisk">*</span></label>
                 <input type="text" name="address" placeholder="Enter address" required />
             </div>
             <!-- Image URL -->
@@ -329,6 +329,7 @@ document.addEventListener("FoodFormReady", async () => {
   });
 
 });
+
 
 
 
