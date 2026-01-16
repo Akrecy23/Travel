@@ -472,7 +472,9 @@ font-size: 1.5rem;
   border-radius: 6px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-
+.asterisk { 
+    color: red; font-weight: bold;   /* optional, makes it stand out */ 
+}
 /* Editable focus styles */
 #add-trip-modal .form-group input:not([readonly]):focus,
 #add-trip-modal .form-group textarea:focus,
@@ -696,3 +698,4 @@ font-size: 1.5rem;
   background-color: #aaa;      /* greyed out when disabled */
   cursor: not-allowed;         /* show disabled cursor */
 }
+
