@@ -549,10 +549,12 @@
   width: 100%; /* fill the grid column */
   box-sizing: border-box;  /* prevent overflow */
 }
-.form-group .timeInput{
-  width: 90% !important;
+/* For Safari */
+@supports (-webkit-touch-callout: none) {
+  .form-group .timeInput {
+    width: 88% !important;
+  }
 }
-
 .form-group input:not([readonly]):focus,
 .form-group textarea:focus,
 .form-group select:focus {
@@ -618,6 +620,7 @@
   transform: translateY(-2px); 
 
 }
+
 
 
 
