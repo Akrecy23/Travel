@@ -715,6 +715,7 @@
   margin: 0.5rem 0 0.25rem;
   font-weight: 500;
   color: #444;
+  width: 100%;
 }
 #newBookingForm .step1 input,
 #newBookingForm .step2 input,
@@ -826,4 +827,5 @@
   to { opacity: 1; transform: translateY(0); }
 
 }
+
 
