@@ -478,7 +478,7 @@ font-size: 1.5rem;
 /* For Safari */
 @supports (-webkit-touch-callout: none) {
   #add-trip-modal .form-group .inputDate {
-    width: 90% !important;
+    width: 88% !important;
   }
 }
 .asterisk { 
@@ -707,6 +707,7 @@ font-size: 1.5rem;
   background-color: #aaa;      /* greyed out when disabled */
   cursor: not-allowed;         /* show disabled cursor */
 }
+
 
 
 
