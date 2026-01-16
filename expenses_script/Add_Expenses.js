@@ -66,7 +66,11 @@ document.addEventListener("FormReady", e => {
 function openNewExpenseForm(tabName, tripId, tripTitle) {
   currentTab = tabName;
   currentTripId = tripId;
-  currentTripTitle = tripTitle;   // save it globally
+  // Only update if tripTitle is provided
+  if (tripTitle) {
+    currentTripTitle = tripTitle;
+  }
+
   const formContainer = document.getElementById("newExpenseFormContainer");
   if (!formContainer) return;
 
@@ -80,7 +84,7 @@ function openNewExpenseForm(tabName, tripId, tripTitle) {
       <div class="form-header">
         <div class="field-pair">
           <label>Trip:</label>
-          <input type="text" value="${tripTitle || currentTripTitle}" readonly>
+          <input type="text" value="${currentTripTitle}" readonly>
         </div>
         <div class="field-pair">
           <label>Expenses for:</label>
@@ -138,6 +142,7 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
 
