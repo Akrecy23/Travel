@@ -406,13 +406,13 @@
 #newExpenseForm .form-header {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   font-weight: 600;
 }
 
 #newExpenseForm .form-header label {
-  margin-right: 0.25rem;
+  margin-right: 0.20rem;
 }
 
 #newExpenseForm .form-header input[readonly] {
@@ -422,6 +422,8 @@
   padding: 0.4rem 0.6rem;
   font-weight: 500;
   cursor: not-allowed;       /* cross cursor for uneditable fields */
+  flex: 0 0 auto;
+  width: auto;
 }
 #newExpenseForm .form-fields label {
   display: block;
@@ -466,6 +468,7 @@
   background: #1e40af;
 
 }
+
 
 
 
