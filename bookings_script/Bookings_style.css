@@ -794,7 +794,7 @@
 @supports (-webkit-touch-callout: none) {
   #newBookingForm .form-fields .inputTime,
   #newBookingForm .form-fields .inputDate {
-    width: 88% !important;
+    width: 95% !important;
   }
 }
 
@@ -835,6 +835,7 @@
   to { opacity: 1; transform: translateY(0); }
 
 }
+
 
 
 
