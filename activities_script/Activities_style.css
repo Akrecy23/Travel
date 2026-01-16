@@ -592,10 +592,10 @@
   border-color: #999;
 }
 
-.radio-group input[type="radio"]:checked + label {
-  background: #007bff;
+.radio-group label:has(input[type="radio"]:checked) {
+  background: #66b2ff;
   color: #fff;
-  border-color: #007bff;
+  border-color: #0056b3;
 }
 
 .next-btn,
@@ -618,6 +618,7 @@
   transform: translateY(-2px); 
 
 }
+
 
 
 
