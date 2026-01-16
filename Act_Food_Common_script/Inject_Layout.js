@@ -64,10 +64,10 @@ function createHomeFrontLayout() {
     <div class="category-section">
       <div class="category-row">
         <div class="category-pills">
-          <button class="pill" data-page="bookings.html"><span class="tab-emoji">🏨</span> Bookings</button>
-          <button class="pill" data-page="expenses.html"><span class="tab-emoji">🚕</span> Expenses</button>
+          <button class="pill" data-page="bookings.html"><span class="tab-emoji">🎫</span> Bookings</button>
+          <button class="pill" data-page="expenses.html"><span class="tab-emoji">💰</span> Expenses</button>
           <button class="pill" data-page="itinerary.html"><span class="tab-emoji">🗺️</span> Itinerary</button>
-          <button class="pill" data-page="activities.html"><span class="tab-emoji">🎨</span> Activities</button>
+          <button class="pill" data-page="activities.html"><span class="tab-emoji">🎯</span> Activities</button>
           <button class="pill" data-page="food.html"><span class="tab-emoji">🍜</span> Food</button>
         </div>
         <div class="category-controls">
@@ -223,6 +223,7 @@ function createHomeFrontLayout() {
   // document.dispatchEvent(new Event("HomeFrontLayoutReady"));
 
 }
+
 
 
 
