@@ -11,11 +11,8 @@ document.addEventListener("FormReady", e => {
   }
   const { tabName, tripId } = e.detail;
   
-  let form = document.getElementById("newExpenseForm");
+  const form = document.getElementById("newExpenseForm");
   if (!form) return;
-
-  form.replaceWith(form.cloneNode(true));
-  form = document.getElementById("newExpenseForm"); // re‑grab the fresh clone
   
   form.addEventListener("submit", async ev => {
     ev.preventDefault();
@@ -141,6 +138,7 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
 
