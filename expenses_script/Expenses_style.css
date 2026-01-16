@@ -415,7 +415,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;             /* space between label and input */
-  flex: 1;                 /* let each pair share available space */
+  flex: 1 1 50%;                 /* let each pair share available space */
   min-width: 0;            /* allow shrinking if space is tight */
 }
 /* Labels inside header */
@@ -434,6 +434,9 @@
   cursor: not-allowed;
   flex: 1;                 /* input stretches to fill remaining space */
   max-width: 100%;         /* prevent overflow */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 #newExpenseForm .form-fields label {
   display: block;
@@ -477,3 +480,4 @@
 #newExpenseForm .form-actions button[type="submit"]:hover {
   background: #1e40af;
 }
+
