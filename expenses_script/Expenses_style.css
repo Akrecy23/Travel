@@ -409,6 +409,7 @@
   flex-wrap: nowrap;
   align-items: center;
   font-weight: 600;
+  max-width: 37.5rem;
 }
 /* Each label+input pair */
 #newExpenseForm .form-header .field-pair {
@@ -480,4 +481,5 @@
 #newExpenseForm .form-actions button[type="submit"]:hover {
   background: #1e40af;
 }
+
 
