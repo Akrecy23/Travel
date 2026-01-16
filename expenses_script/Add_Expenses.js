@@ -11,7 +11,7 @@ document.addEventListener("FormReady", e => {
   }
   const { tabName, tripId } = e.detail;
   
-  const form = document.getElementById("newExpenseForm");
+  let form = document.getElementById("newExpenseForm");
   if (!form) return;
 
   form.replaceWith(form.cloneNode(true));
@@ -141,6 +141,7 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
 
