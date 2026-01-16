@@ -84,12 +84,12 @@ function openNewExpenseForm(tabName, tripId, tripTitle) {
   `;
 
   html += `
-    <label>Header:*</label><input type="text" name="header" required>
+    <label>Header:<span class="asterisk">*</span></label><input type="text" name="header" required>
     <label>Payment Date/Time:</label><input type="text" name="dateTime">
     <label>Details:</label><input type="text" name="details">
-    <label>Paid By:*</label><input type="text" name="paidBy" required>
-    <label>Cost:*</label><input type="text" name="cost" required>
-    <label>Expense Type:*</label>
+    <label>Paid By:<span class="asterisk">*</span></label><input type="text" name="paidBy" required>
+    <label>Cost:<span class="asterisk">*</span></label><input type="text" name="cost" required>
+    <label>Expense Type:<span class="asterisk">*</span></label>
     <select name="type" required>
       <option value="Accommodation">Accommodation</option>
       <option value="Activity">Activity</option>
@@ -131,4 +131,5 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
