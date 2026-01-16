@@ -467,6 +467,7 @@ font-size: 1.5rem;
 #add-trip-modal .form-group input,
 #add-trip-modal .form-group textarea,
 #add-trip-modal .form-group select {
+  width: 80%;
   padding: 0.5rem 0.625rem;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -698,4 +699,5 @@ font-size: 1.5rem;
   background-color: #aaa;      /* greyed out when disabled */
   cursor: not-allowed;         /* show disabled cursor */
 }
+
 
