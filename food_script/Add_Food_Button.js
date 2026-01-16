@@ -47,12 +47,12 @@ document.addEventListener("FoodCardsLoaded", () => {
             <!-- Opening Time -->
             <div class="form-group">
                 <label>Opening Time</label>
-                <input type="time" name="openingTime" />
+                <input class="inputTime" type="time" name="openingTime" />
             </div>
             <!-- Closing Time -->
             <div class="form-group">
                 <label>Closing Time</label>
-                <input type="time" name="closingTime" />
+                <input class="inputTime" type="time" name="closingTime" />
             </div>
             <!-- Address -->
             <div class="form-group">
@@ -329,6 +329,7 @@ document.addEventListener("FoodFormReady", async () => {
   });
 
 });
+
 
 
 
