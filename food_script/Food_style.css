@@ -550,8 +550,11 @@
   width: 100%;
   box-sizing: border-box;
 }
-.form-group .inputTime {
-  width: 90% !important;
+/* For Safari */
+@supports (-webkit-touch-callout: none) {
+  .form-group .inputTime {
+    width: 88% !important;
+  }
 }
 .form-group input:not([readonly]):focus,
 .form-group textarea:focus,
@@ -618,6 +621,7 @@
   transform: translateY(-2px); 
 
 }
+
 
 
 
