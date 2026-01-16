@@ -19,12 +19,12 @@ document.addEventListener("ActivityCardsLoaded", () => {
             </div>
             <!-- City -->
             <div class="form-group">
-                <label>City*</label>
+                <label>City<span class="asterisk">*</span></label>
                 <select name="city" id="citySelect" required></select>
             </div>
             <!-- Activity Type -->
             <div class="form-group">
-                <label>Activity Type*</label>
+                <label>Activity Type<span class="asterisk">*</span></label>
                 <select name="activityType" id="activityTypeSelect" required></select>
             </div>
             <!-- Next Button -->
@@ -61,7 +61,7 @@ document.addEventListener("ActivityCardsLoaded", () => {
             </div>
             <!-- Address -->
             <div class="form-group">
-                <label>Address*</label>
+                <label>Address<span class="asterisk">*</span></label>
                 <input type="text" name="address" placeholder="Enter address" required />
             </div>
             <!-- Image URL -->
@@ -71,7 +71,7 @@ document.addEventListener("ActivityCardsLoaded", () => {
             </div>
             <!-- Indoor or Outdoor -->
             <div class="form-group">
-              <label>Indoor/Outdoor*</label>
+              <label>Indoor/Outdoor<span class="asterisk">*</span></label>
               <div>
                 <label>
                   <input type="radio" name="inOutDoor" value="Indoor" required />
@@ -355,6 +355,7 @@ document.addEventListener("ActivityFormReady", async () => {
     }
   });
 });
+
 
 
 
