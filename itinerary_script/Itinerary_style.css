@@ -499,6 +499,9 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.asterisk { 
+  color: red; font-weight: bold;   /* optional, makes it stand out */ 
+}
 
 .activity-form-modal .form-actions {
   text-align: right;
@@ -596,6 +599,7 @@
 .move-itinerary-modal button[type="submit"]:hover {
   background: #1e40af;
 }
+
 
 
 
