@@ -404,25 +404,23 @@
 }
 /* Header section (Trip + Tab) */
 #newExpenseForm .form-header {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: nowrap;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* two equal columns */
+  gap: 1rem;                       /* space between columns */
   font-weight: 600;
   max-width: 37.5rem;
 }
 /* Each label+input pair */
 #newExpenseForm .form-header .field-pair {
+  width: 100%;                     /* take full width of its column */
   display: flex;
   align-items: center;
-  gap: 0.5rem;             /* space between label and input */
-  flex: 1 1 50%;                 /* let each pair share available space */
-  min-width: 0;            /* allow shrinking if space is tight */
+  gap: 0.5rem;    
 }
 /* Labels inside header */
 #newExpenseForm .form-header .field-pair label {
-  flex: 0 0 auto;          /* label stays its natural width */
-  margin: 0;               /* remove block spacing */
+  flex: 0 0 auto;                   /* label stays its natural width */
+  margin: 0;                        /* remove block spacing */
   font-weight: 500;
 }
 /* Readonly inputs inside header */
@@ -433,12 +431,13 @@
   padding: 0.4rem 0.6rem;
   font-weight: 500;
   cursor: not-allowed;
-  flex: 1;                 /* input stretches to fill remaining space */
-  max-width: 100%;         /* prevent overflow */
+  flex: 1;                          /* input stretches to fill remaining space */
+  max-width: 100%;                  /* prevent overflow */
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   flex-shrink: 1;
+  min-width: 0;                     /* critical for Chrome shrink behavior */
 }
 #newExpenseForm .form-fields label {
   display: block;
@@ -482,6 +481,3 @@
 #newExpenseForm .form-actions button[type="submit"]:hover {
   background: #1e40af;
 }
-
-
-
