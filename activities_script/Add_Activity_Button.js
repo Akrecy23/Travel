@@ -47,12 +47,12 @@ document.addEventListener("ActivityCardsLoaded", () => {
             <!-- Opening Time -->
             <div class="form-group">
                 <label>Opening Time</label>
-                <input type="time" name="openingTime" />
+                <input class="timeInput" type="time" name="openingTime" />
             </div>
             <!-- Closing Time -->
             <div class="form-group">
                 <label>Closing Time</label>
-                <input type="time" name="closingTime" />
+                <input class="timeInput" type="time" name="closingTime" />
             </div>
             <!-- Duration -->
             <div class="form-group">
@@ -355,6 +355,7 @@ document.addEventListener("ActivityFormReady", async () => {
     }
   });
 });
+
 
 
 
