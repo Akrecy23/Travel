@@ -36,7 +36,7 @@ document.addEventListener("ActivityCardsLoaded", () => {
           <div id="step2" class="hidden">
             <!-- Activity Name -->
             <div class="form-group">
-                <label>Activity Name*</label>
+                <label>Activity Name<span class="asterisk">*</span></label>
                 <input type="text" name="activityName" placeholder="Enter activity name" required />
             </div>
             <!-- Price -->
@@ -355,6 +355,7 @@ document.addEventListener("ActivityFormReady", async () => {
     }
   });
 });
+
 
 
 
