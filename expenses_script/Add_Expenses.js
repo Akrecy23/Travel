@@ -75,10 +75,14 @@ function openNewExpenseForm(tabName, tripId, tripTitle) {
         <button type="button" class="close-form-btn" title="Close">✕</button>
       </div>
       <div class="form-header">
-        <label>Trip:</label>
-        <input type="text" value="${tripTitle}" readonly>
-        <label>Expenses for:</label>
-        <input type="text" value="${tabName}" readonly>
+        <div class="field-pair">
+          <label>Trip:</label>
+          <input type="text" value="${tripTitle}" readonly>
+        </div>
+        <div class="field-pair">
+          <label>Expenses for:</label>
+          <input type="text" value="${tabName}" readonly>
+        </div>
       </div>
       <div class="form-fields">
   `;
@@ -131,5 +135,6 @@ function closeFormOverlay(tripId) {
   }
 
 }
+
 
 
