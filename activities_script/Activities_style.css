@@ -520,6 +520,10 @@
   gap: 1.125rem;
   margin-top: 1.25rem;
 }
+.asterisk {
+  color: red;
+  font-weight: bold;   /* optional, makes it stand out */
+}
 #add-activity-modal #step1.hidden,
 #add-activity-modal #step2.hidden {
   display: none; /* hide without breaking grid definition */
@@ -608,3 +612,4 @@
   transform: translateY(-2px); 
 
 }
+
