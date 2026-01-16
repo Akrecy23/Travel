@@ -550,7 +550,7 @@
   width: 100%;
   box-sizing: border-box;
 }
-.form-group .timeInput {
+.form-group .inputTime {
   width: 90% !important;
 }
 .form-group input:not([readonly]):focus,
@@ -618,6 +618,7 @@
   transform: translateY(-2px); 
 
 }
+
 
 
 
