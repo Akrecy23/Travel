@@ -458,6 +458,7 @@ font-size: 1.5rem;
 #add-trip-modal .form-group {
   display: flex;
   flex-direction: column;
+    padding-right: 0.5rem
 }
 #add-trip-modal .form-group label {
   font-weight: 600;
@@ -467,7 +468,8 @@ font-size: 1.5rem;
 #add-trip-modal .form-group input,
 #add-trip-modal .form-group textarea,
 #add-trip-modal .form-group select {
-  width: 80%;
+  width: 100%;             /* fill the column */
+  box-sizing: border-box;  /* prevent overflow */
   padding: 0.5rem 0.625rem;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -699,5 +701,6 @@ font-size: 1.5rem;
   background-color: #aaa;      /* greyed out when disabled */
   cursor: not-allowed;         /* show disabled cursor */
 }
+
 
 
