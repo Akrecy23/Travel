@@ -790,9 +790,12 @@
   font-size: 0.95rem;
 }
 
-#newBookingForm .form-fields .inputTime,
-#newBookingForm .form-fields .inputDate{
-  width: 90% !important;
+/* For Safari */
+@supports (-webkit-touch-callout: none) {
+  #newBookingForm .form-fields .inputTime,
+  #newBookingForm .form-fields .inputDate {
+    width: 88% !important;
+  }
 }
 
 #newBookingForm .form-fields input[type="radio"] {
@@ -832,6 +835,7 @@
   to { opacity: 1; transform: translateY(0); }
 
 }
+
 
 
 
