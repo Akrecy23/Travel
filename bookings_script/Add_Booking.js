@@ -155,7 +155,7 @@ function openNewBookingForm(tabName, tripId, tripTitle, editableTab = false) {
     <form id="newBookingForm">
       <div class="form-header">
         <label>Trip:</label>
-        <input type="text" value="${tripTitle}" readonly}>
+        <input type="text" value="${tripTitle}" readonly>
         <label>Tab:</label>
         <select name="tabName" ${editableTab ? "" : "disabled"}>
           <option value="Transport" ${tabName === "Transport" ? "selected" : ""}>Transport</option>
@@ -339,6 +339,7 @@ function toggleStepInputs() {
       step.querySelectorAll("input, textarea, select").forEach(el => { el.disabled = isHidden; }); 
     }); 
 }
+
 
 
 
