@@ -410,17 +410,30 @@
   align-items: center;
   font-weight: 600;
 }
-
-#newExpenseForm .form-header input[readonly] {
+/* Each label+input pair */
+#newExpenseForm .form-header .field-pair {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;             /* space between label and input */
+  flex: 1;                 /* let each pair share available space */
+  min-width: 0;            /* allow shrinking if space is tight */
+}
+/* Labels inside header */
+#newExpenseForm .form-header .field-pair label {
+  flex: 0 0 auto;          /* label stays its natural width */
+  margin: 0;               /* remove block spacing */
+  font-weight: 500;
+}
+/* Readonly inputs inside header */
+#newExpenseForm .form-header .field-pair input[readonly] {
   background: #f3f4f6;
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 0.4rem 0.6rem;
   font-weight: 500;
-  cursor: not-allowed;       /* cross cursor for uneditable fields */
-  flex: 1 1 auto;
-  width: auto;
-  max-width: 7rem;
+  cursor: not-allowed;
+  flex: 1;                 /* input stretches to fill remaining space */
+  max-width: 100%;         /* prevent overflow */
 }
 #newExpenseForm .form-fields label {
   display: block;
@@ -463,13 +476,4 @@
 
 #newExpenseForm .form-actions button[type="submit"]:hover {
   background: #1e40af;
-
 }
-
-
-
-
-
-
-
-
