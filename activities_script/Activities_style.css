@@ -546,6 +546,8 @@
   border: 1px solid #ccc;
   border-radius: 0.375rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;             /* fill the grid column */
+  box-sizing: border-box;  /* prevent overflow */
 }
 .form-group input:not([readonly]):focus,
 .form-group textarea:focus,
@@ -612,4 +614,3 @@
   transform: translateY(-2px); 
 
 }
-
