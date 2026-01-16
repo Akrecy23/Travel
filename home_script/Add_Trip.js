@@ -12,37 +12,37 @@ document.addEventListener("HomeBackLayoutReady", () => {
 
             <!-- Country -->
             <div class="form-group">
-              <label>Country*</label>
+              <label>Country<span class="asterisk">*</span></label>
               <select name="country" id="countrySelect" required></select>
             </div>
 
             <!-- City -->
             <div class="form-group">
-              <label>City*</label>
+              <label>City<span class="asterisk">*</span></label>
               <input type="text" name="city" placeholder="Enter city" required />
             </div>
 
             <!-- Departure Date -->
             <div class="form-group">
-              <label>Departure Date*</label>
+              <label>Departure Date<span class="asterisk">*</span></label>
               <input type="date" name="departureDate" required />
             </div>
 
             <!-- Return Date -->
             <div class="form-group">
-              <label>Return Date*</label>
+              <label>Return Date<span class="asterisk">*</span></label>
               <input type="date" name="returnDate" required />
             </div>
 
             <!-- Trip Name -->
             <div class="form-group">
-              <label>Trip Name*</label>
+              <label>Trip Name<span class="asterisk">*</span></label>
               <input type="text" name="tripName" placeholder="Enter trip name" required />
             </div>
 
             <!-- Group -->
             <div class="form-group">
-              <label>Group*</label>
+              <label>Group<span class="asterisk">*</span></label>
               <select name="group" id="groupSelect" required></select>
             </div>
 
@@ -414,6 +414,7 @@ async function createCityCountryYear(currentUserId, pathName, country, cities, y
     YearList: firebase.firestore.FieldValue.arrayUnion(year)
   }, { merge: true });
 }
+
 
 
 
