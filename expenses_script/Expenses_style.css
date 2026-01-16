@@ -438,6 +438,9 @@
   background: #fff;
   font-size: 0.95rem;
 }
+.asterisk { 
+  color: red; font-weight: bold;   /* optional, makes it stand out */ 
+}
 /* Actions */
 #newBookingForm .form-actions {
   display: flex;
@@ -463,6 +466,7 @@
   background: #1e40af;
 
 }
+
 
 
 
