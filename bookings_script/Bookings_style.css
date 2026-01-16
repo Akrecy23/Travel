@@ -672,7 +672,9 @@
 #newBookingForm .close-form-btn:hover {
   color: #000;
 }
-
+.asterisk { 
+  color: red; font-weight: bold;   /* optional, makes it stand out */ 
+}
 /* Specifically for Transport */
 /* ===== Multi-step form sections ===== */
 #newBookingForm .step1,
@@ -819,6 +821,7 @@
   to { opacity: 1; transform: translateY(0); }
 
 }
+
 
 
 
