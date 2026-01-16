@@ -550,6 +550,9 @@
   width: 90%;
   box-sizing: border-box;
 }
+.form-group textarea {
+  width: 100% !important;
+}
 .form-group input:not([readonly]):focus,
 .form-group textarea:focus,
 .form-group select:focus {
@@ -615,5 +618,6 @@
   transform: translateY(-2px); 
 
 }
+
 
 
