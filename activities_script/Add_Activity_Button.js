@@ -73,11 +73,14 @@ document.addEventListener("ActivityCardsLoaded", () => {
             <div class="form-group">
               <label>Indoor/Outdoor<span class="asterisk">*</span></label>
               <div class="radio-group">
-                  <input type="radio" id="indoor" name="inOutDoor" value="Indoor" required />
-                  <label for="indoor">Indoor</label>
-
-                  <input type="radio" id="outdoor" name="inOutDoor" value="Outdoor" required />
-                  <label for="outdoor">Outdoor</label>
+                <label>
+                  <input type="radio" name="inOutDoor" value="Indoor" required />
+                  Indoor
+                </label>
+                <label>
+                  <input type="radio" name="inOutDoor" value="Outdoor" required />
+                  Outdoor
+                </label>
               </div>
             </div>
             <!-- Remarks -->
@@ -352,6 +355,7 @@ document.addEventListener("ActivityFormReady", async () => {
     }
   });
 });
+
 
 
 
