@@ -151,7 +151,7 @@ document.addEventListener("NewTripFormReady", () => {
   }
 
   // ===== Populate Group dropdown when departure date selected =====
-  departureInput.addEventListener("change", async () => {
+  if (groupSelect) {
     groupSelect.innerHTML = ""; // reset
 
     const hardcodedGroups = ["Polytechnic", "Secondary", "Family"];
@@ -221,7 +221,7 @@ document.addEventListener("NewTripFormReady", () => {
 
     groupSelect.removeEventListener("change", newGroupHandler);
     groupSelect.addEventListener("change", newGroupHandler);
-  });
+  }
 
   // ===== Handle form submission =====
   form.addEventListener("submit", async (e) => {
@@ -414,6 +414,7 @@ async function createCityCountryYear(currentUserId, pathName, country, cities, y
     YearList: firebase.firestore.FieldValue.arrayUnion(year)
   }, { merge: true });
 }
+
 
 
 
