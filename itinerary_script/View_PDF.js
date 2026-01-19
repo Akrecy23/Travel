@@ -53,7 +53,7 @@ async function viewItineraryPDF(tripId) {
         a.Time || "",
         a.Description || "",
         a.Remarks || "",
-        { content: address, mapsUrl }, // Clickable address
+        { content: address, mapsUrl, styles: { textColor: [0,0,255] } }, // Clickable address
         (a.About === "Food" || a.About === "Activity") ? a.Tag || "" : a.About || ""
       ];
     });
