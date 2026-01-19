@@ -45,23 +45,15 @@ async function viewItineraryPDF(tripId) {
     const rows = activities.map(a => {
       // Make address clickable in PDF (open G-maps)
       const address = a.Address || "";
-      let mapsUrl = "";
-      if (address){
-        mapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
-      }
-      
+      const mapsUrl = address
+        ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address)
+        : "";
+
       return [
         a.Time || "",
         a.Description || "",
         a.Remarks || "",
-        mapsUrl
-          ? {
-              content: address,
-              styles: { textColor: [0,0,255], fontStyle: "underline" },
-              // IMPORTANT: use 'link' or 'url' depending on version
-              url: mapsUrl   // <-- try 'url' instead of 'link'
-            }
-          : address, // Clickable address
+        { content: address, mapsUrl }, // Clickable address
         (a.About === "Food" || a.About === "Activity") ? a.Tag || "" : a.About || ""
       ];
     });
@@ -91,6 +83,17 @@ async function viewItineraryPDF(tripId) {
       }
     });
 
+    const table = doc.lastAutoTable;
+    table.body.forEach(row => {
+      const cell = row.cells[3]; // Address column
+      if (cell.raw && cell.raw.mapsUrl) {
+        const { x, y } = cell;
+        const width = cell.width;
+        const height = cell.height;
+        doc.link(x, y, width, height, { url: cell.raw.mapsUrl });
+      }
+    });
+    
     y = doc.lastAutoTable.finalY + 10;
     doc.line(20, y, 190, y);
     // Only add a new page if this is not the last day
