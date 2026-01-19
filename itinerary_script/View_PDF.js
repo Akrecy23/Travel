@@ -55,7 +55,12 @@ async function viewItineraryPDF(tripId) {
         a.Description || "",
         a.Remarks || "",
         mapsUrl
-          ? { content: address, link: mapsUrl, styles: { textColor: [0,0,255], fontStyle: "underline" } }
+          ? {
+              content: address,
+              styles: { textColor: [0,0,255], fontStyle: "underline" },
+              // IMPORTANT: use 'link' or 'url' depending on version
+              url: mapsUrl   // <-- try 'url' instead of 'link'
+            }
           : address, // Clickable address
         (a.About === "Food" || a.About === "Activity") ? a.Tag || "" : a.About || ""
       ];
