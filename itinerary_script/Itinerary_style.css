@@ -170,6 +170,10 @@
   color: #005fa3;       /* darker blue on hover */
   text-decoration: none; /* remove underline on hover */
 }
+.remarks-text {
+  white-space: pre-line;
+}
+/* === Edit Mode === */
 /* Shorter length */
 .edit-time {
   width: 5rem;        /* adjust as needed */
@@ -177,8 +181,6 @@
   font-size: 0.9rem;
   text-align: center; /* keeps the time nicely aligned */
 }
-
-/* === Edit Mode === */
 .itinerary-card.editing {
   background: #fff8f8;
   border: 1px solid #e5e7eb;
@@ -599,6 +601,7 @@
 .move-itinerary-modal button[type="submit"]:hover {
   background: #1e40af;
 }
+
 
 
 
