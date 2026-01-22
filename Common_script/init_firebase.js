@@ -6,7 +6,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCyugbx_pPHi9pv3e9ljG2i6wziYnmTrvE",   // restricted key
   authDomain: "travel-328e8.firebaseapp.com",
   projectId: "travel-328e8",
-  storageBucket: "travel-328e8.firebasestorage.app",
+  storageBucket: "travel-328e8.appspot.com",
   messagingSenderId: "210082383366",
   appId: "1:210082383366:web:2628625b06780dec642587",
   measurementId: "G-9YWYBETLM3"
@@ -39,4 +39,5 @@ window.auth.onAuthStateChanged(user => {
   window.AUTH_READY = true;
   document.dispatchEvent(new Event("UserAuthenticated"));
 });
+
 
