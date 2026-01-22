@@ -79,8 +79,21 @@ async function handleImageClick(expenseId, tripId, spendingId) {
       return;
     }
 
-    // Open the file in a new tab/window
-    window.open(receiptUrl, "_blank");
+    // ===== Platform-specific handling for showing image =====
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (isIOS) {
+      // iPhone/iPad → force download/save
+      const link = document.createElement("a");
+      link.href = receiptUrl;
+      link.download = "receipt.png"; // or use spendingId + ".png"
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      // Desktop/Android → open in new tab
+      window.open(receiptUrl, "_blank");
+    }
   } catch (err) {
     console.error("Error fetching receipt:", err);
     alert("Could not load receipt.");
