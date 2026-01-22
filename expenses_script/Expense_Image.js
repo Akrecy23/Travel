@@ -42,7 +42,7 @@ function handleUploadClick(expenseId, tripId, spendingId) {
             .collection("Trips").doc(tripId)
             .collection("Expenses").doc(expenseId)
             .collection("Spendings").doc(spendingId)
-            .update({ receiptUrl: downloadURL });
+            .update({ receiptPaths: firebase.firestore.FieldValue.arrayUnion(path) });
 
           alert("Upload complete!");
         }
@@ -72,30 +72,68 @@ async function handleImageClick(expenseId, tripId, spendingId) {
     }
 
     const data = spendingDoc.data();
-    const receiptUrl = data.receiptUrl;
+    const receiptPaths = data.receiptPaths || [];
 
-    if (!receiptUrl) {
+    if (receiptPaths.length === 0) {
       alert("No file uploaded for this spending.");
       return;
     }
 
-    // ===== Platform-specific handling for showing image =====
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const container = document.querySelector(".receipts-container");
+    container.innerHTML = ""; // clear old thumbnails
 
-    if (isIOS) {
-      // iPhone/iPad → force download/save
-      const link = document.createElement("a");
-      link.href = receiptUrl;
-      link.download = "receipt.png"; // or use spendingId + ".png"
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else {
-      // Desktop/Android → open in new tab
-      window.open(receiptUrl, "_blank");
+    for (const path of receiptPaths) {
+      const fileRef = window.storage.ref(path);
+      const url = await fileRef.getDownloadURL();
+
+      const img = document.createElement("img");
+      img.src = url;
+      img.className = "receipt-thumb";
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "Delete";
+      delBtn.onclick = () => deleteReceiptImage(spendingDoc.ref, path);
+
+      // Platform-specific view
+      img.onclick = () => {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "receipt.png";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } else {
+          window.open(url, "_blank");
+        }
+      };
+
+      container.appendChild(img);
+      container.appendChild(delBtn);
     }
   } catch (err) {
-    console.error("Error fetching receipt:", err);
-    alert("Could not load receipt.");
+    console.error("Error fetching receipts:", err);
+    alert("Could not load receipts.");
+  }
+}
+
+// ======== DELETE IMAGE ==========
+async function deleteReceiptImage(spendingRef, path) {
+  try {
+    // Delete from Storage
+    await window.storage.ref(path).delete();
+
+    // Remove from Firestore array
+    await spendingRef.update({
+      receiptPaths: firebase.firestore.FieldValue.arrayRemove(path)
+    });
+
+    alert("Image deleted successfully.");
+    // Optionally refresh the view
+    // handleImageClick(expenseId, tripId, spendingId);
+  } catch (err) {
+    console.error("Error deleting image:", err);
+    alert("Could not delete image.");
   }
 }
