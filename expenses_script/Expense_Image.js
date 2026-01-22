@@ -18,8 +18,8 @@ function handleUploadClick(expenseId, tripId, spendingId) {
     try {
       console.log("Current UID:", firebase.auth().currentUser?.uid);
       const uniqueName = Date.now() + "_" + file.name;
-      const storageRef = window.storage
-        .ref(`receipts/${tripId}/${expenseId}/${spendingId}/${uniqueName}`);
+      const path = `receipts/${tripId}/${expenseId}/${spendingId}/${uniqueName}`;
+      const storageRef = window.storage.ref(path);
 
       const uploadTask = storageRef.put(file);
 
