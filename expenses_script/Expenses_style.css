@@ -324,12 +324,45 @@
 }
 
 /* Amount at bottom */
+.card-amount-row {
+  display: flex;
+  justify-content: flex-end; /* push everything to the right */
+  align-items: center;
+  gap: 0.5rem; /* space between amount and icons */
+  margin-top: 0.5rem;
+}
+
 .card-amount {
   font-weight: bold;
   font-size: 1rem;
   color: #2563eb;
-  text-align: right;
-  margin-top: 0.5rem;
+}
+
+.card-amount-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.card-amount-actions button {
+  padding: 0.3rem;
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.card-amount-actions button:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.image-btn svg {
+  stroke: #10b981; /* green */
+}
+
+.upload-btn svg {
+  stroke: #9333ea; /* purple */
 }
 
 /* Container for the add button */
@@ -482,3 +515,4 @@
 #newExpenseForm .form-actions button[type="submit"]:hover {
   background: #1e40af;
 }
+
