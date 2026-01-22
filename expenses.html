@@ -51,7 +51,10 @@
         <p class="settings-option" id="signOut">Sign out</p>
       </div>
     </div>
-    
+
+    <!-- Hidden file input for uploads -->
+    <input type="file" id="hiddenFileInput" accept="image/*" style="display:none" />
+
     <!-- CALL SCRIPT -->
     <!-- Initialise Firestore database -->
     <script src="Common_script/init_firebase.js"></script>
@@ -74,5 +77,6 @@
     <script src="expenses_script/Add_Expenses.js"></script>
 
 </body>
+
 
 
