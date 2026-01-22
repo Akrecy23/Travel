@@ -14,9 +14,30 @@ function handleUploadClick(expenseId, tripId, spendingId) {
 
     console.log("Selected file:", file.name);
 
-    // Example: upload to Firebase Storage
     try {
-      console.log("Current UID:", firebase.auth().currentUser?.uid);
+      console.log("Selected file:", file.name);
+
+      // 1. Check if an old receipt exists
+      const spendingRef = window.db
+        .collection("Trips").doc(tripId)
+        .collection("Expenses").doc(expenseId)
+        .collection("Spendings").doc(spendingId);
+
+      const spendingDoc = await spendingRef.get();
+      if (spendingDoc.exists) {
+        const oldUrl = spendingDoc.data().receiptUrl;
+        if (oldUrl) {
+          try {
+            const oldRef = window.storage.refFromURL(oldUrl);
+            await oldRef.delete();
+            console.log("Old receipt deleted from storage.");
+          } catch (err) {
+            console.warn("Could not delete old receipt:", err);
+          }
+        }
+      }
+
+      // 2. Upload new file to Firebase Storage
       const uniqueName = Date.now() + "_" + file.name;
       const path = `receipts/${tripId}/${expenseId}/${spendingId}/${uniqueName}`;
       const storageRef = window.storage.ref(path);
@@ -37,13 +58,8 @@ function handleUploadClick(expenseId, tripId, spendingId) {
           const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
           console.log("File available at:", downloadURL);
 
-          // Optionally save the URL back into Firestore
-          await window.db
-            .collection("Trips").doc(tripId)
-            .collection("Expenses").doc(expenseId)
-            .collection("Spendings").doc(spendingId)
-            .update({ receiptUrl: downloadURL });
-
+          // 3. Save new URL in Firestore
+          await spendingRef.update({ receiptUrl: downloadURL });
           alert("Upload complete!");
         }
       );
@@ -92,34 +108,8 @@ async function handleImageClick(expenseId, tripId, spendingId) {
     } else {
       window.open(receiptUrl, "_blank");
     }
-
-    // Show delete button
-    const container = document.querySelector(".receipts-container");
-    container.innerHTML = ""; // clear old
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "Delete Receipt";
-    delBtn.onclick = () => deleteReceiptImage(spendingDoc.ref, receiptUrl);
-    container.appendChild(delBtn);
-
   } catch (err) {
     console.error("Error fetching receipt:", err);
     alert("Could not load receipt.");
-  }
-}
-
-// ======== DELETE IMAGE ==========
-async function deleteReceiptImage(spendingRef, receiptUrl) {
-  try {
-    // Delete from Storage
-    const fileRef = window.storage.refFromURL(receiptUrl);
-    await fileRef.delete();
-
-    // Remove from Firestore
-    await spendingRef.update({ receiptUrl: firebase.firestore.FieldValue.delete() });
-
-    alert("Receipt deleted successfully.");
-  } catch (err) {
-    console.error("Error deleting receipt:", err);
-    alert("Could not delete receipt.");
   }
 }
