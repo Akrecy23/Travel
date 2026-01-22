@@ -18,6 +18,7 @@ firebase.initializeApp(firebaseConfig);
 // ======== CONNECT SERVICES ==========
 window.auth = firebase.auth();        // Auth + Firestore share same app
 window.db   = firebase.firestore();
+window.storage = firebase.storage();
 
 // ======== AUTH STATE HANDLING ==========
 window.AUTH_READY = false;
@@ -38,3 +39,4 @@ window.auth.onAuthStateChanged(user => {
   window.AUTH_READY = true;
   document.dispatchEvent(new Event("UserAuthenticated"));
 });
+
