@@ -16,6 +16,7 @@ function handleUploadClick(expenseId, tripId, spendingId) {
 
     // Example: upload to Firebase Storage
     try {
+      console.log("Current UID:", firebase.auth().currentUser?.uid);
       const uniqueName = Date.now() + "_" + file.name;
       const storageRef = window.storage
         .ref(`receipts/${tripId}/${expenseId}/${spendingId}/${uniqueName}`);
